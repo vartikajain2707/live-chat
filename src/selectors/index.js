@@ -1,12 +1,16 @@
 import { createSelector } from 'reselect';
-import { fromJS } from 'immutable';
+import { fromJS, List } from 'immutable';
 
 
-export const setSendMessgaeFromUser = (state, payload) => state.setIn(['botResponseValue'], fromJS(payload))
+export const setSendMessageFromUser = (state, payload) => state.setIn(['botResponseValue'],fromJS(payload))
 
 
-
-export const getSendMessgaeFromUser = createSelector(
-    state => state.getIn(['abc']),
-    abc => console.log({abc})
+export const getSendMessageFromUser = createSelector(
+    state => fromJS(state).getIn(['botResponse','botResponseValue']),
+    botResponseValue =>  (List.isList(botResponseValue) ? botResponseValue.toJS() : [])
 );
+
+// export const getSendMessageFromUser = createSelector(
+//     state => state,
+//     botResponseValue => console.log({botResponseValue})
+// );

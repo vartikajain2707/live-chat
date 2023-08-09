@@ -8,4 +8,4 @@ const createAction = type => Object.assign(
     },
     { type }
 );
-export const sendMessgaeFromUser = createAction('SEND_MESSAGE_FROM_USER');
+export const sendMessageFromUser = createAction('SEND_MESSAGE_FROM_USER');

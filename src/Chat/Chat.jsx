@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState,useEffect} from 'react';
 import { withStyles,Typography, Button, InputAdornment } from '@material-ui/core';
 import { TextField } from '@material-ui/core';
 import keycode from 'keycode';
@@ -12,11 +12,13 @@ const styles=({shadows,spacing,palette})=>({
         //     height: '920px',
         //     alignItems:'flex-end'
         // },
-        // chat:{
-        //     boxShadow: shadows[4],
-        //     background: '#FFFFF',
-        //     borderRadius:'10px',
-        // },
+        chat:{
+            background: '#FFFFF',
+            height:'780px',
+            display:'flex',
+            flexDirection:'column',
+            justifyContent:'space-between'
+        },
         chatHeader:{
             width:'100%',
             display:'flex',
@@ -24,17 +26,27 @@ const styles=({shadows,spacing,palette})=>({
             marginTop: spacing.unit * 2
         },
         chatHeaderTitle:{
+            fontFamily:'"Trade Gothic",Arial,sans-serif',
+            fontWeight: 600
         },
         chatBody:{
-            height:'780px'
+            overflow: 'auto',
+            backgroundPosition: 'center',
+            maxHeight:'750px',
+            flexWrap: 'nowrap',
+            '&::-webkit-scrollbar': {
+                display: 'none'
+            }
         },
         chatMessage:{
             position:'relative',
             fontSize:spacing.unit * 2,
             padding: spacing.unit * 2,
-            // backgroundColor:palette.primary.main,
             borderRadius:spacing.unit * 2,
-            width:'fit-content'
+            width:'fit-content',
+            marginBottom: spacing.unit,
+            color:'black',
+            backgroundColor:palette.secondary.main,
 
         },
         chatMessageReceiver:{
@@ -44,7 +56,13 @@ const styles=({shadows,spacing,palette})=>({
         },
         chatFooter:{
             width:'100%',
-            display: 'flex'
+            display: 'flex',
+            borderRadius: '30px',
+            border: 'none',
+            position: 'fixed',
+            left: 0,
+            bottom: 0,
+            margin: spacing.unit
         },
         textField:{
             width:'100%'
@@ -53,17 +71,24 @@ const styles=({shadows,spacing,palette})=>({
 )
 
 const Chat = ({ classes,...props})  => {
-    const {sendMessgaeFromUser} = props;
-    console.log({sendMessgaeFromUser});
-    console.log({props});
-    const userName='Vartika';
-    const [input, setInput] =useState('')
+    const {sendMessageFromUser,responseFromBot} = props;
+    const botResponseMessage=(responseFromBot[0] || {}).message
+    const userName = 'Vartika';
+    const [input, setInput] = useState('')
     const [messages, setMessages] = useState([]);
+    useEffect(() => {
+        if ((botResponseMessage || '').trim()) {
+            setMessages([...messages, Object.assign({}, responseFromBot[0])])
+
+        }
+    },[botResponseMessage])
+
+
     const messageAppend =() =>{
-        if(input){
+        if(input.trim()){
             setMessages([...messages,Object.assign({}, {user:'self', message:input})])
             setInput('')
-            sendMessgaeFromUser(input)
+            sendMessageFromUser(input)
         }
     }
     const onEnter =(event) =>{
@@ -74,20 +99,16 @@ const Chat = ({ classes,...props})  => {
     return <div className={classes.chatWrapper}>
         <div className={classes.chat}>
             <div className={classes.chatHeader}>
-                <Typography
-                    variant={'heading'}
-                    className={classes.chatHeaderTitle}
-                    color="primary"
-                >
+                <Typography variant="h5" gutterBottom color="primary" className={classes.chatHeaderTitle}>
                     Hi {userName}! How can I help you?
                 </Typography>
             </div>
             <div className={classes.chatBody}>
-                {messages.map(({message}) => <Typography component="p" color={'textPrimary'} variant={'body2'} className={classNames({
+                {messages.map(({message,user}) => <Typography component="p" color={'textPrimary'} variant={'body2'} className={classNames({
                         [classes.chatMessage]: true,
-                        [classes.chatMessageReceiver] :true
+                        [classes.chatMessageReceiver] : user !== 'bot'
                     })}>
-                        {message}
+                     {message}
                     </Typography>
                 )}
             </div>
