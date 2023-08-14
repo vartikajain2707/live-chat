@@ -1,18 +1,22 @@
 import { connect } from 'react-redux';
-import { sendMessageFromUser } from '../actions';
+import { sendMessageFromUser , loadingDots} from '../actions';
 import Chat from './Chat';
 import { bindActionCreators } from 'redux';
-import {getSendMessageFromUser} from '../selectors'
+import {getSendMessageFromUser, getLoadingDots} from '../selectors'
 
 const stateToProps = state => {
     const responseFromBot=getSendMessageFromUser(state) || [];
+    const responseLoadingDots = getLoadingDots(state) || false
+    console.log({responseLoadingDots})
     return {
-        responseFromBot
+        responseFromBot,
+        responseLoadingDots
     }
 };
 
 const dispatchToProps = dispatch => bindActionCreators({
-    sendMessageFromUser
+    sendMessageFromUser,
+    loadingDots
 }, dispatch);
 
 export default connect(stateToProps, dispatchToProps)(Chat);

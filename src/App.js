@@ -1,8 +1,8 @@
 import Chat from './Chat'
-
+import './App.css';
 function App() {
   return (
-    <div>
+    <div className='app__body'>
       <Chat />
     </div>
   );

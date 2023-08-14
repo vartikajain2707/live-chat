@@ -9,3 +9,5 @@ const createAction = type => Object.assign(
     { type }
 );
 export const sendMessageFromUser = createAction('SEND_MESSAGE_FROM_USER');
+
+export const loadingDots=createAction('LOADING_DOTS')
