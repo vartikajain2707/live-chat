@@ -241,7 +241,11 @@ const Chat = ({ classes,...props})  => {
                     >
                         <MenuItem onClick={handleClose}>Send Transcript</MenuItem>
                     </Menu>
-                    <CloseIcon className={classes.closeIcon} />
+                    <CloseIcon className={classes.closeIcon} onClick={() => {
+                        if (window && window.parent) {
+                            window.parent.postMessage({closeChatBot: true}, '*');
+                        }
+                    }} />
                 </div>
             </div>
             <div className={classes.chatBody}>
