@@ -9,7 +9,6 @@ const noop = type => () => {
 
 const reducer =(state ,{payload}) => ({
     ['LOADING_DOTS']: () => {
-        console.log({state,payload})
         return setLoadingDots(state, payload)
     }
 

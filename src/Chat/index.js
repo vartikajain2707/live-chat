@@ -5,9 +5,8 @@ import { bindActionCreators } from 'redux';
 import {getSendMessageFromUser, getLoadingDots} from '../selectors'
 
 const stateToProps = state => {
-    const responseFromBot=getSendMessageFromUser(state) || [];
+    const responseFromBot = getSendMessageFromUser(state) || {};
     const responseLoadingDots = getLoadingDots(state) || false
-    console.log({responseLoadingDots})
     return {
         responseFromBot,
         responseLoadingDots

@@ -14,7 +14,7 @@
                 bot.style.height = '600px';
                 bot.style.width = '350px';
                 botImg.style.display = 'none';
-            }            
+            }
         }
         body.addEventListener('click', (e) => {
             e.target.matches = e.target.matches || e.target.msMatchesSelector;
@@ -23,11 +23,9 @@
             };
         });
         window.addEventListener("message", ({data}) => {
-            console.log({data});
             if (data.closeChatBot) {
                 const bot = document.getElementById('cex-chatbot');
                 const botImg = document.getElementById('cex-bot-launcher-img');
-                console.log(bot, botImg);
                 bot.style.display = 'none';
                 botImg.style.display = 'block';
             }

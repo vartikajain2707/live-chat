@@ -1,4 +1,4 @@
-import React, {useState,useEffect} from 'react';
+import React, {useState, useEffect, useRef,useLayoutEffect} from 'react';
 import { withStyles, Typography, Button, InputAdornment, TextField, Avatar, MenuItem, Menu} from '@material-ui/core';
 import keycode from 'keycode';
 import classNames from 'classnames';
@@ -8,7 +8,17 @@ import SendIcon from '@material-ui/icons/Send';
 import cexFlagImage from '../assets/cexFlag.png'
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 import CloseIcon from '@material-ui/icons/Close';
+import {keyframes} from "styled-components";
 
+
+// const typewriter=keyframes`
+//      from{width: 0;}
+//      to{width: 24em;}
+// `
+// const blinkTextCursor =keyframes`
+//     from{border-right-color: rgba(255,255,255,.75);}
+//     to{border-right-color: transparent;}
+// `
 
 const styles=({spacing})=>({
         chat:{
@@ -22,7 +32,7 @@ const styles=({spacing})=>({
             display:'flex',
             padding: '12px',
             alignItems: 'center',
-            boxShadow:'1px 2px 3px #164689'
+            boxShadow:'1px 1px 2px #164689'
 
         },
             chatHeaderInfo: {
@@ -32,7 +42,7 @@ const styles=({spacing})=>({
         chatHeaderTitle:{
             // fontFamily:'"Trade Gothic",Arial,sans-serif',
             fontWeight: 600,
-            textShadow: '2px 2px #161C27',
+            // textShadow: '3px 0px 7px rgba(81,67,21,0.8), -3px 0px 7px rgba(81,67,21,0.8), 0px 4px 7px rgba(81,67,21,0.8)',
             font:'1.2em "Fira Sans", sans-serif',
             color:'#fff',
             letterSpacing: '1px',
@@ -58,18 +68,25 @@ const styles=({spacing})=>({
         chatMessage:{
             position:'relative',
             fontSize:spacing.unit * 1.5,
-            padding: spacing.unit * 1.5,
+            padding: '13px',
             borderRadius:spacing.unit * 2,
             width:'fit-content',
             marginBottom: spacing.unit * 0.5,
+            minHeight:'10px',
+            minWidth:'11px',
             color:'black',
-            backgroundColor: '#fff',
-            boxShadow: '1px 1px 2px lightGray'
+            backgroundColor: '#fff'
         },
-        loader:{
-            position:'relative',
-            marginBottom: spacing.unit * 0.5
-        },
+
+/* Animation */
+//     chatAnimation: {
+//     animation: '${typewriter} 4s steps(44) 1s 1 normal both, ${blinkTextCursor} 500ms steps(44) infinite normal'
+// },
+//
+//         loader:{
+//             position:'relative',
+//             marginBottom: spacing.unit * 0.5
+//         },
             chatName:{
             position: 'absolute',
             top: '-15px',
@@ -79,8 +96,8 @@ const styles=({spacing})=>({
         },
             chatTimestamp:{
             fontSize: 'xx-small',
-            position:'relative',
-            top:'28px',
+            position:'absolute',
+            top:'44px',
             color:'grey'
         },
         chatMessageReceiver:{
@@ -115,11 +132,22 @@ const styles=({spacing})=>({
             right: '-27px',
             top:'18px'
         },
+        optionButton:{
+                backgroundColor:'#1646A8',
+            color:'#fff',
+            marginRight:spacing.unit *2,
+            marginTop:spacing.unit *2,
+            padding: '3px',
+            fontSize: '11px'
+        },
+        optionsContainer:{
+                display:'flex'
+        },
         avatar:{
             backgroundColor:'#fff'
         },
         differentUserMessage:{
-            marginTop: spacing.unit * 3,
+            marginTop: spacing.unit * 4,
         },
         sameUserMessage:{
             borderRadius: spacing.unit * 2
@@ -147,11 +175,11 @@ const styles=({spacing})=>({
             color:'lightGray'
         },
         headerIcon:{
-            color:'#fff'
+            color:'#fff',
+            padding:0
         },
         closeIcon:{
-            color:'#fff',
-            marginLeft: '15px'
+            color:'#fff'
         },
         hideLoading:{
             display:'none'
@@ -161,7 +189,6 @@ const styles=({spacing})=>({
 
 const Chat = ({ classes,...props})  => {
     const {sendMessageFromUser,responseFromBot,responseLoadingDots} = props;
-    const botResponseMessage=(responseFromBot[0] || {}).message
     const [input, setInput] = useState('')
     // const [option, setOption] = useState('')
     const [messages, setMessages] = useState([]);
@@ -170,23 +197,21 @@ const Chat = ({ classes,...props})  => {
     const open=Boolean(anchorElement)
 
     useEffect(() => {
-        if ((botResponseMessage || '').trim()) {
-            setMessages([...messages, Object.assign({}, responseFromBot[0])])
-        }
-    },[botResponseMessage])
+        setMessages([...messages, Object.assign({}, responseFromBot)])
+    },[responseFromBot])
+
+    const chatBoxScroll = useRef(null);
+    useEffect(() => chatBoxScroll.current?.scrollIntoView({ behavior: "smooth" }), [messages]);
+
 
 
     const messageAppend =() =>{
+        console.log({input})
         if(input.trim()){
-            setMessages([...messages,Object.assign({}, {user: 'self', message: input})])
+            setMessages([...messages,Object.assign({}, {user: 'self', message: [input]})])
             setInput('')
             sendMessageFromUser(input)
         }
-        // if(option.trim()){
-        //     setMessages([...messages,Object.assign({}, {user: 'self', message: option})])
-        //     setOption('')
-        //     sendMessageFromUser(option)
-        // }
     }
     const onEnter =(event) =>{
         if(keycode(event) === 'enter'){
@@ -195,13 +220,38 @@ const Chat = ({ classes,...props})  => {
     }
 
     const handleClick =(event) =>{
-        console.log({value:event.target.value})
         setAnchorElement(event.currentTarget)
     }
 
     const handleClose = () => {
         setAnchorElement(null)
     }
+
+    const decode = (str) => {
+        let txt = document.createElement("textarea");
+        txt.innerHTML = str;
+        return txt.value;
+    }
+
+    const chatContent = ({isDifferentUser, isDiffUserFromBottom, user, idx, key}) => {
+        console.log({isDiffUserFromBottom})
+        return <div>{isDifferentUser && ((user === 'bot' || user === 'loading') ? <Avatar className={classes.messageAvatar}>
+                    <img src={cexFlagImage} className={classes.robotImage}/>
+                </Avatar> :
+                <Avatar className={classes.selfAvatar}>
+                    <PersonIcon/>
+                </Avatar>)}
+            {(isDifferentUser && user!== 'loading') && <span className={classes.chatName}>{user.toUpperCase()}</span>}
+            {/*<InlineLoader />*/}
+            {(responseLoadingDots !== false && user ==='loading' && idx === messageLength -1) ? <InlineLoader /> : <div dangerouslySetInnerHTML={{__html: decode(key)}}></div>
+            }
+            {isDiffUserFromBottom && <span
+                className={classes.chatTimestamp}>{new Date().toLocaleTimeString().substring(0, 5)}
+                                    </span>}
+        </div>
+
+    }
+
     return <div className={classes.chat}>
             <div className={classes.chatHeader}>
                 <Avatar className={classes.avatar}>
@@ -215,6 +265,7 @@ const Chat = ({ classes,...props})  => {
                 <div className={classes.chatHeaderSide}>
                     <Button
                         onClick={handleClick}
+                        size="small"
                         aria-controls={'customized-menu'}
                         aria-haspopup="true"
                         className={classes.headerIcon}>
@@ -249,34 +300,31 @@ const Chat = ({ classes,...props})  => {
                 </div>
             </div>
             <div className={classes.chatBody}>
-                {messages.map(({message,user},idx) => {
-                    const isDifferentUser = idx === 0 || user !== messages[idx-1].user
-                    const isDiffUserFromBottom = idx === messages.length -1 || user !== messages[idx+1].user
-
-                        return <div>
-                            {
-                                <Typography component="p" color={'textPrimary'} variant={'body2'}
+                {messages.map(({message,user,options},idx) => {
+                        return <div ref={chatBoxScroll}>
+                            {message && message.map( (key,subIdx) => {
+                                const isDifferentUser = (idx === 0 || user !== messages[idx-1].user) && subIdx === 0;
+                                const isDiffUserFromBottom = (idx === messages.length -1 || user !== messages[idx+1].user) && subIdx === message.length -1;
+                                return <Typography component="p" color={'textPrimary'} variant={'body2'}
                                             className={classNames({
                                                 [classes.chatMessage]: true,
                                                 [classes.chatMessageReceiver]: user === 'self',
                                                 [classes.chatMessageBot]: user === 'bot' || user === 'loading',
-                                                [classes.differentUserMessage]: (idx > 0 && user !== messages[idx - 1].user),
+                                                [classes.differentUserMessage]: (idx > 0 && user !== messages[idx - 1].user) && subIdx === 0,
                                                 [classes.sameUserMessage] : !isDifferentUser,
                                                 [classes.hideLoading] : (!responseLoadingDots || idx !== messageLength -1) && user ==='loading'
                                             })}>
-                                    {isDifferentUser && (user === 'bot' ? <Avatar className={classes.messageAvatar}>
-                                            <img src={cexFlagImage} className={classes.robotImage}/>
-                                        </Avatar> :
-                                        <Avatar className={classes.selfAvatar}>
-                                            <PersonIcon/>
-                                        </Avatar>)}
-                                    {isDifferentUser && <span className={classes.chatName}>{user.toUpperCase()}</span>}
-                                    {responseLoadingDots!== false && user ==='loading' && idx === messageLength -1 ? <InlineLoader /> : message}
-                                    {isDiffUserFromBottom && <span
-                                        className={classes.chatTimestamp}>{new Date().toLocaleTimeString().substring(0, 5)}
-                                    </span>}
+                                    {chatContent({isDifferentUser, isDiffUserFromBottom, user, idx, key})}
                                 </Typography>
+                                })
                             }
+                            <div className={classes.optionsContainer}>
+                                {options && options.length>0 && options.map((option) => <Button size="small" variant="contained" className={classes.optionButton}
+                                                                                                onClick={() =>{setMessages([...messages,Object.assign({}, {user: 'self', message: [option]})])
+                                                                                                    sendMessageFromUser(option)}}>{option}
+                                </Button>)}
+                            </div>
+
                             </div>
 
                     }

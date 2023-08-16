@@ -1,7 +1,8 @@
-import { takeLatest, put,takeEvery,call } from 'redux-saga/effects';
+import { takeLatest, put,call } from 'redux-saga/effects';
 import { sendMessageFromUser,loadingDots } from '../actions';
 import Debug from 'debug';
 import axios from 'axios';
+import {getSendMessageFromUser} from "../selectors";
 
 // function* createTodoSaga(action) {
 //     try {
@@ -28,21 +29,23 @@ export function* sendMessageFromUserSaga({payload}) {
     debug('called');
     try {
         yield put(loadingDots(true))
-        yield put(sendMessageFromUser.success([{user: 'loading', message: '.......'}]))
-        const input ={"botId": "D4ALYGLD6O",
-            "sessionId": "test1234",
+        yield put(sendMessageFromUser.success({user: 'loading', message: ['.......']}))
+        const input ={
+            "botId": "D4ALYGLD6O",
+            "sessionId": "test123",
             "localeId": "en_US",
-            "text": payload}
+            "text": payload,
+            "propertyId": "base"
+        }
 
         const response = yield call(axios.post, 'https://smjli6j817.execute-api.us-west-2.amazonaws.com/ayush/chatBotApi', JSON.stringify(input));
-
-
-        const edittedResponse=response?.data?.messages[0]?.content || 'Are you sure hardcoded?'
-        const finalRes=[{user: 'bot', message: edittedResponse}]
-
+        // console.log({data: response.data.message[0]})
+        console.log({response});
         // const response=[{user:'bot', message:'hello jii',options:['yes','no']}]
-        yield put(sendMessageFromUser.success(finalRes || []))
+        // const edittedResponse=response.data.messages[0].content || response.data.message[0] || 'Are you sure hardcoded?'
+        const finalRes={user: 'bot', message: response.data.messages, options: response.data.options};
 
+        yield put(sendMessageFromUser.success(finalRes))
         yield put(loadingDots(false))
     } catch (err) {
         debug(err);
