@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useRef,useLayoutEffect} from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import { withStyles, Typography, Button, InputAdornment, TextField, Avatar, MenuItem, Menu} from '@material-ui/core';
 import keycode from 'keycode';
 import classNames from 'classnames';
@@ -8,19 +8,10 @@ import SendIcon from '@material-ui/icons/Send';
 import cexFlagImage from '../assets/cexFlag.png'
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 import CloseIcon from '@material-ui/icons/Close';
-import {keyframes} from "styled-components";
 import {v4} from 'uuid';
 
 
 
-// const typewriter=keyframes`
-//      from{width: 0;}
-//      to{width: 24em;}
-// `
-// const blinkTextCursor =keyframes`
-//     from{border-right-color: rgba(255,255,255,.75);}
-//     to{border-right-color: transparent;}
-// `
 
 const styles=({spacing})=>({
         chat:{
@@ -99,11 +90,26 @@ const styles=({spacing})=>({
             left:'6px',
             color:'grey'
         },
+        chatNameReciever:{
+            right:'7px',
+            position: 'absolute',
+            top: '-15px',
+            fontWeight: '800',
+            fontSize: 'xx-small',
+            color:'grey'
+        },
             chatTimestamp:{
             fontSize: 'xx-small',
             position:'absolute',
             marginTop: '16px',
             left:'6px',
+            color:'grey'
+        },
+        chatTimestampReciever:{
+            fontSize: 'xx-small',
+            position:'absolute',
+            marginTop: '16px',
+            right:'7px',
             color:'grey'
         },
         chatMessageReceiver:{
@@ -197,7 +203,6 @@ const Chat = ({ classes,...props})  => {
     const {sendMessageFromUser,responseFromBot,responseLoadingDots} = props;
     const [input, setInput] = useState('')
     const [sessionId, setSessionId] =useState('')
-    // const [option, setOption] = useState('')
     const [messages, setMessages] = useState([]);
     const messageLength=messages.length
     const [anchorElement, setAnchorElement] = useState(null);
@@ -253,11 +258,16 @@ const Chat = ({ classes,...props})  => {
                 <Avatar className={classes.selfAvatar}>
                     <PersonIcon/>
                 </Avatar>)}
-            {(isDifferentUser && user !== 'loading') && <span className={classes.chatName}>{user.toUpperCase()}</span>}
+            {(isDifferentUser && user !== 'loading') && <span className={classNames({
+                [classes.chatName]: user === 'bot',
+                [classes.chatNameReciever]: user === 'self'})}>
+                {user.toUpperCase()}</span>}
             {(responseLoadingDots !== false && user ==='loading' && idx === messageLength -1) ? <InlineLoader /> : <div dangerouslySetInnerHTML={{__html: decode(key)}}></div>
             }
             {isDiffUserFromBottom && user !== 'loading' && <span
-                className={classes.chatTimestamp}>{new Date().toLocaleTimeString().substring(0, 5)}
+                className={classNames({
+                    [classes.chatTimestamp]: user === 'bot',
+                    [classes.chatTimestampReciever]: user === 'self'})}>{new Date().toLocaleTimeString().substring(0, 5)}
                                     </span>}
         </div>
 
@@ -312,7 +322,6 @@ const Chat = ({ classes,...props})  => {
             </div>
             <div className={classes.chatBody}>
                 {messages.map(({message,user,options},idx) => {
-                    console.log({user})
                         return <div ref={chatBoxScroll}>
                             {message && message.map( (key,subIdx) => {
                                 const isDifferentUser = (idx === 0 || user !== messages[idx-1].user) && subIdx === 0;
