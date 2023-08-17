@@ -28,13 +28,15 @@ const debug = Debug('hb:liveChat:sagas:sendMessageFromUser');
 export function* sendMessageFromUserSaga({payload}) {
     debug('called');
     try {
+        console.log({payload})
+        const {text,sessId} = payload
         yield put(loadingDots(true))
         yield put(sendMessageFromUser.success({user: 'loading', message: ['.......']}))
         const input ={
             "botId": "D4ALYGLD6O",
-            "sessionId": "test123",
+            "sessionId": sessId,
             "localeId": "en_US",
-            "text": payload,
+            "text": text,
             "propertyId": "base"
         }
 

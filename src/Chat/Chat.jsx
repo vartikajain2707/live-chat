@@ -9,6 +9,8 @@ import cexFlagImage from '../assets/cexFlag.png'
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 import CloseIcon from '@material-ui/icons/Close';
 import {keyframes} from "styled-components";
+import {v4} from 'uuid';
+
 
 
 // const typewriter=keyframes`
@@ -40,8 +42,8 @@ const styles=({spacing})=>({
             paddingLeft: '20px'
         },
         chatHeaderTitle:{
-            // fontFamily:'"Trade Gothic",Arial,sans-serif',
-            fontWeight: 600,
+            fontFamily:'-apple-system, BlinkMacSystemFont, sans-serif',
+            fontWeight: 700,
             // textShadow: '3px 0px 7px rgba(81,67,21,0.8), -3px 0px 7px rgba(81,67,21,0.8), 0px 4px 7px rgba(81,67,21,0.8)',
             font:'1.2em "Fira Sans", sans-serif',
             color:'#fff',
@@ -67,6 +69,8 @@ const styles=({spacing})=>({
         },
         chatMessage:{
             position:'relative',
+            fontFamily:"-apple-system, BlinkMacSystemFont, sans-serif",
+            fontWeight:400,
             fontSize:spacing.unit * 1.5,
             padding: '13px',
             borderRadius:spacing.unit * 2,
@@ -92,12 +96,14 @@ const styles=({spacing})=>({
             top: '-15px',
             fontWeight: '800',
             fontSize: 'xx-small',
+            left:'6px',
             color:'grey'
         },
             chatTimestamp:{
             fontSize: 'xx-small',
             position:'absolute',
-            top:'44px',
+            marginTop: '16px',
+            left:'6px',
             color:'grey'
         },
         chatMessageReceiver:{
@@ -133,16 +139,16 @@ const styles=({spacing})=>({
             top:'18px'
         },
         optionButton:{
-                backgroundColor:'#1646A8',
+            backgroundColor:'#1646A8',
             color:'#fff',
             marginRight:spacing.unit *2,
             marginTop:spacing.unit *2,
-            padding: '3px',
+            padding: '3%',
             fontSize: '11px'
         },
-        optionsContainer:{
-                display:'flex'
-        },
+        // optionsContainer:{
+        //         display:'flex'
+        // },
         avatar:{
             backgroundColor:'#fff'
         },
@@ -164,10 +170,10 @@ const styles=({spacing})=>({
             flex: '1',
             padding: '10px'
         },
-        message_body:{
-            display:'flex',
-            flexDirection:'column'
-        },
+        // message_body:{
+        //     display:'flex',
+        //     flexDirection:'column'
+        // },
         sendIcon:{
             color:'#1646A8'
         },
@@ -190,11 +196,18 @@ const styles=({spacing})=>({
 const Chat = ({ classes,...props})  => {
     const {sendMessageFromUser,responseFromBot,responseLoadingDots} = props;
     const [input, setInput] = useState('')
+    const [sessionId, setSessionId] =useState('')
     // const [option, setOption] = useState('')
     const [messages, setMessages] = useState([]);
     const messageLength=messages.length
     const [anchorElement, setAnchorElement] = useState(null);
     const open=Boolean(anchorElement)
+
+    useEffect(() =>{
+        const uuid=v4()
+        setSessionId(uuid)
+        sendMessageFromUser({text:'Hi', sessId:uuid})
+    }, [])
 
     useEffect(() => {
         setMessages([...messages, Object.assign({}, responseFromBot)])
@@ -210,7 +223,7 @@ const Chat = ({ classes,...props})  => {
         if(input.trim()){
             setMessages([...messages,Object.assign({}, {user: 'self', message: [input]})])
             setInput('')
-            sendMessageFromUser(input)
+            sendMessageFromUser({text:input, sessId:sessionId})
         }
     }
     const onEnter =(event) =>{
@@ -234,18 +247,16 @@ const Chat = ({ classes,...props})  => {
     }
 
     const chatContent = ({isDifferentUser, isDiffUserFromBottom, user, idx, key}) => {
-        console.log({isDiffUserFromBottom})
-        return <div>{isDifferentUser && ((user === 'bot' || user === 'loading') ? <Avatar className={classes.messageAvatar}>
+        return <div className={classes.chatContentContainer}>{isDifferentUser && ((user === 'bot' || user === 'loading') ? <Avatar className={classes.messageAvatar}>
                     <img src={cexFlagImage} className={classes.robotImage}/>
                 </Avatar> :
                 <Avatar className={classes.selfAvatar}>
                     <PersonIcon/>
                 </Avatar>)}
-            {(isDifferentUser && user!== 'loading') && <span className={classes.chatName}>{user.toUpperCase()}</span>}
-            {/*<InlineLoader />*/}
+            {(isDifferentUser && user !== 'loading') && <span className={classes.chatName}>{user.toUpperCase()}</span>}
             {(responseLoadingDots !== false && user ==='loading' && idx === messageLength -1) ? <InlineLoader /> : <div dangerouslySetInnerHTML={{__html: decode(key)}}></div>
             }
-            {isDiffUserFromBottom && <span
+            {isDiffUserFromBottom && user !== 'loading' && <span
                 className={classes.chatTimestamp}>{new Date().toLocaleTimeString().substring(0, 5)}
                                     </span>}
         </div>
@@ -301,6 +312,7 @@ const Chat = ({ classes,...props})  => {
             </div>
             <div className={classes.chatBody}>
                 {messages.map(({message,user,options},idx) => {
+                    console.log({user})
                         return <div ref={chatBoxScroll}>
                             {message && message.map( (key,subIdx) => {
                                 const isDifferentUser = (idx === 0 || user !== messages[idx-1].user) && subIdx === 0;
@@ -321,7 +333,10 @@ const Chat = ({ classes,...props})  => {
                             <div className={classes.optionsContainer}>
                                 {options && options.length>0 && options.map((option) => <Button size="small" variant="contained" className={classes.optionButton}
                                                                                                 onClick={() =>{setMessages([...messages,Object.assign({}, {user: 'self', message: [option]})])
-                                                                                                    sendMessageFromUser(option)}}>{option}
+                                                                                                    sendMessageFromUser({
+                                                                                                        text: option,
+                                                                                                        sessId: sessionId
+                                                                                                    })}}>{option}
                                 </Button>)}
                             </div>
 
