@@ -26,7 +26,7 @@ export function* sendMessageFromUserSaga({payload}) {
         // console.log({response});
         // const response=[{user:'bot', message:'hello jii',options:['yes','no']}]
         // const edittedResponse=response.data.messages[0].content || response.data.message[0] || 'Are you sure hardcoded?'
-        const finalRes={user: 'bot', message: response.data.messages, options: response.data.options};
+        const finalRes={user: 'bot', message: response.data.messages, options: response.data.options, timeStamp:new Date().toLocaleTimeString().substring(0, 5)};
 
         yield put(sendMessageFromUser.success(finalRes))
         yield put(loadingDots(false))
