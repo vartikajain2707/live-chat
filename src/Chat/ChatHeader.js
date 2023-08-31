@@ -46,7 +46,7 @@ const styles = () => ({
     }
 
 })
-const ChatHeader = ({classes}) => {
+const ChatHeader = ({classes, ...props}) => {
     const [anchorElement, setAnchorElement] = useState(null);
     const open = Boolean(anchorElement)
     const handleClick = (event) => {
@@ -54,6 +54,9 @@ const ChatHeader = ({classes}) => {
     }
 
     const handleClose = () => {
+        const {sendTranscript, messages, sessionId} = props
+        const filteredMessages = messages.filter(({user}) => user !== 'loading')
+        sendTranscript({sessId: sessionId, allMessages: filteredMessages})
         setAnchorElement(null)
     }
     return <div className={classes.chatHeader}>
