@@ -1,6 +1,5 @@
-import {setSendMessageFromUser} from '../selectors';
-
 import {fromJS} from 'immutable';
+import {setNextBatchOfMessages} from '../selectors';
 
 const initialState = fromJS({});
 
@@ -10,8 +9,7 @@ const noop = type => () => {
 
 
 const reducer = (state, {payload, type}) => ({
-    ['SEND_MESSAGE_FROM_USER_SUCCESS']: () => setSendMessageFromUser(state, payload)
-
+    ['SEND_SIGNAL_TO_SEND_MORE_MESS_SUCCESS']: () => setNextBatchOfMessages(state, payload)
 
 }[type] || noop(type))() || state
 

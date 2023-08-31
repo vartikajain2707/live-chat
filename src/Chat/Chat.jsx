@@ -18,21 +18,32 @@ const styles = () => ({
 )
 
 const Chat = ({classes, ...props}) => {
-    const {sendMessageFromUser, responseFromBot, responseLoadingDots} = props;
+    const {
+        sendMessageFromUser, responseFromBot, responseLoadingDots, sendSignalToSendMoreMess,
+        nextBatchOfMessages, clientUserName, sendTranscript
+    } = props;
     const [input, setInput] = useState('')
     const [sessionId, setSessionId] = useState('')
     const [messages, setMessages] = useState([]);
+    const [storedMessageStatus, setStoredMessageStatus] = useState(false)
+    console.log({messages})
+
+    useEffect(() => {
+        const filteredMessages = messages.filter(({user}) => user !== 'loading')
+        const finalSetMessages = nextBatchOfMessages.concat(filteredMessages)
+        console.log({finalSetMessages})
+        setMessages(finalSetMessages)
+    }, [nextBatchOfMessages])
 
     useEffect(() => {
         let allStoredMessages = localStorage.getItem('cachedMessages')
         let topMsg = []
         if (allStoredMessages) {
             topMsg = JSON.parse(allStoredMessages)
-            console.log({topMsg})
-            // setMessages(topMsg)
         }
-        if (messages.length > 0 && messages[messages.length - 1].user !== 'loading') {
+        if (messages.length > 0 && messages[messages.length - 1].user !== 'loading' && storedMessageStatus) {
             topMsg.push(messages[messages.length - 1])
+            setStoredMessageStatus(false)
         }
         if (topMsg.length > 10) {
             topMsg = topMsg.slice(-10)
@@ -42,51 +53,25 @@ const Chat = ({classes, ...props}) => {
 
     }, [messages])
 
-    // useEffect(() => {
-    // let uuid = localStorage.getItem('sessionId');
-    // if (!uuid) {
-    //     uuid = v4()
-    //     setSessionId(uuid)
-    //     localStorage.setItem('sessionId', uuid);
-    // }
-    // // const uuid = v4()
-    // sendMessageFromUser({text: 'Hi', sessId: uuid})
-    // runEffect()
-    // setInterval(() => )
-    // }, [])
 
     useEffect(() => {
-        // const runEffect = () => {
         let uuid = localStorage.getItem('sessionId');
-        // console.log({uuid})
-        // const lastMessageTimeStamp = ((messages || []).pop() || {}).timeStamp
-        // console.log({lastMessageTimeStamp})
-        // const currentDate = new Date()
-        // const currentTimeStamp = currentDate.setHours(currentDate.getHours() - 1).toLocaleString().substring(0, 5)
-        // const currentTimeStamp = currentDate.setTime(currentDate.getTime() - 60 * 1000).toLocaleString().substring(0, 5)
 
         if (!uuid) {   //newChat Condition
-            console.log('inside uuid')
             uuid = v4()
             localStorage.setItem('sessionId', uuid);
             sendMessageFromUser({text: 'Hi', sessId: uuid})
+        } else {
+            const localStorageMessages = JSON.parse(localStorage.getItem('cachedMessages'));
+            setMessages([...localStorageMessages])
         }
         setSessionId(uuid);
-        const localStorageMessages = JSON.parse(localStorage.getItem('cachedMessages'));
-        console.log({localStorageMessages})
-        setMessages(localStorageMessages)
-        // }
-
-        // runEffect()
-        // const interval = setInterval(() => {
-        //     runEffect()
-        // }, 600000);
-        // return () => clearInterval(interval); // This represents the unmount function, in which you need to clear your interval to prevent memory leaks.
     }, [])
 
     useEffect(() => {
         if (Object.keys(responseFromBot).length > 0) {
             setMessages([...messages, Object.assign({}, responseFromBot)])
+            setStoredMessageStatus(true)
         }
 
     }, [responseFromBot])
@@ -95,10 +80,11 @@ const Chat = ({classes, ...props}) => {
     const messageAppend = () => {
         if (input.trim().length > 0) {
             setMessages([...messages, Object.assign({}, {
-                user: 'self',
+                user: (clientUserName || 'self'),
                 message: [input],
                 timeStamp: new Date().toLocaleTimeString().substring(0, 5)
             })])
+            setStoredMessageStatus(true)
             setInput('')
             sendMessageFromUser({text: input, sessId: sessionId})
 
@@ -112,9 +98,12 @@ const Chat = ({classes, ...props}) => {
 
 
     return <div className={classes.chat}>
-        <ChatHeader/>
-        <ChatBody messages={messages} setMessages={setMessages} responseLoadingDots={responseLoadingDots}
-                  sendMessageFromUser={sendMessageFromUser} sessionId={sessionId}/>
+        <ChatHeader sendTranscript={sendTranscript} messages={messages} sessionId={sessionId}/>
+        <ChatBody messages={messages} setMessages={setMessages} setStoredMessageStatus={setStoredMessageStatus}
+                  responseLoadingDots={responseLoadingDots}
+                  sendMessageFromUser={sendMessageFromUser} sessionId={sessionId}
+                  sendSignalToSendMoreMess={sendSignalToSendMoreMess} clientUserName={clientUserName}
+        />
         <ChatFooter onEnter={onEnter} input={input} setInput={setInput} messageAppend={messageAppend}/>
     </div>
 
