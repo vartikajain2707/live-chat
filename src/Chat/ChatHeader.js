@@ -4,7 +4,6 @@ import cexFlagImage from "../assets/cexFlag.png";
 import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
 import CloseIcon from "@material-ui/icons/Close";
 
-
 const styles = () => ({
     chatHeader: {
         backgroundColor: '#1646A8',
@@ -47,6 +46,7 @@ const styles = () => ({
 
 })
 const ChatHeader = ({classes, ...props}) => {
+    const {closeClickedOnce, showFeedbackOnClickCross, enableScroll} = props
     const [anchorElement, setAnchorElement] = useState(null);
     const open = Boolean(anchorElement)
     const handleClick = (event) => {
@@ -99,8 +99,15 @@ const ChatHeader = ({classes, ...props}) => {
                 <MenuItem onClick={handleClose}>Send Transcript</MenuItem>
             </Menu>
             <CloseIcon className={classes.closeIcon} onClick={() => {
-                if (window && window.parent) {
-                    window.parent.postMessage({closeChatBot: true}, 'https://live-chat-test-html.s3.us-west-2.amazonaws.com');
+
+                if (!showFeedbackOnClickCross) {
+                    enableScroll(true)
+                    closeClickedOnce(true)
+                } else {
+                    if (window && window.parent) {
+                        window.parent.postMessage({closeChatBot: true}, '*');
+
+                    }
                 }
             }}/>
         </div>

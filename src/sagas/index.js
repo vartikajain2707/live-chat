@@ -1,10 +1,14 @@
 import {fork, all} from 'redux-saga/effects';
 import sendMessageFromUser from './sendMessageFromUser';
 import sendSignalToSendMoreMess from './sendSignalToSendMoreMess';
+import sendTranscript from "./sendTranscript";
+import submitFeedback from './submitFeedback'
 
 const sagas = {
     sendMessageFromUser,
-    sendSignalToSendMoreMess
+    sendSignalToSendMoreMess,
+    sendTranscript,
+    submitFeedback
 }
 
 export default function* root() {
