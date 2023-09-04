@@ -16,10 +16,47 @@ export const getLoadingDots = createSelector(
     loadingStatus => loadingStatus
 );
 
+export const setScroll = (state, payload) => state.setIn(['scrollStatus'], fromJS(payload))
+export const getScroll = createSelector(
+    state => fromJS(state).getIn(['enableScroll', 'scrollStatus']),
+    scrollStatus => scrollStatus
+);
+export const setStoreSessionId = (state, payload) => state.setIn(['setStoreSessionId'], fromJS(payload))
+export const getStoreSessionId = createSelector(
+    state => fromJS(state).getIn(['storeSessionId', 'setStoreSessionId']),
+    storeSessionId => storeSessionId
+);
+
+
+// export const setFetchLoader = (state, payload) => state.setIn(['fetchLoaderStatus'], fromJS(payload))
+// export const getFetchLoader = createSelector(
+//     state => {
+//         return fromJS(state).getIn(['fetchLoader', 'fetchLoaderStatus'])
+//     },
+//     fetchLoaderStatus => fetchLoaderStatus
+// );
+
+export const setCloseClick = (state, payload) => state.setIn(['closeClickedOnce'], fromJS(payload))
+export const getCloseClick = createSelector(
+    state => fromJS(state).getIn(['closeClickedOnce', 'closeClickedOnce']),
+    onCloseClick => onCloseClick
+);
+export const setAfterFeedbackResult = (state, payload) => state.setIn(['setAfterFeedbackResult'], fromJS(payload))
+export const getAfterFeedbackResult = createSelector(
+    state => {
+        // console.log({state})
+        return fromJS(state).getIn(['afterFeedbackBotResponse', 'setAfterFeedbackResult'])
+    },
+    feedbackResult => (feedbackResult ? feedbackResult.toJS() : {})
+);
+
 export const setClientUserName = (state, payload) => state.setIn(['clientName'], fromJS(payload))
 export const getClientUserName = createSelector(
-    state => fromJS(state).getIn(['clientUserName', 'clientName']),
-    clientName => 'vartika'
+    state => {
+        // console.log({state})
+        return fromJS(state).getIn(['clientUserName', 'clientName'])
+    },
+    clientName => clientName
 );
 
 

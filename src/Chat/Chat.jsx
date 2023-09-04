@@ -5,6 +5,7 @@ import {v4} from 'uuid';
 import ChatHeader from '../Chat/ChatHeader'
 import ChatBody from '../Chat/ChatBody'
 import ChatFooter from '../Chat/ChatFooter'
+import moment from "moment";
 
 
 const styles = () => ({
@@ -20,18 +21,19 @@ const styles = () => ({
 const Chat = ({classes, ...props}) => {
     const {
         sendMessageFromUser, responseFromBot, responseLoadingDots, sendSignalToSendMoreMess,
-        nextBatchOfMessages, clientUserName, sendTranscript
+        nextBatchOfMessages, clientUserName, sendTranscript, closeClickedOnce, showFeedbackOnClickCross,
+        afterFeedbackResult, storeSessionId, enableScroll, activeScroll
     } = props;
     const [input, setInput] = useState('')
     const [sessionId, setSessionId] = useState('')
     const [messages, setMessages] = useState([]);
     const [storedMessageStatus, setStoredMessageStatus] = useState(false)
-    console.log({messages})
+    const [currentBatchMess, setCurrentBatchMess] = useState([])
+
 
     useEffect(() => {
         const filteredMessages = messages.filter(({user}) => user !== 'loading')
         const finalSetMessages = nextBatchOfMessages.concat(filteredMessages)
-        console.log({finalSetMessages})
         setMessages(finalSetMessages)
     }, [nextBatchOfMessages])
 
@@ -49,8 +51,7 @@ const Chat = ({classes, ...props}) => {
             topMsg = topMsg.slice(-10)
         }
         const cachedMessages = JSON.stringify(topMsg)
-        localStorage.setItem('cachedMessages', cachedMessages)
-
+        localStorage.setItem('cachedMessages', cachedMessages);
     }, [messages])
 
 
@@ -60,11 +61,12 @@ const Chat = ({classes, ...props}) => {
         if (!uuid) {   //newChat Condition
             uuid = v4()
             localStorage.setItem('sessionId', uuid);
-            sendMessageFromUser({text: 'Hi', sessId: uuid})
+            sendMessageFromUser({text: 'Hi', sessId: uuid, timeStamp: moment().unix()})
         } else {
             const localStorageMessages = JSON.parse(localStorage.getItem('cachedMessages'));
             setMessages([...localStorageMessages])
         }
+        storeSessionId(uuid)
         setSessionId(uuid);
     }, [])
 
@@ -76,17 +78,25 @@ const Chat = ({classes, ...props}) => {
 
     }, [responseFromBot])
 
+    useEffect(() => {
+        if (Object.keys(afterFeedbackResult).length > 0) {
+            setMessages([...messages, Object.assign({}, afterFeedbackResult)])
+        }
+
+    }, [afterFeedbackResult])
+
 
     const messageAppend = () => {
         if (input.trim().length > 0) {
             setMessages([...messages, Object.assign({}, {
                 user: (clientUserName || 'self'),
                 message: [input],
-                timeStamp: new Date().toLocaleTimeString().substring(0, 5)
+                timeStamp: moment().unix()
             })])
             setStoredMessageStatus(true)
             setInput('')
-            sendMessageFromUser({text: input, sessId: sessionId})
+            sendMessageFromUser({text: input, sessId: sessionId, timeStamp: moment().unix()})
+            enableScroll(true)
 
         }
     }
@@ -98,13 +108,22 @@ const Chat = ({classes, ...props}) => {
 
 
     return <div className={classes.chat}>
-        <ChatHeader sendTranscript={sendTranscript} messages={messages} sessionId={sessionId}/>
+        <ChatHeader sendTranscript={sendTranscript} messages={messages} sessionId={sessionId}
+                    closeClickedOnce={closeClickedOnce} showFeedbackOnClickCross={showFeedbackOnClickCross}
+                    enableScroll={enableScroll}/>
         <ChatBody messages={messages} setMessages={setMessages} setStoredMessageStatus={setStoredMessageStatus}
                   responseLoadingDots={responseLoadingDots}
                   sendMessageFromUser={sendMessageFromUser} sessionId={sessionId}
                   sendSignalToSendMoreMess={sendSignalToSendMoreMess} clientUserName={clientUserName}
+                  showFeedbackOnClickCross={showFeedbackOnClickCross}
+                  currentBatchMess={currentBatchMess} setCurrentBatchMess={setCurrentBatchMess}
+                  nextBatchOfMessages={nextBatchOfMessages}
+                  enableScroll={enableScroll}
+                  activeScroll={activeScroll}
+            // chatBoxScroll={chatBoxScroll}
         />
-        <ChatFooter onEnter={onEnter} input={input} setInput={setInput} messageAppend={messageAppend}/>
+        <ChatFooter onEnter={onEnter} input={input} setInput={setInput} messageAppend={messageAppend}
+                    afterFeedbackResult={afterFeedbackResult}/>
     </div>
 
 }
