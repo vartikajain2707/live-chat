@@ -1,5 +1,5 @@
+import {setScroll} from '../selectors';
 import {fromJS} from 'immutable';
-import {setClientUserName} from '../selectors';
 
 const initialState = fromJS({});
 
@@ -9,10 +9,8 @@ const noop = type => () => {
 
 
 const reducer = (state, {payload, type}) => ({
-    ['CLIENT_USER_NAME']: () => {
-        // console.log({payload})
-        return setClientUserName(state, payload)
-    }
+    ['ENABLE_SCROLL']: () => setScroll(state, payload)
+
 
 }[type] || noop(type))() || state
 

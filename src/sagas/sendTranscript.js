@@ -9,7 +9,7 @@ const debug = Debug('hb:liveChat:sagas:sendTranscriptSaga');
 export function* sendTranscriptSaga({payload}) {
     debug('called');
     try {
-        console.log({payload})
+        // console.log({payload})
         const {allMessages, sessId} = payload
         const input = {
             "botId": "D4ALYGLD6O",

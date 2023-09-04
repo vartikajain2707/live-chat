@@ -13,6 +13,8 @@ export function* sendSignalToSendMoreMessSaga({payload}) {
         const {sessId, ...rest} = payload
         const clientName = yield select(getClientUserName)
         const {fetchMessageCount, currentMessagesCount} = rest
+        // yield put(fetchLoader(true))
+
         const input = {
             "botId": "D4ALYGLD6O",
             "sessionId": sessId,
@@ -30,8 +32,10 @@ export function* sendSignalToSendMoreMessSaga({payload}) {
             }
             return item
         })
-        console.log({response})
+        // console.log({response})
         yield put(sendSignalToSendMoreMess.success(finalResponse))
+        // yield put(fetchLoader(false))
+
 
     } catch (err) {
         debug(err);

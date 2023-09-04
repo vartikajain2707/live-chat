@@ -1,5 +1,5 @@
 import {fromJS} from 'immutable';
-import {setClientUserName} from '../selectors';
+import {setAfterFeedbackResult} from "../selectors";
 
 const initialState = fromJS({});
 
@@ -9,10 +9,8 @@ const noop = type => () => {
 
 
 const reducer = (state, {payload, type}) => ({
-    ['CLIENT_USER_NAME']: () => {
-        // console.log({payload})
-        return setClientUserName(state, payload)
-    }
+    ['SUBMIT_FEEDBACK_SUCCESS']: () => setAfterFeedbackResult(state, payload)
+
 
 }[type] || noop(type))() || state
 

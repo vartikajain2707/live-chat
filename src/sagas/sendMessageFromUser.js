@@ -2,6 +2,7 @@ import {takeLatest, put, call} from 'redux-saga/effects';
 import {sendMessageFromUser, loadingDots, clientUserName} from '../actions';
 import Debug from 'debug';
 import axios from 'axios';
+import moment from "moment"
 
 
 const debug = Debug('hb:liveChat:sagas:sendMessageFromUser');
@@ -9,8 +10,8 @@ const debug = Debug('hb:liveChat:sagas:sendMessageFromUser');
 export function* sendMessageFromUserSaga({payload}) {
     debug('called');
     try {
-        console.log('inside sendMessFromuser saga')
-        const {text, sessId} = payload
+        // console.log('inside sendMessFromuser saga')
+        const {text, sessId, timeStamp} = payload
         yield put(loadingDots(true))
         yield put(sendMessageFromUser.success({user: 'loading', message: ['.......']}))
         const input = {
@@ -18,11 +19,12 @@ export function* sendMessageFromUserSaga({payload}) {
             "sessionId": sessId,
             "localeId": "en_US",
             "text": text,
-            "siteId": "base"
+            "siteId": "base",
+            "timeStamp": timeStamp
         }
-        console.log({input})
+        // console.log({input})
         const response = yield call(axios.post, 'https://smjli6j817.execute-api.us-west-2.amazonaws.com/ayush/chatBotApi', JSON.stringify(input));
-        console.log({response})
+        // console.log({response})
         const intent = response.data.sessionState.intent.name
         let customerAsUser = 'self'
         if (intent === 'Welcome') {
@@ -37,10 +39,10 @@ export function* sendMessageFromUserSaga({payload}) {
             user: 'bot',
             message: response.data.messages,
             options: response.data.options,
-            timeStamp: new Date().toLocaleTimeString().substring(0, 5),
+            timeStamp: moment().unix(),
             customerAsUser: customerAsUser || 'self'
         };
-        console.log({finalRes})
+        // console.log({finalRes})
         yield put(sendMessageFromUser.success(finalRes))
         yield put(loadingDots(false))
     } catch (err) {

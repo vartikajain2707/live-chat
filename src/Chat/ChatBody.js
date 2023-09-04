@@ -4,7 +4,8 @@ import classNames from 'classnames';
 import PersonIcon from '@material-ui/icons/Person';
 import cexFlagImage from '../assets/cexFlag.png'
 import InlineLoader from '../components/InlineLoader'
-// import Feedback from '../Chat/feedback'
+import Feedback from '../Chat/feedback'
+import moment from 'moment-timezone/builds/moment-timezone-with-data-10-year-range';
 
 
 const styles = ({spacing}) => ({
@@ -13,7 +14,6 @@ const styles = ({spacing}) => ({
         '&::-webkit-scrollbar': {
             display: 'none'
         },
-        // padding: '32px',
         height: '90vh',
         padding: '20px 36px 32px 36px'
     },
@@ -131,26 +131,30 @@ const decode = (str) => {
 const ChatBody = ({classes, ...props}) => {
     const {
         messages, setMessages, responseLoadingDots, sendMessageFromUser, sessionId, setStoredMessageStatus,
-        sendSignalToSendMoreMess, clientUserName
+        sendSignalToSendMoreMess, clientUserName, showFeedbackOnClickCross,
+        activeScroll, enableScroll
     } = props
-    const [loadMoreMsgClicked, setLoadMoreMsgClicked] = useState(false)
+    // const [loadMoreMsgClicked, setLoadMoreMsgClicked] = useState(false)
+    const [showFeedback, setShowFeedback] = useState(true)
     const messageLength = messages.length
     const chatBoxScroll = useRef(null);
     const userBotMessagesOnly = messages.filter(({user}) => user !== 'loading')
     const userBotMessageOnlyLength = userBotMessagesOnly.length
     useEffect(() => {
-        if (!loadMoreMsgClicked) {
-            setLoadMoreMsgClicked(false)
-            return chatBoxScroll.current?.scrollIntoView({behavior: "smooth"})
+        console.log({activeScroll})
+        if (activeScroll) {
+            console.log({crr: chatBoxScroll.current})
+            chatBoxScroll.current?.scrollIntoView({behavior: "smooth", block: "end"})
+
         }
     }, [messages]);
 
-
+    const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
     return <div className={classes.chatBody}>
-        {userBotMessageOnlyLength > 10 &&
+        {userBotMessageOnlyLength > 9 &&
             <Button size={'small'}
                     onClick={() => {
-                        setLoadMoreMsgClicked(true)
+                        enableScroll(false)
                         return sendSignalToSendMoreMess({
                             sessId: sessionId,
                             fetchMessageCount: 10,
@@ -162,6 +166,7 @@ const ChatBody = ({classes, ...props}) => {
         }
         {messages.map(({message, user, options, timeStamp}, idx) => {
                 console.log({message})
+                const formattedTime = moment.unix(timeStamp).tz(timezone).format('hh:mm A')
                 return <div ref={chatBoxScroll}>
                     {message && message.map((key, subIdx) => {
                         const isDifferentUser = (idx === 0 || user !== messages[idx - 1].user) && subIdx === 0;
@@ -195,7 +200,7 @@ const ChatBody = ({classes, ...props}) => {
                                     className={classNames({
                                         [classes.chatTimestamp]: user === 'bot',
                                         [classes.chatTimestampReciever]: user === (clientUserName || 'self')
-                                    })}>{timeStamp}
+                                    })}>{formattedTime}
                                     </span>}
                             </div>
                         </Typography>
@@ -207,12 +212,14 @@ const ChatBody = ({classes, ...props}) => {
                                     onClick={() => {
                                         setMessages([...messages, Object.assign({}, {
                                             user: (clientUserName || 'self'),
+                                            timeStamp: moment().unix(),
                                             message: [option]
                                         })])
                                         setStoredMessageStatus(true)
                                         sendMessageFromUser({
                                             text: option,
-                                            sessId: sessionId
+                                            sessId: sessionId,
+                                            timeStamp: moment().unix()
                                         })
                                     }}>{option}
                             </Button>)}
@@ -222,7 +229,8 @@ const ChatBody = ({classes, ...props}) => {
 
             }
         )}
-        {/*<Feedback/>*/}
+        {(showFeedbackOnClickCross === true && showFeedback) &&
+            <Feedback setShowFeedback={setShowFeedback}> </Feedback>}
     </div>
 }
 
