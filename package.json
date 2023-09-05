@@ -45,7 +45,14 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "clean:terraform-cache": "cd ./terraform; rm -rf .terraform/ .terraform.lock.hcl terraform.tfstate terraform.tfstate.backup;",
+    "build:dipankar": "NODE_ENV=dipankar react-scripts build;",
+    "deploy:dipankar": "npm run build:dipankar; npm run clean:terraform-cache; cd ./terraform;  terraform init -backend-config \"key=cityexperiences-bot/dipankar.tfstate\" -backend-config \"bucket=hb-commerce-api-dev-tf-state\"; terraform apply -auto-approve -var 'ENV=dipankar';",
+    "build:test": "NODE_ENV=test react-scripts build;",
+    "deploy:test": "npm run build:test; npm run clean:terraform-cache; cd ./terraform;  terraform init -backend-config \"key=cityexperiences-bot/test.tfstate\" -backend-config \"bucket=hb-commerce-api-dev-tf-state\"; terraform apply -auto-approve -var 'ENV=test';",
+    "build:prod": "NODE_ENV=prod react-scripts build;",
+    "deploy:prod": "npm run build:prod; npm run clean:terraform-cache; cd ./terraform;  terraform init -backend-config \"key=cityexperiences-bot/prod.tfstate\" -backend-config \"bucket=hornblower-terraform-state-files\" -backend-config \"profile=prodv3\"; terraform apply -auto-approve -var 'ENV=prod';"
   },
   "eslintConfig": {
     "extends": [
