@@ -13,14 +13,17 @@ import {
     getClientUserName,
     getCloseClick,
     getAfterFeedbackResult,
-    getScroll
+    getScroll,
+    getFetchLoader
 } from '../selectors'
 
 const stateToProps = state => {
     const responseFromBot = getSendMessageFromUser(state) || {};
     const responseLoadingDots = getLoadingDots(state) || false
+    const responseFetchLoadingDots = getFetchLoader(state) || false
+    // console.log({responseFetchLoadingDots})
     const activeScroll = getScroll(state) || false
-    const clientUserName = getClientUserName(state) || 'self';
+    const usersName = getClientUserName(state) || 'self';
     const showFeedbackOnClickCross = getCloseClick(state) || false;
     const afterFeedbackResult = (getAfterFeedbackResult(state) || {})
     const nextBatchOfMessages = (getNextBatchOfMessages(state) || List()).toJS() || []
@@ -29,9 +32,10 @@ const stateToProps = state => {
         activeScroll,
         responseLoadingDots,
         nextBatchOfMessages,
-        clientUserName,
+        usersName,
         showFeedbackOnClickCross,
-        afterFeedbackResult
+        afterFeedbackResult,
+        responseFetchLoadingDots
     }
 };
 

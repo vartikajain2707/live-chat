@@ -27,7 +27,6 @@ const styles = () => ({
     chatHeaderTitle: {
         fontFamily: '-apple-system, BlinkMacSystemFont, sans-serif',
         fontWeight: 700,
-        // textShadow: '3px 0px 7px rgba(81,67,21,0.8), -3px 0px 7px rgba(81,67,21,0.8), 0px 4px 7px rgba(81,67,21,0.8)',
         font: '1.2em "Fira Sans", sans-serif',
         color: '#fff',
         letterSpacing: '1px',

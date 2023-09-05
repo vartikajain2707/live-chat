@@ -8,7 +8,7 @@ import afterFeedbackBotResponse from "./afterFeedbackBotResponse";
 import storeSessionId from "./storeSessionId";
 import {reducer} from 'redux-form';
 import enableScroll from './enableScroll'
-// import fetchLoader from "./fetchLoader"
+import fetchLoader from "./fetchLoader"
 
 const rootReducer = combineReducers({
     botResponse: botResponse,
@@ -19,8 +19,8 @@ const rootReducer = combineReducers({
     afterFeedbackBotResponse: afterFeedbackBotResponse,
     storeSessionId: storeSessionId,
     enableScroll: enableScroll,
-    form: reducer
-    // fetchLoader: fetchLoader
+    form: reducer,
+    fetchLoader: fetchLoader
 });
 
 export default rootReducer;
