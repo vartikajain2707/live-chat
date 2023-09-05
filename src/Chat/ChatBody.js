@@ -4,7 +4,8 @@ import classNames from 'classnames';
 import PersonIcon from '@material-ui/icons/Person';
 import cexFlagImage from '../assets/cexFlag.png'
 import InlineLoader from '../components/InlineLoader'
-import Feedback from '../Chat/feedback'
+import Feedback from '../Chat/feedback';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import moment from 'moment-timezone/builds/moment-timezone-with-data-10-year-range';
 
 
@@ -119,6 +120,10 @@ const styles = ({spacing}) => ({
             backgroundColor: 'transparent',
             fontWeight: 'bold'
         }
+    },
+    fetchLoader: {
+        position: 'absolute',
+        left: '0px'
     }
 })
 
@@ -131,21 +136,17 @@ const decode = (str) => {
 const ChatBody = ({classes, ...props}) => {
     const {
         messages, setMessages, responseLoadingDots, sendMessageFromUser, sessionId, setStoredMessageStatus,
-        sendSignalToSendMoreMess, clientUserName, showFeedbackOnClickCross,
+        sendSignalToSendMoreMess, usersName, showFeedbackOnClickCross, responseFetchLoadingDots,
         activeScroll, enableScroll
     } = props
-    // const [loadMoreMsgClicked, setLoadMoreMsgClicked] = useState(false)
     const [showFeedback, setShowFeedback] = useState(true)
     const messageLength = messages.length
     const chatBoxScroll = useRef(null);
     const userBotMessagesOnly = messages.filter(({user}) => user !== 'loading')
     const userBotMessageOnlyLength = userBotMessagesOnly.length
     useEffect(() => {
-        console.log({activeScroll})
         if (activeScroll) {
-            console.log({crr: chatBoxScroll.current})
-            chatBoxScroll.current?.scrollIntoView({behavior: "smooth", block: "end"})
-
+            chatBoxScroll.current?.scrollIntoView({behavior: "smooth"})
         }
     }, [messages]);
 
@@ -162,19 +163,21 @@ const ChatBody = ({classes, ...props}) => {
                         })
                     }}
                     className={classes.loadMoreBtn}
-            >Load More Messages</Button>
+            >
+                {responseFetchLoadingDots ? <CircularProgress size={'1rem'}/> : `Load More Messages`}
+            </Button>
         }
+
         {messages.map(({message, user, options, timeStamp}, idx) => {
-                console.log({message})
                 const formattedTime = moment.unix(timeStamp).tz(timezone).format('hh:mm A')
-                return <div ref={chatBoxScroll}>
+                return <div id={idx} ref={chatBoxScroll}>
                     {message && message.map((key, subIdx) => {
                         const isDifferentUser = (idx === 0 || user !== messages[idx - 1].user) && subIdx === 0;
                         const isDiffUserFromBottom = (idx === messages.length - 1 || user !== messages[idx + 1].user) && subIdx === message.length - 1;
                         return <Typography component="p" color={'textPrimary'} variant={'body2'}
                                            className={classNames({
                                                [classes.chatMessage]: true,
-                                               [classes.chatMessageReceiver]: user === (clientUserName || 'self'),
+                                               [classes.chatMessageReceiver]: user !== 'bot' && user !== 'loading',
                                                [classes.chatMessageBot]: user === 'bot' || user === 'loading',
                                                [classes.differentUserMessage]: (idx > 0 && user !== messages[idx - 1].user) && subIdx === 0,
                                                [classes.sameUserMessage]: !isDifferentUser,
@@ -190,7 +193,7 @@ const ChatBody = ({classes, ...props}) => {
                                 </Avatar>)}
                                 {(isDifferentUser && user !== 'loading') && <span className={classNames({
                                     [classes.chatName]: user === 'bot',
-                                    [classes.chatNameReciever]: user === (clientUserName || 'self')
+                                    [classes.chatNameReciever]: user !== 'bot' && user !== 'loading'
                                 })}>
                 {user.toUpperCase()}</span>}
                                 {(responseLoadingDots !== false && user === 'loading' && idx === messageLength - 1) ?
@@ -199,7 +202,7 @@ const ChatBody = ({classes, ...props}) => {
                                 {isDiffUserFromBottom && user !== 'loading' && <span
                                     className={classNames({
                                         [classes.chatTimestamp]: user === 'bot',
-                                        [classes.chatTimestampReciever]: user === (clientUserName || 'self')
+                                        [classes.chatTimestampReciever]: user !== 'bot' && user !== 'loading'
                                     })}>{formattedTime}
                                     </span>}
                             </div>
@@ -211,7 +214,7 @@ const ChatBody = ({classes, ...props}) => {
                             <Button size="small" variant="contained" className={classes.optionButton}
                                     onClick={() => {
                                         setMessages([...messages, Object.assign({}, {
-                                            user: (clientUserName || 'self'),
+                                            user: (usersName || 'self'),
                                             timeStamp: moment().unix(),
                                             message: [option]
                                         })])

@@ -1,5 +1,5 @@
 import {takeLatest, put, call, select} from 'redux-saga/effects';
-import {sendSignalToSendMoreMess} from '../actions';
+import {sendSignalToSendMoreMess, fetchLoader} from '../actions';
 import Debug from 'debug';
 import axios from "axios";
 import {getClientUserName} from "../selectors";
@@ -13,7 +13,7 @@ export function* sendSignalToSendMoreMessSaga({payload}) {
         const {sessId, ...rest} = payload
         const clientName = yield select(getClientUserName)
         const {fetchMessageCount, currentMessagesCount} = rest
-        // yield put(fetchLoader(true))
+        yield put(fetchLoader(true))
 
         const input = {
             "botId": "D4ALYGLD6O",
@@ -34,7 +34,7 @@ export function* sendSignalToSendMoreMessSaga({payload}) {
         })
         // console.log({response})
         yield put(sendSignalToSendMoreMess.success(finalResponse))
-        // yield put(fetchLoader(false))
+        yield put(fetchLoader(false))
 
 
     } catch (err) {

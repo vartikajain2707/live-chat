@@ -21,20 +21,23 @@ const styles = () => ({
 const Chat = ({classes, ...props}) => {
     const {
         sendMessageFromUser, responseFromBot, responseLoadingDots, sendSignalToSendMoreMess,
-        nextBatchOfMessages, clientUserName, sendTranscript, closeClickedOnce, showFeedbackOnClickCross,
-        afterFeedbackResult, storeSessionId, enableScroll, activeScroll
+        nextBatchOfMessages, usersName, sendTranscript, closeClickedOnce, showFeedbackOnClickCross,
+        afterFeedbackResult, storeSessionId, enableScroll, activeScroll, responseFetchLoadingDots
     } = props;
     const [input, setInput] = useState('')
     const [sessionId, setSessionId] = useState('')
     const [messages, setMessages] = useState([]);
     const [storedMessageStatus, setStoredMessageStatus] = useState(false)
-    const [currentBatchMess, setCurrentBatchMess] = useState([])
-
+    const [currentFetchedMessages, setCurrentFetchedMessages] = useState([])
 
     useEffect(() => {
         const filteredMessages = messages.filter(({user}) => user !== 'loading')
-        const finalSetMessages = nextBatchOfMessages.concat(filteredMessages)
-        setMessages(finalSetMessages)
+        if (JSON.stringify(currentFetchedMessages) !== JSON.stringify(nextBatchOfMessages)) {
+            const finalSetMessages = nextBatchOfMessages.concat(filteredMessages)
+            setStoredMessageStatus(false)
+            setMessages(finalSetMessages)
+            setCurrentFetchedMessages(nextBatchOfMessages)
+        }
     }, [nextBatchOfMessages])
 
     useEffect(() => {
@@ -75,7 +78,6 @@ const Chat = ({classes, ...props}) => {
             setMessages([...messages, Object.assign({}, responseFromBot)])
             setStoredMessageStatus(true)
         }
-
     }, [responseFromBot])
 
     useEffect(() => {
@@ -89,7 +91,7 @@ const Chat = ({classes, ...props}) => {
     const messageAppend = () => {
         if (input.trim().length > 0) {
             setMessages([...messages, Object.assign({}, {
-                user: (clientUserName || 'self'),
+                user: (usersName || 'self'),
                 message: [input],
                 timeStamp: moment().unix()
             })])
@@ -97,7 +99,6 @@ const Chat = ({classes, ...props}) => {
             setInput('')
             sendMessageFromUser({text: input, sessId: sessionId, timeStamp: moment().unix()})
             enableScroll(true)
-
         }
     }
     const onEnter = (event) => {
@@ -114,13 +115,12 @@ const Chat = ({classes, ...props}) => {
         <ChatBody messages={messages} setMessages={setMessages} setStoredMessageStatus={setStoredMessageStatus}
                   responseLoadingDots={responseLoadingDots}
                   sendMessageFromUser={sendMessageFromUser} sessionId={sessionId}
-                  sendSignalToSendMoreMess={sendSignalToSendMoreMess} clientUserName={clientUserName}
+                  sendSignalToSendMoreMess={sendSignalToSendMoreMess} usersName={usersName}
                   showFeedbackOnClickCross={showFeedbackOnClickCross}
-                  currentBatchMess={currentBatchMess} setCurrentBatchMess={setCurrentBatchMess}
-                  nextBatchOfMessages={nextBatchOfMessages}
+                  responseFetchLoadingDots={responseFetchLoadingDots}
+            // nextBatchOfMessages={nextBatchOfMessages}
                   enableScroll={enableScroll}
                   activeScroll={activeScroll}
-            // chatBoxScroll={chatBoxScroll}
         />
         <ChatFooter onEnter={onEnter} input={input} setInput={setInput} messageAppend={messageAppend}
                     afterFeedbackResult={afterFeedbackResult}/>
