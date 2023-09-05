@@ -3,9 +3,6 @@ import {withStyles, Typography, Grid, Card, CardContent, Button} from "@material
 import TextField from '../../components/TextField';
 import {Form, Field} from 'redux-form/immutable';
 import StarRating from '../../components/RatingStar';
-import {compose} from 'recompose';
-import {formValues} from 'redux-form/lib/immutable';
-import {submitFeedback} from "../../actions";
 
 
 const styles = () => ({
@@ -27,15 +24,7 @@ const styles = () => ({
     }
 })
 const Feedback = ({classes, ...props}) => {
-    const {submitFeedback, selectedFeedbackInput, handleSubmit} = props
-    // const [feedbackInputt, setFeedbackInputt] = useState('')
-    // const [starRatingg, setStarRatingg] = useState(0)
-
-    // const handleSubmit = () => {
-    //     console.log({feedbackInputt, star: typeof (starRatingg), selectedFeedbackInput})
-    //     submitFeedback({feedbackInput: selectedFeedbackInput, starRatingg: starRatingg});
-    //
-    // }
+    const {handleSubmit} = props
     return <Form onSubmit={handleSubmit}>
         <Grid container className={classes.containerClass}>
             <Grid item xs={12} sm={8} md={8}>
@@ -53,9 +42,6 @@ const Feedback = ({classes, ...props}) => {
                                 starSize={24}
                                 topTxt={'My Stars'}
                                 starsColor={"#ffd700"}
-                                // onChange={evt => {
-                                //     setStarRatingg(evt)
-                                // }}
                                 component={StarRating}/>
                         </Grid>
                         <Grid item xs={12}>
@@ -72,10 +58,6 @@ const Feedback = ({classes, ...props}) => {
                                 data-bdd="feedbackBox-input"
                                 label="Feedback"
                                 name="feedbackInput"
-                                // onChange={evt => {
-                                //     console.log({feedback: evt.target.value})
-                                //     setFeedbackInputt(evt.target.value)
-                                // }}
                             />
                         </Grid>
                         <Grid item xs={12}>
@@ -95,8 +77,3 @@ const Feedback = ({classes, ...props}) => {
 }
 
 export default withStyles(styles)(Feedback)
-//
-// export default compose(withStyles(styles), formValues({
-//     selectedFeedbackInput: 'feedbackInput'
-// }))(Feedback);
-

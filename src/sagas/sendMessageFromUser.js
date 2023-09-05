@@ -29,8 +29,9 @@ export function* sendMessageFromUserSaga({payload}) {
         let customerAsUser = 'self'
         if (intent === 'Welcome') {
             customerAsUser = response?.data?.sessionState?.intent?.slots?.firstName?.value?.originalValue
-            yield put(clientUserName(customerAsUser))
+
         }
+        yield put(clientUserName(customerAsUser))
         // console.log({data: response.data.message[0]})
         // console.log({response});
         // const response = [{user: 'bot', message: 'hello jii', options: ['yes', 'no']}]
@@ -39,8 +40,7 @@ export function* sendMessageFromUserSaga({payload}) {
             user: 'bot',
             message: response.data.messages,
             options: response.data.options,
-            timeStamp: moment().unix(),
-            customerAsUser: customerAsUser || 'self'
+            timeStamp: moment().unix()
         };
         // console.log({finalRes})
         yield put(sendMessageFromUser.success(finalRes))
