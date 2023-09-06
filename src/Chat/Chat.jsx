@@ -29,6 +29,7 @@ const Chat = ({classes, ...props}) => {
     const [messages, setMessages] = useState([]);
     const [storedMessageStatus, setStoredMessageStatus] = useState(false)
     const [currentFetchedMessages, setCurrentFetchedMessages] = useState([])
+    const [hideLoadMore, setHideLoadMore] = useState(false)
 
     useEffect(() => {
         const filteredMessages = messages.filter(({user}) => user !== 'loading')
@@ -36,7 +37,11 @@ const Chat = ({classes, ...props}) => {
             const finalSetMessages = nextBatchOfMessages.concat(filteredMessages)
             setStoredMessageStatus(false)
             setMessages(finalSetMessages)
+            if (nextBatchOfMessages.length <= currentFetchedMessages.length) {
+                setHideLoadMore(true)
+            }
             setCurrentFetchedMessages(nextBatchOfMessages)
+
         }
     }, [nextBatchOfMessages])
 
@@ -59,8 +64,12 @@ const Chat = ({classes, ...props}) => {
 
 
     useEffect(() => {
+        let localStorageMessages = JSON.parse(localStorage.getItem('cachedMessages'))
+        const lastStoredMessTime = ((localStorageMessages || []).pop() || {}).timeStamp
+        if (lastStoredMessTime + 3600 < moment().unix()) {
+            localStorage.clear()
+        }
         let uuid = localStorage.getItem('sessionId');
-
         if (!uuid) {   //newChat Condition
             uuid = v4()
             localStorage.setItem('sessionId', uuid);
@@ -118,9 +127,9 @@ const Chat = ({classes, ...props}) => {
                   sendSignalToSendMoreMess={sendSignalToSendMoreMess} usersName={usersName}
                   showFeedbackOnClickCross={showFeedbackOnClickCross}
                   responseFetchLoadingDots={responseFetchLoadingDots}
-            // nextBatchOfMessages={nextBatchOfMessages}
                   enableScroll={enableScroll}
                   activeScroll={activeScroll}
+                  hideLoadMore={hideLoadMore}
         />
         <ChatFooter onEnter={onEnter} input={input} setInput={setInput} messageAppend={messageAppend}
                     afterFeedbackResult={afterFeedbackResult}/>

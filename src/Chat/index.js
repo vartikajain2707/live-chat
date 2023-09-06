@@ -21,7 +21,6 @@ const stateToProps = state => {
     const responseFromBot = getSendMessageFromUser(state) || {};
     const responseLoadingDots = getLoadingDots(state) || false
     const responseFetchLoadingDots = getFetchLoader(state) || false
-    // console.log({responseFetchLoadingDots})
     const activeScroll = getScroll(state) || false
     const usersName = getClientUserName(state) || 'self';
     const showFeedbackOnClickCross = getCloseClick(state) || false;

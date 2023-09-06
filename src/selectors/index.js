@@ -30,10 +30,7 @@ export const getStoreSessionId = createSelector(
 
 export const setFetchLoader = (state, payload) => state.setIn(['fetchLoaderStatus'], fromJS(payload))
 export const getFetchLoader = createSelector(
-    state => {
-        console.log({state})
-        return fromJS(state).getIn(['fetchLoader', "fetchLoaderStatus"])
-    },
+    state => fromJS(state).getIn(['fetchLoader', "fetchLoaderStatus"]),
     fetchLoaderStatus => fetchLoaderStatus
 );
 

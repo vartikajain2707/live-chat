@@ -1,8 +1,9 @@
-import {takeLatest, put, call} from 'redux-saga/effects';
+import {takeLatest, put, call, select} from 'redux-saga/effects';
 import {sendMessageFromUser, loadingDots, clientUserName} from '../actions';
 import Debug from 'debug';
 import axios from 'axios';
 import moment from "moment"
+import {getClientUserName} from "../selectors";
 
 
 const debug = Debug('hb:liveChat:sagas:sendMessageFromUser');
@@ -10,21 +11,23 @@ const debug = Debug('hb:liveChat:sagas:sendMessageFromUser');
 export function* sendMessageFromUserSaga({payload}) {
     debug('called');
     try {
-        // console.log('inside sendMessFromuser saga')
         const {text, sessId, timeStamp} = payload
         yield put(loadingDots(true))
+        const clientName = yield select(getClientUserName)
         yield put(sendMessageFromUser.success({user: 'loading', message: ['.......']}))
         const input = {
-            "botId": "D4ALYGLD6O",
+            "botId": "D4ALYGLD6O", // ayush stack
+            // "botId": '2RON6R80PC', //prod
+            // botAliasId: 'TSTALIASID', // (test mode)
+            "botAliasId": 'ERAZYC0A2I', //(prod mode)
             "sessionId": sessId,
             "localeId": "en_US",
             "text": text,
             "siteId": "base",
-            "timeStamp": timeStamp
+            "timeStamp": timeStamp,
+            "userName": clientName
         }
-        // console.log({input})
         const response = yield call(axios.post, 'https://smjli6j817.execute-api.us-west-2.amazonaws.com/ayush/chatBotApi', JSON.stringify(input));
-        // console.log({response})
         const intent = response.data.sessionState.intent.name
         let customerAsUser = 'self'
         if (intent === 'Welcome') {
@@ -32,17 +35,12 @@ export function* sendMessageFromUserSaga({payload}) {
 
         }
         yield put(clientUserName(customerAsUser))
-        // console.log({data: response.data.message[0]})
-        // console.log({response});
-        // const response = [{user: 'bot', message: 'hello jii', options: ['yes', 'no']}]
-        // const edittedResponse=response.data.messages[0].content || response.data.message[0] || 'Are you sure hardcoded?'
         const finalRes = {
             user: 'bot',
             message: response.data.messages,
             options: response.data.options,
             timeStamp: moment().unix()
         };
-        // console.log({finalRes})
         yield put(sendMessageFromUser.success(finalRes))
         yield put(loadingDots(false))
     } catch (err) {
