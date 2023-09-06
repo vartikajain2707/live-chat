@@ -70,4 +70,5 @@ resource "aws_s3_object" "upload_files" {
     key = each.value
     source = "./../build/${each.value}"
     content_type = lookup(tomap(local.mime_types), element(split(".", each.value), length(split(".", each.value)) - 1))
+    etag    = "${timestamp()}"
 }

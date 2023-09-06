@@ -4,6 +4,7 @@ import Debug from 'debug';
 import axios from 'axios';
 import moment from "moment"
 import {getClientUserName} from "../selectors";
+import { config } from '../config';
 
 
 const debug = Debug('hb:liveChat:sagas:sendMessageFromUser');
@@ -16,10 +17,8 @@ export function* sendMessageFromUserSaga({payload}) {
         const clientName = yield select(getClientUserName)
         yield put(sendMessageFromUser.success({user: 'loading', message: ['.......']}))
         const input = {
-            "botId": "D4ALYGLD6O", // ayush stack
-            // "botId": '2RON6R80PC', //prod
-            // botAliasId: 'TSTALIASID', // (test mode)
-            "botAliasId": 'ERAZYC0A2I', //(prod mode)
+            "botId": config.botId,
+            "botAliasId": config.botAliasId,
             "sessionId": sessId,
             "localeId": "en_US",
             "text": text,
@@ -27,7 +26,7 @@ export function* sendMessageFromUserSaga({payload}) {
             "timeStamp": timeStamp,
             "userName": clientName
         }
-        const response = yield call(axios.post, 'https://smjli6j817.execute-api.us-west-2.amazonaws.com/ayush/chatBotApi', JSON.stringify(input));
+        const response = yield call(axios.post, `${config.apiUri}/chatBotApi`, JSON.stringify(input));
         const intent = response.data.sessionState.intent.name
         let customerAsUser = 'self'
         if (intent === 'Welcome') {

@@ -4,6 +4,7 @@ import Debug from 'debug';
 import axios from "axios";
 import {getStoreSessionId} from "../selectors";
 import moment from "moment";
+import { config } from '../config';
 
 
 const debug = Debug('hb:liveChat:sagas:submitFeedbackSaga');
@@ -21,7 +22,7 @@ export function* submitFeedbackSaga({payload}) {
             },
             "siteId": "base"
         }
-        yield call(axios.post, 'https://smjli6j817.execute-api.us-west-2.amazonaws.com/ayush/chatBotApi/submitFeedback', JSON.stringify(input));
+        yield call(axios.post, `${config.apiUri}/chatBotApi/submitFeedback`, JSON.stringify(input));
         const response = {
             user: 'bot',
             message: ['Your Feedback has been submitted. Thank You! Have a nice day.'],

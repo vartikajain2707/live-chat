@@ -3,7 +3,7 @@ import {sendSignalToSendMoreMess, fetchLoader} from '../actions';
 import Debug from 'debug';
 import axios from "axios";
 import {getClientUserName} from "../selectors";
-
+import { config } from '../config';
 
 const debug = Debug('hb:liveChat:sagas:sendSignalToSendMoreMess');
 
@@ -24,7 +24,7 @@ export function* sendSignalToSendMoreMessSaga({payload}) {
             "currentMessagesCount": currentMessagesCount,
             "siteId": "base"
         }
-        const response = yield call(axios.post, 'https://smjli6j817.execute-api.us-west-2.amazonaws.com/ayush/chatBotApi/fetchPrevMessages', JSON.stringify(input));
+        const response = yield call(axios.post, `${config.apiUri}/chatBotApi/fetchPrevMessages`, JSON.stringify(input));
         const finalResponse = (response.data || []).map((item, idx) => {
             if (item.user === 'self') {
                 item.user = clientName || 'self'

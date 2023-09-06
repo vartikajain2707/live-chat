@@ -16,6 +16,7 @@
     "classnames": "^2.3.2",
     "components": "^0.1.0",
     "debug": "^4.3.4",
+    "env-cmd": "^10.1.0",
     "eslint": "^8.46.0",
     "immutable": "^4.3.2",
     "keycode": "^2.2.1",
@@ -42,16 +43,16 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject",
+    "start": "env-cmd -f .test.env react-scripts start",
+    "build": "env-cmd -f .prod.env react-scripts build",
+    "test": "env-cmd -f .test.env react-scripts test",
+    "eject": "env-cmd -f .test.env react-scripts eject",
     "clean:terraform-cache": "cd ./terraform; rm -rf .terraform/ .terraform.lock.hcl terraform.tfstate terraform.tfstate.backup;",
-    "build:dipankar": "NODE_ENV=dipankar react-scripts build;",
+    "build:dipankar": "env-cmd -f .test.env react-scripts build;",
     "deploy:dipankar": "npm run build:dipankar; npm run clean:terraform-cache; cd ./terraform;  terraform init -backend-config \"key=cityexperiences-bot/dipankar.tfstate\" -backend-config \"bucket=hb-commerce-api-dev-tf-state\"; terraform apply -auto-approve -var 'ENV=dipankar';",
-    "build:test": "NODE_ENV=test react-scripts build;",
+    "build:test": "env-cmd -f .test.env react-scripts build;",
     "deploy:test": "npm run build:test; npm run clean:terraform-cache; cd ./terraform;  terraform init -backend-config \"key=cityexperiences-bot/test.tfstate\" -backend-config \"bucket=hb-commerce-api-dev-tf-state\"; terraform apply -auto-approve -var 'ENV=test';",
-    "build:prod": "NODE_ENV=prod react-scripts build;",
+    "build:prod": "env-cmd -f .prod.env react-scripts build;",
     "deploy:prod": "npm run build:prod; npm run clean:terraform-cache; cd ./terraform;  terraform init -backend-config \"key=cityexperiences-bot/prod.tfstate\" -backend-config \"bucket=hornblower-terraform-state-files\" -backend-config \"profile=prodv3\"; terraform apply -auto-approve -var 'ENV=prod';"
   },
   "eslintConfig": {
