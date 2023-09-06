@@ -2,6 +2,7 @@ import {takeLatest, put, call} from 'redux-saga/effects';
 import {sendTranscript} from '../actions';
 import Debug from 'debug';
 import axios from "axios";
+import { config } from '../config';
 
 
 const debug = Debug('hb:liveChat:sagas:sendTranscriptSaga');
@@ -17,7 +18,7 @@ export function* sendTranscriptSaga({payload}) {
             "allMessages": allMessages,
             "siteId": "base"
         }
-        yield call(axios.post, 'https://smjli6j817.execute-api.us-west-2.amazonaws.com/ayush/chatBotApi/fetchPrevMessages', JSON.stringify(input));
+        yield call(axios.post, `${config.apiUri}/chatBotApi/fetchPrevMessages`, JSON.stringify(input));
     } catch (err) {
         debug(err);
         yield put(sendTranscript.error());

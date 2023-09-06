@@ -212,22 +212,30 @@ const ChatBody = ({classes, ...props}) => {
                     })
                     }
                     <div>
-                        {options && options.length > 0 && options.map((option) =>
-                            <Button size="small" variant="contained" className={classes.optionButton}
+                        {options && options.length > 0 && options.map((option) => {
+                            let display, input;
+                            if (typeof option === 'object') {
+                                display = option.display;
+                                input = option.input;
+                            } else {
+                                display = input = option;
+                            }
+                            return (<Button size="small" variant="contained" className={classes.optionButton}
                                     onClick={() => {
                                         setMessages([...messages, Object.assign({}, {
                                             user: (usersName || 'self'),
                                             timeStamp: moment().unix(),
-                                            message: [option]
+                                            message: [display]
                                         })])
                                         setStoredMessageStatus(true)
                                         sendMessageFromUser({
-                                            text: option,
+                                            text: input,
                                             sessId: sessionId,
                                             timeStamp: moment().unix()
                                         })
-                                    }}>{option}
-                            </Button>)}
+                                    }}>{display}
+                            </Button>)
+                            })}
                     </div>
 
                 </div>
