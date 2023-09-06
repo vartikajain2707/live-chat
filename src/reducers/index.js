@@ -9,6 +9,7 @@ import storeSessionId from "./storeSessionId";
 import {reducer} from 'redux-form';
 import enableScroll from './enableScroll'
 import fetchLoader from "./fetchLoader"
+import clientEmailId from './clientEmailId'
 
 const rootReducer = combineReducers({
     botResponse: botResponse,
@@ -20,7 +21,8 @@ const rootReducer = combineReducers({
     storeSessionId: storeSessionId,
     enableScroll: enableScroll,
     form: reducer,
-    fetchLoader: fetchLoader
+    fetchLoader: fetchLoader,
+    clientEmailId: clientEmailId
 });
 
 export default rootReducer;

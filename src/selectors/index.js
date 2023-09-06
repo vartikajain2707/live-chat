@@ -50,6 +50,14 @@ export const getClientUserName = createSelector(
     state => fromJS(state).getIn(['clientUserName', 'clientName']),
     clientName => clientName
 );
+export const setClientEmailId = (state, payload) => state.setIn(['clientEmailId'], fromJS(payload))
+export const getClientEmailId = createSelector(
+    state => {
+        console.log({state})
+        return fromJS(state).getIn(['clientEmailId', 'clientEmailId'])
+    },
+    clientEmailId => clientEmailId
+);
 
 
 export const setNextBatchOfMessages = (state, payload) => state.setIn(['nextBatchMsgs'], fromJS(payload))
