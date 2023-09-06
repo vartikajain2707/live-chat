@@ -10,7 +10,8 @@ const styles = () => ({
         display: 'flex',
         padding: '12px',
         alignItems: 'center',
-        boxShadow: '1px 1px 2px #164689'
+        boxShadow: '1px 1px 2px #164689',
+        // marginBottom: '6px'
 
     },
     avatar: {
@@ -64,7 +65,7 @@ const ChatHeader = ({classes, ...props}) => {
         </Avatar>
         <div className={classes.chatHeaderInfo}>
             <Typography variant="subtitle1" className={classes.chatHeaderTitle}>
-                CEX Assistant
+                CEX Support
             </Typography>
         </div>
         <div className={classes.chatHeaderSide}>

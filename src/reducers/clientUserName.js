@@ -9,10 +9,8 @@ const noop = type => () => {
 
 
 const reducer = (state, {payload, type}) => ({
-    ['CLIENT_USER_NAME']: () => {
-        // console.log({payload})
-        return setClientUserName(state, payload)
-    }
+    ['CLIENT_USER_NAME']: () => setClientUserName(state, payload)
+
 
 }[type] || noop(type))() || state
 

@@ -12,7 +12,6 @@ export function* submitFeedbackSaga({payload}) {
     debug('called');
     try {
         const {feedbackInput, starRating} = payload
-        // console.log({feedbackInput, starRating});
         const sessionId = yield select(getStoreSessionId);
         const input = {
             "sessionId": sessionId,

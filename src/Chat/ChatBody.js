@@ -1,11 +1,10 @@
 import React, {useEffect, useRef, useState} from 'react'
-import {Avatar, Button, Typography, withStyles} from "@material-ui/core";
+import {Avatar, Button, Typography, withStyles, CircularProgress} from "@material-ui/core";
 import classNames from 'classnames';
 import PersonIcon from '@material-ui/icons/Person';
 import cexFlagImage from '../assets/cexFlag.png'
 import InlineLoader from '../components/InlineLoader'
 import Feedback from '../Chat/feedback';
-import CircularProgress from '@material-ui/core/CircularProgress';
 import moment from 'moment-timezone/builds/moment-timezone-with-data-10-year-range';
 
 
@@ -30,7 +29,8 @@ const styles = ({spacing}) => ({
         minHeight: '10px',
         minWidth: '11px',
         color: 'black',
-        backgroundColor: '#fff'
+        backgroundColor: '#fff',
+        boxShadow: '1px 1px 2px #eaeaef'
     },
     chatName: {
         position: 'absolute',
@@ -70,7 +70,7 @@ const styles = ({spacing}) => ({
         alignItems: 'flex-end',
         justifyContent: 'flex-end',
         borderBottomRightRadius: 0,
-        boxShadow: '1px 2px 3px #164689'
+        boxShadow: '1px 1px 2px #5973a8'
     },
     chatMessageBot: {
         borderBottomLeftRadius: 0
@@ -116,6 +116,7 @@ const styles = ({spacing}) => ({
         color: '#1646A8',
         cursor: 'pointer',
         fontSize: '10px',
+        marginTop: '-30px',
         "&:hover": {
             backgroundColor: 'transparent',
             fontWeight: 'bold'
@@ -137,7 +138,7 @@ const ChatBody = ({classes, ...props}) => {
     const {
         messages, setMessages, responseLoadingDots, sendMessageFromUser, sessionId, setStoredMessageStatus,
         sendSignalToSendMoreMess, usersName, showFeedbackOnClickCross, responseFetchLoadingDots,
-        activeScroll, enableScroll
+        activeScroll, enableScroll, hideLoadMore
     } = props
     const [showFeedback, setShowFeedback] = useState(true)
     const messageLength = messages.length
@@ -148,11 +149,12 @@ const ChatBody = ({classes, ...props}) => {
         if (activeScroll) {
             chatBoxScroll.current?.scrollIntoView({behavior: "smooth"})
         }
+        // eslint-disable-next-line
     }, [messages]);
 
     const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
     return <div className={classes.chatBody}>
-        {userBotMessageOnlyLength > 9 &&
+        {(userBotMessageOnlyLength > 9 && !hideLoadMore) &&
             <Button size={'small'}
                     onClick={() => {
                         enableScroll(false)
