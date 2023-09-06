@@ -43,6 +43,7 @@ const Chat = ({classes, ...props}) => {
             setCurrentFetchedMessages(nextBatchOfMessages)
 
         }
+        // eslint-disable-next-line
     }, [nextBatchOfMessages])
 
     useEffect(() => {
@@ -60,6 +61,7 @@ const Chat = ({classes, ...props}) => {
         }
         const cachedMessages = JSON.stringify(topMsg)
         localStorage.setItem('cachedMessages', cachedMessages);
+        // eslint-disable-next-line
     }, [messages])
 
 
@@ -80,6 +82,7 @@ const Chat = ({classes, ...props}) => {
         }
         storeSessionId(uuid)
         setSessionId(uuid);
+        // eslint-disable-next-line
     }, [])
 
     useEffect(() => {
@@ -87,13 +90,14 @@ const Chat = ({classes, ...props}) => {
             setMessages([...messages, Object.assign({}, responseFromBot)])
             setStoredMessageStatus(true)
         }
+        // eslint-disable-next-line
     }, [responseFromBot])
 
     useEffect(() => {
         if (Object.keys(afterFeedbackResult).length > 0) {
             setMessages([...messages, Object.assign({}, afterFeedbackResult)])
         }
-
+        // eslint-disable-next-line
     }, [afterFeedbackResult])
 
 

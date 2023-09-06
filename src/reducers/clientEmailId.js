@@ -1,6 +1,6 @@
 /* eslint max-lines: "off" */
 import {fromJS} from 'immutable';
-import {setClientUserName} from '../selectors';
+import {setClientEmailId} from '../selectors';
 
 const initialState = fromJS({});
 
@@ -11,7 +11,7 @@ const noop = type => () => {
 
 
 const reducer = (state, {payload, type}) => ({  //eslint-disable-line
-    'CLIENT_USER_NAME': () => setClientUserName(state, payload)
+    'CLIENT_EMAILID': () => setClientEmailId(state, payload)
 
 
 }[type] || noop(type))() || state

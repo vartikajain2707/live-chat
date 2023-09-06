@@ -10,10 +10,11 @@ const noop = type => () => {
 
 
 const reducer = (state, {payload, type}) => ({
-    ['FETCH_LOADER']: () => setFetchLoader(state, payload)
+    'FETCH_LOADER': () => setFetchLoader(state, payload)
 
 
 }[type] || noop(type))() || state
 
 
+// eslint-disable-next-line import/no-anonymous-default-export
 export default (state = initialState, action) => reducer(state, action);

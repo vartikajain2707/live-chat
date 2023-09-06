@@ -41,6 +41,7 @@ export function* sendSignalToSendMoreMessSaga({payload}) {
     }
 }
 
+// eslint-disable-next-line import/no-anonymous-default-export
 export default function* () {
     yield takeLatest('SEND_SIGNAL_TO_SEND_MORE_MESS', sendSignalToSendMoreMessSaga);
 }

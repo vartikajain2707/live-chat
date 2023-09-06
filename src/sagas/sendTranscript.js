@@ -25,6 +25,7 @@ export function* sendTranscriptSaga({payload}) {
     }
 }
 
+// eslint-disable-next-line import/no-anonymous-default-export
 export default function* () {
     yield takeLatest('SEND_TRANSCRIPT', sendTranscriptSaga);
 }
