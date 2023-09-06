@@ -16,7 +16,8 @@ export function* sendSignalToSendMoreMessSaga({payload}) {
         yield put(fetchLoader(true))
 
         const input = {
-            "botId": "D4ALYGLD6O",
+            // "botId": "D4ALYGLD6O", // ayush stack
+            "botId": '2RON6R80PC', // prod
             "sessionId": sessId,
             "localeId": "en_US",
             "fetchMessageCount": fetchMessageCount,
@@ -24,15 +25,12 @@ export function* sendSignalToSendMoreMessSaga({payload}) {
             "siteId": "base"
         }
         const response = yield call(axios.post, 'https://smjli6j817.execute-api.us-west-2.amazonaws.com/ayush/chatBotApi/fetchPrevMessages', JSON.stringify(input));
-        // const finalResponse = response.data
-
         const finalResponse = (response.data || []).map((item, idx) => {
             if (item.user === 'self') {
                 item.user = clientName || 'self'
             }
             return item
         })
-        // console.log({response})
         yield put(sendSignalToSendMoreMess.success(finalResponse))
         yield put(fetchLoader(false))
 
