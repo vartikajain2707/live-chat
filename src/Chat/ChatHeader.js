@@ -46,7 +46,7 @@ const styles = () => ({
 
 })
 const ChatHeader = ({classes, ...props}) => {
-    const {closeClickedOnce, showFeedbackOnClickCross, enableScroll} = props
+    const {closeClickedOnce, showFeedbackOnClickCross} = props
     const [anchorElement, setAnchorElement] = useState(null);
     const open = Boolean(anchorElement)
     const handleClick = (event) => {
@@ -54,6 +54,10 @@ const ChatHeader = ({classes, ...props}) => {
     }
 
     const handleClose = () => {
+        setAnchorElement(null)
+    }
+
+    const onClickSendTranscript = () => {
         const {sendTranscript, messages, sessionId} = props
         const filteredMessages = messages.filter(({user}) => user !== 'loading')
         sendTranscript({sessId: sessionId, allMessages: filteredMessages})
@@ -96,12 +100,13 @@ const ChatHeader = ({classes, ...props}) => {
                     horizontal: 'center',
                 }}
             >
-                <MenuItem onClick={handleClose}>Send Transcript</MenuItem>
+                <MenuItem onClick={onClickSendTranscript}
+                >Send Transcript</MenuItem>
             </Menu>
             <CloseIcon className={classes.closeIcon} onClick={() => {
 
                 if (!showFeedbackOnClickCross) {
-                    enableScroll(true)
+                    // enableScroll(true)
                     closeClickedOnce(true)
                 } else {
                     if (window && window.parent) {

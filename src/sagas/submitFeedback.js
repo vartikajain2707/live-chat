@@ -1,10 +1,10 @@
 import {takeLatest, put, call, select} from 'redux-saga/effects';
-import {submitFeedback} from '../actions';
+import {enableScroll, submitFeedback} from '../actions';
 import Debug from 'debug';
 import axios from "axios";
 import {getStoreSessionId} from "../selectors";
 import moment from "moment";
-import { config } from '../config';
+import {config} from '../config';
 
 
 const debug = Debug('hb:liveChat:sagas:submitFeedbackSaga');
@@ -12,16 +12,18 @@ const debug = Debug('hb:liveChat:sagas:submitFeedbackSaga');
 export function* submitFeedbackSaga({payload}) {
     debug('called');
     try {
-        const {feedbackInput, starRating} = payload
+        const {feedbackInput, starRating, sendTranscriptCheckbox} = payload
         const sessionId = yield select(getStoreSessionId);
         const input = {
             "sessionId": sessionId,
             "feedback": {
                 feedbackInput,
-                starRating
+                starRating,
+                sendTranscriptToUser: sendTranscriptCheckbox
             },
             "siteId": "base"
         }
+        yield put(enableScroll(true))
         yield call(axios.post, `${config.apiUri}/chatBotApi/submitFeedback`, JSON.stringify(input));
         const response = {
             user: 'bot',

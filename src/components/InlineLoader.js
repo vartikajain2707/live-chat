@@ -1,7 +1,7 @@
 import React from "react"
 import styled, {keyframes} from "styled-components"
 
-const animate=keyframes`
+const animate = keyframes`
   0% {
     background-color: black;
   }
@@ -39,6 +39,7 @@ const Dots = styled.span`
     animation: ${animate} 0.5s infinite alternate;
     animation-delay: 0s;
   }
+
   &::after {
     left: 11px;
     width: 4px;
@@ -51,7 +52,7 @@ const Dots = styled.span`
   }
 `
 
-
+// eslint-disable-next-line import/no-anonymous-default-export
 export default props => {
-    return <Dots />
+    return <Dots/>
 }

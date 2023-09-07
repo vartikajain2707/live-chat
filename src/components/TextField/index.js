@@ -7,6 +7,7 @@ const TextFieldContainer = ({
                                 meta: {error, invalid, touched} = {},
                                 forcedError,
                                 allowErrorOnAllRequiredFields = false,
+                                size,
                                 ...rest
                             }) => {
     let status = 'success';
@@ -19,6 +20,7 @@ const TextFieldContainer = ({
         <TextField
             errorMessage={(error && (allowErrorOnAllRequiredFields || touched)) ? error : forcedError}
             status={status}
+            size={size}
             {...input}
             {...rest}
         />

@@ -9,10 +9,10 @@ const noop = type => () => {
 
 
 const reducer = (state, {payload, type}) => ({
-    ['ENABLE_SCROLL']: () => setScroll(state, payload)
+    'ENABLE_SCROLL': () => setScroll(state, payload)
 
 
 }[type] || noop(type))() || state
 
-
+// eslint-disable-next-line import/no-anonymous-default-export
 export default (state = initialState, action) => reducer(state, action);

@@ -52,10 +52,7 @@ export const getClientUserName = createSelector(
 );
 export const setClientEmailId = (state, payload) => state.setIn(['clientEmailId'], fromJS(payload))
 export const getClientEmailId = createSelector(
-    state => {
-        console.log({state})
-        return fromJS(state).getIn(['clientEmailId', 'clientEmailId'])
-    },
+    state => fromJS(state).getIn(['clientEmailId', 'clientEmailId']),
     clientEmailId => clientEmailId
 );
 
