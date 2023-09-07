@@ -10,10 +10,10 @@ const noop = type => () => {
 
 
 const reducer = (state, {payload, type}) => ({
-    ['SEND_MESSAGE_FROM_USER_SUCCESS']: () => setSendMessageFromUser(state, payload)
+    'SEND_MESSAGE_FROM_USER_SUCCESS': () => setSendMessageFromUser(state, payload)
 
 
 }[type] || noop(type))() || state
 
-
+// eslint-disable-next-line import/no-anonymous-default-export
 export default (state = initialState, action) => reducer(state, action);

@@ -22,7 +22,7 @@ const Chat = ({classes, ...props}) => {
     const {
         sendMessageFromUser, responseFromBot, responseLoadingDots, sendSignalToSendMoreMess,
         nextBatchOfMessages, usersName, sendTranscript, closeClickedOnce, showFeedbackOnClickCross,
-        afterFeedbackResult, storeSessionId, enableScroll, activeScroll, responseFetchLoadingDots
+        afterFeedbackResult, storeSessionId, activeScroll, responseFetchLoadingDots
     } = props;
     const [input, setInput] = useState('')
     const [sessionId, setSessionId] = useState('')
@@ -111,7 +111,6 @@ const Chat = ({classes, ...props}) => {
             setStoredMessageStatus(true)
             setInput('')
             sendMessageFromUser({text: input, sessId: sessionId, timeStamp: moment().unix()})
-            enableScroll(true)
         }
     }
     const onEnter = (event) => {
@@ -124,14 +123,13 @@ const Chat = ({classes, ...props}) => {
     return <div className={classes.chat}>
         <ChatHeader sendTranscript={sendTranscript} messages={messages} sessionId={sessionId}
                     closeClickedOnce={closeClickedOnce} showFeedbackOnClickCross={showFeedbackOnClickCross}
-                    enableScroll={enableScroll}/>
+        />
         <ChatBody messages={messages} setMessages={setMessages} setStoredMessageStatus={setStoredMessageStatus}
                   responseLoadingDots={responseLoadingDots}
                   sendMessageFromUser={sendMessageFromUser} sessionId={sessionId}
                   sendSignalToSendMoreMess={sendSignalToSendMoreMess} usersName={usersName}
                   showFeedbackOnClickCross={showFeedbackOnClickCross}
                   responseFetchLoadingDots={responseFetchLoadingDots}
-                  enableScroll={enableScroll}
                   activeScroll={activeScroll}
                   hideLoadMore={hideLoadMore}
         />

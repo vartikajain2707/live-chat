@@ -3,6 +3,7 @@ import {withStyles, Typography, Grid, Card, CardContent, Button} from "@material
 import TextField from '../../components/TextField';
 import {Form, Field} from 'redux-form/immutable';
 import StarRating from '../../components/RatingStar';
+import Checkbox from '../../components/Checkbox';
 
 
 const styles = () => ({
@@ -21,7 +22,16 @@ const styles = () => ({
         "&:hover": {
             color: 'black'
         }
-    }
+    },
+    checkBoxIcon: {
+        padding: '4px',
+        height: '12px',
+        width: '12px',
+        '& svg': {
+            fontSize: '14px !important'
+        },
+        border: '1px solid red'
+    },
 })
 const Feedback = ({classes, ...props}) => {
     const {handleSubmit} = props
@@ -56,8 +66,21 @@ const Feedback = ({classes, ...props}) => {
                                 variant="standard"
                                 placeholder={'Type here'}
                                 data-bdd="feedbackBox-input"
-                                label="Feedback"
+                                label=""
                                 name="feedbackInput"
+                            />
+                        </Grid>
+                        <Grid item xs={12}>
+                            <Field
+                                component={Checkbox}
+                                checkboxValue={true}
+                                size={'small'}
+                                label={
+                                    <Typography variant="caption" color="textSecondary">
+                                        Do you want me to send this chat on your mail? If yes, tick the box below.
+                                    </Typography>}
+                                name="sendTranscriptCheckbox"
+                                color="textSecondary"
                             />
                         </Grid>
                         <Grid item xs={12}>

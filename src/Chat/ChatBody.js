@@ -99,6 +99,7 @@ const styles = ({spacing}) => ({
         color: '#fff',
         marginRight: spacing.unit * 2,
         marginTop: spacing.unit * 2,
+        marginBottom: '3px',
         padding: '3%',
         fontSize: '11px'
     },
@@ -138,7 +139,7 @@ const ChatBody = ({classes, ...props}) => {
     const {
         messages, setMessages, responseLoadingDots, sendMessageFromUser, sessionId, setStoredMessageStatus,
         sendSignalToSendMoreMess, usersName, showFeedbackOnClickCross, responseFetchLoadingDots,
-        activeScroll, enableScroll, hideLoadMore
+        activeScroll, hideLoadMore
     } = props
     const [showFeedback, setShowFeedback] = useState(true)
     const messageLength = messages.length
@@ -157,7 +158,6 @@ const ChatBody = ({classes, ...props}) => {
         {(userBotMessageOnlyLength > 9 && !hideLoadMore) &&
             <Button size={'small'}
                     onClick={() => {
-                        enableScroll(false)
                         return sendSignalToSendMoreMess({
                             sessId: sessionId,
                             fetchMessageCount: 10,

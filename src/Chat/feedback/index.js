@@ -10,10 +10,12 @@ const stateToProps = (state, ownProps) => {
     const formValues = getFormValues('FeedbackForm')(state) || Map();
     const feedbackInput = formValues.feedbackInput
     const starRating = formValues.starRating
+    const sendTranscriptCheckbox = formValues.sendTranscriptCheckbox
     return {
         setShowFeedback,
         feedbackInput,
-        starRating
+        starRating,
+        sendTranscriptCheckbox
     }
 };
 
@@ -29,7 +31,8 @@ const mergeProps = (stateProps, dispatchProps, ownProps) => ({
     onSubmit: values => {
         dispatchProps.submitFeedback({
             feedbackInput: stateProps.feedbackInput,
-            starRating: stateProps.starRating
+            starRating: stateProps.starRating,
+            sendTranscriptCheckbox: stateProps.sendTranscriptCheckbox
         })
         stateProps.setShowFeedback(false)
 

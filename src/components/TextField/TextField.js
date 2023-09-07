@@ -15,6 +15,7 @@ const TextFieldInput = ({
                             htmlLabel,
                             variant,
                             margin = 'normal',
+                            size,
                             ...rest
                         }) => (
     <div data-bdd={dataTid}>
@@ -23,6 +24,7 @@ const TextFieldInput = ({
         </Fragment> : null}
         <TextField
             fullWidth={fullWidth}
+            size={size}
             variant={variant}
             margin={margin}
             name={name}

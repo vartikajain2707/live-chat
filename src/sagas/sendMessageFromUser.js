@@ -1,10 +1,10 @@
 import {takeLatest, put, call, select} from 'redux-saga/effects';
-import {sendMessageFromUser, loadingDots, clientUserName, clientEmailId} from '../actions';
+import {sendMessageFromUser, loadingDots, clientUserName, clientEmailId, enableScroll} from '../actions';
 import Debug from 'debug';
 import axios from 'axios';
 import moment from "moment"
 import {getClientUserName, getClientEmailId} from "../selectors";
-import { config } from '../config';
+import {config} from '../config';
 
 
 const debug = Debug('hb:liveChat:sagas:sendMessageFromUser');
@@ -13,8 +13,9 @@ export function* sendMessageFromUserSaga({payload}) {
     debug('called');
     try {
         const {text, sessId, timeStamp} = payload
+        console.log(JSON.stringify({text}, 0,))
         yield put(loadingDots(true))
-        const clientName = yield select(getClientUserName)
+        const clientName = yield select(getClientUserName) || 'self'
         const clientEmailAddress = yield select(getClientEmailId)
         yield put(sendMessageFromUser.success({user: 'loading', message: ['.......']}))
         const input = {
@@ -22,12 +23,13 @@ export function* sendMessageFromUserSaga({payload}) {
             "botAliasId": config.botAliasId,
             "sessionId": sessId,
             "localeId": "en_US",
-            "text": text,
+            "text": text.replace("&", ","),
             "siteId": "base",
             "timeStamp": timeStamp,
             "userName": clientName,
             "emailId": clientEmailAddress
         }
+        yield put(enableScroll(true))
         const response = yield call(axios.post, `${config.apiUri}/chatBotApi`, JSON.stringify(input));
         const intent = response.data.sessionState.intent.name
         let customerAsUser = 'self'
@@ -35,10 +37,10 @@ export function* sendMessageFromUserSaga({payload}) {
         if (intent === 'Welcome') {
             customerAsUser = response?.data?.sessionState?.intent?.slots?.firstName?.value?.originalValue
             customerEmail = response?.data?.sessionState?.intent?.slots?.emailId?.value?.originalValue
-
+            yield put(clientUserName(customerAsUser))
+            yield put(clientEmailId(customerEmail))
         }
-        yield put(clientUserName(customerAsUser))
-        yield put(clientEmailId(customerEmail))
+
         const finalRes = {
             user: 'bot',
             message: response.data.messages,

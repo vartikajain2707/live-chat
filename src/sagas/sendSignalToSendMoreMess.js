@@ -1,9 +1,9 @@
 import {takeLatest, put, call, select} from 'redux-saga/effects';
-import {sendSignalToSendMoreMess, fetchLoader} from '../actions';
+import {sendSignalToSendMoreMess, fetchLoader, enableScroll} from '../actions';
 import Debug from 'debug';
 import axios from "axios";
 import {getClientUserName} from "../selectors";
-import { config } from '../config';
+import {config} from '../config';
 
 const debug = Debug('hb:liveChat:sagas:sendSignalToSendMoreMess');
 
@@ -24,6 +24,7 @@ export function* sendSignalToSendMoreMessSaga({payload}) {
             "currentMessagesCount": currentMessagesCount,
             "siteId": "base"
         }
+        yield put(enableScroll(false))
         const response = yield call(axios.post, `${config.apiUri}/chatBotApi/fetchPrevMessages`, JSON.stringify(input));
         const finalResponse = (response.data || []).map((item, idx) => {
             if (item.user === 'self') {
