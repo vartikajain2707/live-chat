@@ -172,11 +172,11 @@ const ChatBody = ({classes, ...props}) => {
 
         {messages.map(({message, user, options, timeStamp}, idx) => {
                 const formattedTime = moment.unix(timeStamp).tz(timezone).format('hh:mm A')
-                return <div id={idx} ref={chatBoxScroll}>
+                return <div id={idx} key={idx} ref={chatBoxScroll}>
                     {message && message.map((key, subIdx) => {
                         const isDifferentUser = (idx === 0 || user !== messages[idx - 1].user) && subIdx === 0;
                         const isDiffUserFromBottom = (idx === messages.length - 1 || user !== messages[idx + 1].user) && subIdx === message.length - 1;
-                        return <Typography component="p" color={'textPrimary'} variant={'body2'}
+                        return <Typography component="p" color={'textPrimary'} variant={'body2'} key={subIdx}
                                            className={classNames({
                                                [classes.chatMessage]: true,
                                                [classes.chatMessageReceiver]: user !== 'bot' && user !== 'loading',
@@ -212,7 +212,7 @@ const ChatBody = ({classes, ...props}) => {
                     })
                     }
                     <div>
-                        {options && options.length > 0 && options.map((option) => {
+                        {options && options.length > 0 && options.map((option, idx) => {
                             let display, input;
                             if (typeof option === 'object') {
                                 display = option.display;
@@ -220,7 +220,7 @@ const ChatBody = ({classes, ...props}) => {
                             } else {
                                 display = input = option;
                             }
-                            return (<Button size="small" variant="contained" className={classes.optionButton}
+                            return (<Button size="small" variant="contained" key={idx} className={classes.optionButton}
                                     onClick={() => {
                                         setMessages([...messages, Object.assign({}, {
                                             user: (usersName || 'self'),

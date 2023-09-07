@@ -43,17 +43,14 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "env-cmd -f .test.env react-scripts start",
-    "build": "env-cmd -f .prod.env react-scripts build",
-    "test": "env-cmd -f .test.env react-scripts test",
-    "eject": "env-cmd -f .test.env react-scripts eject",
-    "clean:terraform-cache": "cd ./terraform; rm -rf .terraform/ .terraform.lock.hcl terraform.tfstate terraform.tfstate.backup;",
-    "build:dipankar": "env-cmd -f .test.env react-scripts build;",
-    "deploy:dipankar": "npm run build:dipankar; npm run clean:terraform-cache; cd ./terraform;  terraform init -backend-config \"key=cityexperiences-bot/dipankar.tfstate\" -backend-config \"bucket=hb-commerce-api-dev-tf-state\"; terraform apply -auto-approve -var 'ENV=dipankar';",
-    "build:test": "env-cmd -f .test.env react-scripts build;",
-    "deploy:test": "npm run build:test; npm run clean:terraform-cache; cd ./terraform;  terraform init -backend-config \"key=cityexperiences-bot/test.tfstate\" -backend-config \"bucket=hb-commerce-api-dev-tf-state\"; terraform apply -auto-approve -var 'ENV=test';",
-    "build:prod": "env-cmd -f .prod.env react-scripts build;",
-    "deploy:prod": "npm run build:prod; npm run clean:terraform-cache; cd ./terraform;  terraform init -backend-config \"key=cityexperiences-bot/prod.tfstate\" -backend-config \"bucket=hornblower-terraform-state-files\" -backend-config \"profile=prodv3\"; terraform apply -auto-approve -var 'ENV=prod';"
+    "start": "webpack serve --env NODE_ENV=test --mode development",
+    "clean:terraform-cache": "cd ./terraform_files; rm -rf .terraform/ .terraform.lock.hcl terraform.tfstate terraform.tfstate.backup;",
+    "build:dipankar": "rm -rf build; webpack --env NODE_ENV=dipankar --mode development",
+    "deploy:dipankar": "npm run clean:terraform-cache; cd ./terraform_files;  terraform init -backend-config \"key=cityexperiences-bot/dipankar.tfstate\" -backend-config \"bucket=hb-commerce-api-dev-tf-state\"; terraform apply -auto-approve -var 'ENV=dipankar';",
+    "build:test": "rm -rf build; webpack --env NODE_ENV=test --mode development",
+    "deploy:test": "npm run clean:terraform-cache; cd ./terraform_files;  terraform init -backend-config \"key=cityexperiences-bot/test.tfstate\" -backend-config \"bucket=hb-commerce-api-dev-tf-state\"; terraform apply -auto-approve -var 'ENV=test';",
+    "build:prod": "rm -rf build; webpack --env NODE_ENV=prod --mode production",
+    "deploy:prod": "npm run clean:terraform-cache; cd ./terraform_files;  terraform init -backend-config \"key=cityexperiences-bot/prod.tfstate\" -backend-config \"bucket=hornblower-terraform-state-files\" -backend-config \"profile=prodv3\"; terraform apply -auto-approve -var 'ENV=prod';"
   },
   "eslintConfig": {
     "extends": [
