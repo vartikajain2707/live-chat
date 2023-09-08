@@ -1,0 +1,44 @@
+image: node:16.20.1
+
+stages:
+    - Build
+    - Deployment
+
+setup:
+    stage: Build
+    script:
+        - yarn
+        - wget https://releases.hashicorp.com/terraform/1.5.6/terraform_1.5.6_linux_amd64.zip
+        - unzip terraform_1.5.6_linux_amd64.zip
+        - yarn build:test
+    artifacts:
+        expire_in: 1h
+        when: always
+        paths:
+            - terraform
+            - node_modules/
+            - build
+
+deploy to test:
+    stage: Deployment
+    environment: test
+    rules:
+        - if: $CI_COMMIT_REF_NAME == $CI_DEFAULT_BRANCH
+    script: 
+        - mv terraform /usr/local/bin
+        - chmod +x /usr/local/bin/terraform
+        - terraform -v
+        - yarn deploy:test
+
+deploy to prod:
+    stage: Deployment
+    environment: prod
+    rules:
+        - if: $CI_COMMIT_REF_NAME == $CI_DEFAULT_BRANCH
+    script: 
+        - mv terraform /usr/local/bin
+        - chmod +x /usr/local/bin/terraform
+        - terraform -v
+        - yarn build:prod
+        - yarn deploy:prod
+    when: manual
