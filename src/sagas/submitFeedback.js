@@ -39,6 +39,7 @@ export function* submitFeedbackSaga({payload}) {
                 window.parent.postMessage({closeChatBot: true}, '*');
             }
         }, "2000");
+        localStorage.clear()
         yield put(submitFeedback.success(response))
     } catch (err) {
         debug(err);

@@ -8,7 +8,8 @@ import Checkbox from '../../components/Checkbox';
 
 const styles = () => ({
     containerClass: {
-        marginTop: '20px'
+        marginTop: '20px',
+        marginBottom: '20px',
     },
     feedbackSubmitContainer: {
         display: 'flex',

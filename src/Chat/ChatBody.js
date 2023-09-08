@@ -170,7 +170,7 @@ const ChatBody = ({classes, ...props}) => {
             </Button>
         }
 
-        {messages.map(({message, user, options, timeStamp}, idx) => {
+        {messages.map(({message, user, options, timeStamp, includeFeedbackCom = false}, idx) => {
                 const formattedTime = moment.unix(timeStamp).tz(timezone).format('hh:mm A')
                 return <div id={idx} key={idx} ref={chatBoxScroll}>
                     {message && message.map((key, subIdx) => {
@@ -183,7 +183,7 @@ const ChatBody = ({classes, ...props}) => {
                                                [classes.chatMessageBot]: user === 'bot' || user === 'loading',
                                                [classes.differentUserMessage]: (idx > 0 && user !== messages[idx - 1].user) && subIdx === 0,
                                                [classes.sameUserMessage]: !isDifferentUser,
-                                               [classes.hideLoading]: (!responseLoadingDots || idx !== messageLength - 1) && user === 'loading'
+                                               [classes.hideLoading]: ((!responseLoadingDots || idx !== messageLength - 1) && (user === 'loading') || user === 'feedbackLoading')
                                            })}>
 
                             <div>{isDifferentUser && ((user === 'bot' || user === 'loading') ?
@@ -221,29 +221,32 @@ const ChatBody = ({classes, ...props}) => {
                                 display = input = option;
                             }
                             return (<Button size="small" variant="contained" key={idx} className={classes.optionButton}
-                                    onClick={() => {
-                                        setMessages([...messages, Object.assign({}, {
-                                            user: (usersName || 'self'),
-                                            timeStamp: moment().unix(),
-                                            message: [display]
-                                        })])
-                                        setStoredMessageStatus(true)
-                                        sendMessageFromUser({
-                                            text: input,
-                                            sessId: sessionId,
-                                            timeStamp: moment().unix()
-                                        })
-                                    }}>{display}
+                                            onClick={() => {
+                                                setMessages([...messages, Object.assign({}, {
+                                                    user: (usersName || 'self'),
+                                                    timeStamp: moment().unix(),
+                                                    message: [display]
+                                                })])
+                                                setStoredMessageStatus(true)
+                                                sendMessageFromUser({
+                                                    text: input,
+                                                    sessId: sessionId,
+                                                    timeStamp: moment().unix()
+                                                })
+                                            }}>{display}
                             </Button>)
-                            })}
+                        })}
+                    </div>
+                    <div>
+                        {(showFeedbackOnClickCross === true && showFeedback && includeFeedbackCom) &&
+                            <Feedback setShowFeedback={setShowFeedback}> </Feedback>}
                     </div>
 
                 </div>
 
             }
         )}
-        {(showFeedbackOnClickCross === true && showFeedback) &&
-            <Feedback setShowFeedback={setShowFeedback}> </Feedback>}
+
     </div>
 }
 
