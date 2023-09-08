@@ -2,7 +2,7 @@ import {takeLatest, put, call, select} from 'redux-saga/effects';
 import {enableScroll, submitFeedback} from '../actions';
 import Debug from 'debug';
 import axios from "axios";
-import {getStoreSessionId} from "../selectors";
+import {getClientEmailId, getClientUserName, getStoreSessionId} from "../selectors";
 import moment from "moment";
 import {config} from '../config';
 
@@ -14,14 +14,18 @@ export function* submitFeedbackSaga({payload}) {
     try {
         const {feedbackInput, starRating, sendTranscriptCheckbox} = payload
         const sessionId = yield select(getStoreSessionId);
+        const clientEmailAddress = yield select(getClientEmailId)
+        const clientName = yield select(getClientUserName) || 'self'
         const input = {
             "sessionId": sessionId,
             "feedback": {
                 feedbackInput,
-                starRating,
-                sendTranscriptToUser: sendTranscriptCheckbox
+                starRating
             },
-            "siteId": "base"
+            "sendTranscriptToUser": sendTranscriptCheckbox,
+            "siteId": "base",
+            "userName": clientName,
+            "emailId": clientEmailAddress
         }
         yield put(enableScroll(true))
         yield call(axios.post, `${config.apiUri}/chatBotApi/submitFeedback`, JSON.stringify(input));
