@@ -13,7 +13,6 @@ export function* sendMessageFromUserSaga({payload}) {
     debug('called');
     try {
         const {text, sessId, timeStamp} = payload
-        console.log(JSON.stringify({text}, 0,))
         yield put(loadingDots(true))
         const clientName = yield select(getClientUserName) || 'self'
         const clientEmailAddress = yield select(getClientEmailId)

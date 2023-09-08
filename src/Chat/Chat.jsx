@@ -22,7 +22,7 @@ const Chat = ({classes, ...props}) => {
     const {
         sendMessageFromUser, responseFromBot, responseLoadingDots, sendSignalToSendMoreMess,
         nextBatchOfMessages, usersName, sendTranscript, closeClickedOnce, showFeedbackOnClickCross,
-        afterFeedbackResult, storeSessionId, activeScroll, responseFetchLoadingDots
+        afterFeedbackResult, storeSessionId, activeScroll, responseFetchLoadingDots, enableScroll
     } = props;
     const [input, setInput] = useState('')
     const [sessionId, setSessionId] = useState('')
@@ -121,8 +121,9 @@ const Chat = ({classes, ...props}) => {
 
 
     return <div className={classes.chat}>
-        <ChatHeader sendTranscript={sendTranscript} messages={messages} sessionId={sessionId}
+        <ChatHeader sendTranscript={sendTranscript} messages={messages} setMessages={setMessages} sessionId={sessionId}
                     closeClickedOnce={closeClickedOnce} showFeedbackOnClickCross={showFeedbackOnClickCross}
+                    enableScroll={enableScroll}
         />
         <ChatBody messages={messages} setMessages={setMessages} setStoredMessageStatus={setStoredMessageStatus}
                   responseLoadingDots={responseLoadingDots}

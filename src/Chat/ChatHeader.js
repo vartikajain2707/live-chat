@@ -46,7 +46,7 @@ const styles = () => ({
 
 })
 const ChatHeader = ({classes, ...props}) => {
-    const {closeClickedOnce, showFeedbackOnClickCross} = props
+    const {closeClickedOnce, showFeedbackOnClickCross, setMessages, messages, enableScroll} = props
     const [anchorElement, setAnchorElement] = useState(null);
     const open = Boolean(anchorElement)
     const handleClick = (event) => {
@@ -106,8 +106,13 @@ const ChatHeader = ({classes, ...props}) => {
             <CloseIcon className={classes.closeIcon} onClick={() => {
 
                 if (!showFeedbackOnClickCross) {
-                    // enableScroll(true)
+                    enableScroll(true)
                     closeClickedOnce(true)
+                    setMessages([...messages, Object.assign({}, {
+                        user: 'feedbackLoading',
+                        includeFeedbackCom: true,
+                        message: ['...']
+                    })])
                 } else {
                     if (window && window.parent) {
                         window.parent.postMessage({closeChatBot: true}, '*');
