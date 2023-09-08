@@ -37,7 +37,7 @@ export function* sendTranscriptSaga({payload}) {
                 timeStamp: moment().unix()
             };
         }
-        // yield put(sendMessageFromUser.success(finalRes))
+        yield put(sendMessageFromUser.success(finalRes))
 
     } catch (err) {
         debug(err);
