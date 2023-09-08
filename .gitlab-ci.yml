@@ -3,6 +3,7 @@ image: node:16.20.1
 stages:
     - Build
     - Deployment
+    - Publish
 
 setup:
     stage: Build
@@ -31,7 +32,7 @@ deploy to test:
         - yarn deploy:test
 
 deploy to prod:
-    stage: Deployment
+    stage: Publish
     environment: prod
     rules:
         - if: $CI_COMMIT_REF_NAME == $CI_DEFAULT_BRANCH
