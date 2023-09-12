@@ -9,5 +9,9 @@ locals {
     "png"  = "image/png"
     "svg"  = "image/svg+xml"
     "txt"  = "text/plain"
+    "woff" = "font/woff"
+    "ttf"  = "font/ttf"
+    "gif"  = "image/gif"
+    "eot"  = "font/eot"
   }
 }
