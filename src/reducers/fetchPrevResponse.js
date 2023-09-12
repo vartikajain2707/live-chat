@@ -1,5 +1,5 @@
 import {fromJS} from 'immutable';
-import {setLoadingDots} from '../selectors';
+import {setPrevResponse} from '../selectors';
 
 const initialState = fromJS({});
 
@@ -9,7 +9,7 @@ const noop = type => () => {
 
 
 const reducer = (state, {payload, type}) => ({
-    'LOADING_DOTS': () => setLoadingDots(state, payload)
+    'PREV_RESPONSE': () => setPrevResponse(state, payload)
 
 
 }[type] || noop(type))() || state

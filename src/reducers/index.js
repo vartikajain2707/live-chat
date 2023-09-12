@@ -10,9 +10,11 @@ import {reducer} from 'redux-form';
 import enableScroll from './enableScroll'
 import fetchLoader from "./fetchLoader"
 import clientEmailId from './clientEmailId'
+import fetchPrevResponse from './fetchPrevResponse'
 
 const rootReducer = combineReducers({
     botResponse: botResponse,
+    fetchPrevResponse: fetchPrevResponse,
     closeClickedOnce: closeClickedOnce,
     nextBatchOfMessages: nextBatchOfMessages,
     clientUserName: clientUserName,

@@ -6,6 +6,7 @@ import cexFlagImage from '../assets/cexFlag.png'
 import InlineLoader from '../components/InlineLoader'
 import Feedback from '../Chat/feedback';
 import moment from 'moment-timezone/builds/moment-timezone-with-data-10-year-range';
+import Slider from '../components/Slider/Slider'
 
 
 const styles = ({spacing}) => ({
@@ -95,13 +96,17 @@ const styles = ({spacing}) => ({
         top: '18px'
     },
     optionButton: {
-        backgroundColor: '#1646A8',
-        color: '#fff',
+        color: '#1646A8',
+        border: '1px solid #1646A8',
         marginRight: spacing.unit * 2,
         marginTop: spacing.unit * 2,
         marginBottom: '3px',
         padding: '3%',
-        fontSize: '11px'
+        fontSize: '11px',
+        "&:hover": {
+            color: '#fff',
+            backgroundColor: '#1646A8'
+        }
     },
     differentUserMessage: {
         marginTop: spacing.unit * 4,
@@ -172,6 +177,7 @@ const ChatBody = ({classes, ...props}) => {
 
         {messages.map(({message, user, options, timeStamp, includeFeedbackCom = false}, idx) => {
                 const formattedTime = moment.unix(timeStamp).tz(timezone).format('hh:mm A')
+                const showSlider = (options || [])[0]?.tagLink
                 return <div id={idx} key={idx} ref={chatBoxScroll}>
                     {message && message.map((key, subIdx) => {
                         const isDifferentUser = (idx === 0 || user !== messages[idx - 1].user) && subIdx === 0;
@@ -212,30 +218,39 @@ const ChatBody = ({classes, ...props}) => {
                     })
                     }
                     <div>
-                        {options && options.length > 0 && options.map((option, idx) => {
-                            let display, input;
-                            if (typeof option === 'object') {
-                                display = option.display;
-                                input = option.input;
-                            } else {
-                                display = input = option;
-                            }
-                            return (<Button size="small" variant="contained" key={idx} className={classes.optionButton}
-                                            onClick={() => {
-                                                setMessages([...messages, Object.assign({}, {
-                                                    user: (usersName || 'self'),
-                                                    timeStamp: moment().unix(),
-                                                    message: [display]
-                                                })])
-                                                setStoredMessageStatus(true)
-                                                sendMessageFromUser({
-                                                    text: input,
-                                                    sessId: sessionId,
-                                                    timeStamp: moment().unix()
-                                                })
-                                            }}>{display}
-                            </Button>)
-                        })}
+                        {showSlider ? <Slider options={options} setMessages={setMessages} messages={messages}
+                                              setStoredMessageStatus={setStoredMessageStatus}
+                                              sendMessageFromUser={sendMessageFromUser}
+                                              sessionId={sessionId} usersName={usersName}
+                            /> :
+                            <div>
+                                {options && options.length > 0 && options.map((option, idx) => {
+                                    let display, input;
+                                    if (typeof option === 'object') {
+                                        display = option.display;
+                                        input = option.input;
+                                    } else {
+                                        display = input = option;
+                                    }
+                                    return (
+                                        <Button size="small" variant="outlined" key={idx} className={classes.optionButton}
+                                                onClick={() => {
+                                                    setMessages([...messages, Object.assign({}, {
+                                                        user: (usersName || 'self'),
+                                                        timeStamp: moment().unix(),
+                                                        message: [display]
+                                                    })])
+                                                    setStoredMessageStatus(true)
+                                                    sendMessageFromUser({
+                                                        text: input,
+                                                        sessId: sessionId,
+                                                        timeStamp: moment().unix()
+                                                    })
+                                                }}>{display}
+                                        </Button>)
+                                })}
+                            </div>
+                        }
                     </div>
                     <div>
                         {(showFeedbackOnClickCross === true && showFeedback && includeFeedbackCom) &&

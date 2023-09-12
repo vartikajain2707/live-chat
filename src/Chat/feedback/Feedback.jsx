@@ -23,16 +23,7 @@ const styles = () => ({
         "&:hover": {
             color: 'black'
         }
-    },
-    checkBoxIcon: {
-        padding: '4px',
-        height: '12px',
-        width: '12px',
-        '& svg': {
-            fontSize: '14px !important'
-        },
-        border: '1px solid red'
-    },
+    }
 })
 const Feedback = ({classes, ...props}) => {
     const {handleSubmit} = props
