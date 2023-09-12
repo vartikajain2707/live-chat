@@ -1,0 +1,32 @@
+.container {
+    width: 100%;
+    margin: 25px auto auto;
+}
+
+li.slick-active > button::before {
+    color: #1646A8 !important;
+    font-size: 18px !important;
+}
+
+
+.slick-prev:before, .slick-next:before {
+    background-color: #1646A8 !important;
+    opacity: 50% !important;
+    border-radius: 10% !important;
+    padding: 3px !important;
+    font-size: 14px !important;
+}
+
+.slick-prev:before {
+    content: '◄' !important
+}
+
+.slick-next:before {
+    content: '►' !important
+}
+
+
+.slick-prev,
+.slick-next {
+    color: black
+}

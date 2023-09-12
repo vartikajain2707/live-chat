@@ -33,6 +33,11 @@ export const getFetchLoader = createSelector(
     state => fromJS(state).getIn(['fetchLoader', "fetchLoaderStatus"]),
     fetchLoaderStatus => fetchLoaderStatus
 );
+export const setPrevResponse = (state, payload) => state.setIn(['setPrevResponse'], fromJS(payload))
+export const getPrevResponse = createSelector(
+    state => fromJS(state).getIn(['fetchPrevResponse', "setPrevResponse"]),
+    fetchPrevResponse => (fetchPrevResponse ? fetchPrevResponse.toJS() : {})
+);
 
 export const setCloseClick = (state, payload) => state.setIn(['closeClickedOnce'], fromJS(payload))
 export const getCloseClick = createSelector(
