@@ -1,9 +1,9 @@
 import {takeLatest, put, call, select} from 'redux-saga/effects';
-import {sendMessageFromUser, loadingDots, clientUserName, clientEmailId, enableScroll} from '../actions';
+import {sendMessageFromUser, loadingDots, clientUserName, clientEmailId, enableScroll, prevResponse} from '../actions';
 import Debug from 'debug';
 import axios from 'axios';
 import moment from "moment"
-import {getClientUserName, getClientEmailId} from "../selectors";
+import {getClientUserName, getClientEmailId, getPrevResponse} from "../selectors";
 import {config} from '../config';
 
 
@@ -14,7 +14,11 @@ export function* sendMessageFromUserSaga({payload}) {
     try {
         const {text, sessId, timeStamp} = payload
         yield put(loadingDots(true))
-        const clientName = yield select(getClientUserName) || 'self'
+        const prevRes = yield select(getPrevResponse)
+        let clientName = yield select(getClientUserName) || 'self'
+        if (prevRes?.data?.sessionState?.intent?.slots?.firstName === null) {
+            clientName = text
+        }
         const clientEmailAddress = yield select(getClientEmailId)
         yield put(sendMessageFromUser.success({user: 'loading', message: ['.......']}))
         const input = {
@@ -34,6 +38,7 @@ export function* sendMessageFromUserSaga({payload}) {
         let customerAsUser = 'self'
         let customerEmail = ""
         if (intent === 'Welcome') {
+            yield put(prevResponse(response))
             customerAsUser = response?.data?.sessionState?.intent?.slots?.firstName?.value?.originalValue
             customerEmail = response?.data?.sessionState?.intent?.slots?.emailId?.value?.originalValue
             yield put(clientUserName(customerAsUser))
