@@ -36,7 +36,7 @@
                 sessionStorage.setItem("displayBot", false);
             }
             if (data.closeChatBotLoader) {
-                console.log({closeChatBotLoader});
+                console.log({closeChatBotLoader: data.closeChatBotLoader});
             }
         });
 })();
