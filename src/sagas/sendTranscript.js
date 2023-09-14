@@ -1,10 +1,9 @@
-import {takeLatest, put, call, select} from 'redux-saga/effects';
+import {takeLatest, put, call} from 'redux-saga/effects';
 import {sendMessageFromUser, sendTranscript} from '../actions';
 import Debug from 'debug';
 import axios from "axios";
 import {config} from '../config';
 import moment from "moment/moment";
-import {getClientEmailId, getClientUserName} from "../selectors";
 
 
 const debug = Debug('hb:liveChat:sagas:sendTranscriptSaga');
@@ -12,8 +11,8 @@ const debug = Debug('hb:liveChat:sagas:sendTranscriptSaga');
 export function* sendTranscriptSaga({payload}) {
     debug('called');
     try {
-        const clientEmailAddress = yield select(getClientEmailId)
-        const clientName = yield select(getClientUserName) || 'self'
+        const sessionEmailId = sessionStorage.getItem('emailAddress')
+        const sessionUserName = sessionStorage.getItem('userName') || 'self'
         const {sessId} = payload
         const input = {
             "botId": config.botId,
@@ -21,8 +20,8 @@ export function* sendTranscriptSaga({payload}) {
             "sessionId": sessId,
             "localeId": "en_US",
             "siteId": "base",
-            "userName": clientName,
-            "emailId": clientEmailAddress
+            "userName": sessionUserName,
+            "emailId": sessionEmailId
         }
         const response = yield call(axios.post, `${config.apiUri}/chatBotApi/sendTranscript`, JSON.stringify(input));
         let finalRes = {
@@ -33,7 +32,7 @@ export function* sendTranscriptSaga({payload}) {
         if (response) {
             finalRes = {
                 user: 'bot',
-                message: [`Your chat transcript has been sent on ${clientEmailAddress}.`],
+                message: [`Your chat transcript has been sent on ${sessionEmailId}.`],
                 timeStamp: moment().unix()
             };
         }

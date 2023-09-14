@@ -2,7 +2,7 @@ import {takeLatest, put, call, select} from 'redux-saga/effects';
 import {enableScroll, submitFeedback} from '../actions';
 import Debug from 'debug';
 import axios from "axios";
-import {getClientEmailId, getClientUserName, getStoreSessionId} from "../selectors";
+import {getStoreSessionId} from "../selectors";
 import moment from "moment";
 import {config} from '../config';
 
@@ -14,8 +14,8 @@ export function* submitFeedbackSaga({payload}) {
     try {
         const {feedbackInput, starRating, sendTranscriptCheckbox} = payload
         const sessionId = yield select(getStoreSessionId);
-        const clientEmailAddress = yield select(getClientEmailId)
-        const clientName = yield select(getClientUserName) || 'self'
+        const sessionEmailId = sessionStorage.getItem('emailAddress')
+        const sessionUserName = sessionStorage.getItem('userName') || 'self'
         const input = {
             "sessionId": sessionId,
             "feedback": {
@@ -24,8 +24,8 @@ export function* submitFeedbackSaga({payload}) {
             },
             "sendTranscriptToUser": sendTranscriptCheckbox,
             "siteId": "base",
-            "userName": clientName,
-            "emailId": clientEmailAddress
+            "userName": sessionUserName,
+            "emailId": sessionEmailId
         }
         yield put(enableScroll(true))
         yield call(axios.post, `${config.apiUri}/chatBotApi/submitFeedback`, JSON.stringify(input));
@@ -39,7 +39,7 @@ export function* submitFeedbackSaga({payload}) {
                 window.parent.postMessage({closeChatBot: true}, '*');
             }
         }, "2000");
-        localStorage.clear()
+        sessionStorage.clear()
         yield put(submitFeedback.success(response))
     } catch (err) {
         debug(err);

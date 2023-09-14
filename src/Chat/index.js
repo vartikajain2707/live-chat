@@ -10,7 +10,6 @@ import {
     getSendMessageFromUser,
     getLoadingDots,
     getNextBatchOfMessages,
-    getClientUserName,
     getCloseClick,
     getAfterFeedbackResult,
     getScroll,
@@ -22,7 +21,10 @@ const stateToProps = state => {
     const responseLoadingDots = getLoadingDots(state) || false
     const responseFetchLoadingDots = getFetchLoader(state) || false
     const activeScroll = getScroll(state) || false
-    const usersName = getClientUserName(state) || 'self';
+    let usersName = sessionStorage.getItem('userName')
+    if (usersName === 'undefined') {
+        usersName = 'self'
+    }
     const showFeedbackOnClickCross = getCloseClick(state) || false;
     const afterFeedbackResult = (getAfterFeedbackResult(state) || {})
     const nextBatchOfMessages = (getNextBatchOfMessages(state) || List()).toJS() || []
