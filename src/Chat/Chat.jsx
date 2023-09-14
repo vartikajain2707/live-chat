@@ -29,7 +29,7 @@ const Chat = ({classes, ...props}) => {
     const [messages, setMessages] = useState([]);
     const [storedMessageStatus, setStoredMessageStatus] = useState(false)
     const [currentFetchedMessages, setCurrentFetchedMessages] = useState([])
-    const [hideLoadMore, setHideLoadMore] = useState(false)
+    const [hideLoadMore, setHideLoadMore] = useState(true)
 
     useEffect(() => {
         const filteredMessages = messages.filter(({user}) => user !== 'loading')
@@ -37,8 +37,8 @@ const Chat = ({classes, ...props}) => {
             const finalSetMessages = nextBatchOfMessages.concat(filteredMessages)
             setStoredMessageStatus(false)
             setMessages(finalSetMessages)
-            if (nextBatchOfMessages.length <= currentFetchedMessages.length) {
-                setHideLoadMore(true)
+            if (nextBatchOfMessages.length > currentFetchedMessages.length) {
+                setHideLoadMore(false)
             }
             setCurrentFetchedMessages(nextBatchOfMessages)
 
@@ -47,7 +47,7 @@ const Chat = ({classes, ...props}) => {
     }, [nextBatchOfMessages])
 
     useEffect(() => {
-        let allStoredMessages = localStorage.getItem('cachedMessages')
+        let allStoredMessages = sessionStorage.getItem('cachedMessages')
         let topMsg = []
         if (allStoredMessages) {
             topMsg = JSON.parse(allStoredMessages)
@@ -60,24 +60,24 @@ const Chat = ({classes, ...props}) => {
             topMsg = topMsg.slice(-10)
         }
         const cachedMessages = JSON.stringify(topMsg)
-        localStorage.setItem('cachedMessages', cachedMessages);
+        sessionStorage.setItem('cachedMessages', cachedMessages);
         // eslint-disable-next-line
     }, [messages])
 
 
     useEffect(() => {
-        let localStorageMessages = JSON.parse(localStorage.getItem('cachedMessages'))
+        let localStorageMessages = JSON.parse(sessionStorage.getItem('cachedMessages'))
         const lastStoredMessTime = ((localStorageMessages || []).pop() || {}).timeStamp
         if (lastStoredMessTime + 3600 < moment().unix()) {
-            localStorage.clear()
+            sessionStorage.clear()
         }
-        let uuid = localStorage.getItem('sessionId');
+        let uuid = sessionStorage.getItem('sessionId');
         if (!uuid) {   //newChat Condition
             uuid = v4()
-            localStorage.setItem('sessionId', uuid);
+            sessionStorage.setItem('sessionId', uuid);
             sendMessageFromUser({text: 'Hi', sessId: uuid, timeStamp: moment().unix()})
         } else {
-            const localStorageMessages = JSON.parse(localStorage.getItem('cachedMessages'));
+            const localStorageMessages = JSON.parse(sessionStorage.getItem('cachedMessages'));
             setMessages([...localStorageMessages])
         }
         storeSessionId(uuid)
