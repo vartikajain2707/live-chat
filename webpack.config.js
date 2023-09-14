@@ -1,5 +1,6 @@
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 const webpack = require('webpack');
 
 module.exports = env => {
@@ -15,6 +16,18 @@ module.exports = env => {
                 filename: 'index.html',
             }),
             new webpack.DefinePlugin({ environment: JSON.stringify(env) }),
+            new CopyWebpackPlugin({
+                patterns: [
+                  {
+                    from: './public/prod-embed.js',
+                    to: './scripts/',
+                  },
+                  {
+                    from: './public/test-embed.js',
+                    to: './scripts/',
+                  },
+                ],
+              }),
         ],
         devServer: {
             port: 3000, // you can change the port

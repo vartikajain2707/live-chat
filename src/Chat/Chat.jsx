@@ -82,6 +82,9 @@ const Chat = ({classes, ...props}) => {
         }
         storeSessionId(uuid)
         setSessionId(uuid);
+        if (window && window.parent) {
+            window.parent.postMessage({closeChatBotLoader: true}, '*');
+        }
         // eslint-disable-next-line
     }, [])
 
