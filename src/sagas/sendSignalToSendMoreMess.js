@@ -1,8 +1,7 @@
-import {takeLatest, put, call, select} from 'redux-saga/effects';
+import {takeLatest, put, call} from 'redux-saga/effects';
 import {sendSignalToSendMoreMess, fetchLoader, enableScroll} from '../actions';
 import Debug from 'debug';
 import axios from "axios";
-import {getClientEmailId, getClientUserName} from "../selectors";
 import {config} from '../config';
 
 const debug = Debug('hb:liveChat:sagas:sendSignalToSendMoreMess');
@@ -11,8 +10,8 @@ export function* sendSignalToSendMoreMessSaga({payload}) {
     debug('called');
     try {
         const {sessId, ...rest} = payload
-        const clientEmailAddress = yield select(getClientEmailId)
-        const clientName = yield select(getClientUserName) || 'self'
+        const sessionEmailId = sessionStorage.getItem('emailAddress')
+        const sessionUserName = sessionStorage.getItem('userName') || 'self'
         const {fetchMessageCount, currentMessagesCount} = rest
         yield put(fetchLoader(true))
 
@@ -24,14 +23,14 @@ export function* sendSignalToSendMoreMessSaga({payload}) {
             "fetchMessageCount": fetchMessageCount,
             "currentMessagesCount": currentMessagesCount,
             "siteId": "base",
-            "userName": clientName,
-            "emailId": clientEmailAddress
+            "userName": sessionUserName,
+            "emailId": sessionEmailId
         }
         yield put(enableScroll(false))
         const response = yield call(axios.post, `${config.apiUri}/chatBotApi/fetchPrevMessages`, JSON.stringify(input));
         const finalResponse = (response.data || []).map((item, idx) => {
             if (item.user === 'self') {
-                item.user = clientName || 'self'
+                item.user = sessionUserName || 'self'
             }
             return item
         })

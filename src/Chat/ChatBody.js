@@ -160,7 +160,7 @@ const ChatBody = ({classes, ...props}) => {
 
     const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
     return <div className={classes.chatBody}>
-        {(userBotMessageOnlyLength > 9 && !hideLoadMore) &&
+        {(userBotMessageOnlyLength > 9 && hideLoadMore) &&
             <Button size={'small'}
                     onClick={() => {
                         return sendSignalToSendMoreMess({
