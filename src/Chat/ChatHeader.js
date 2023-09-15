@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 import {Avatar, Button, Menu, MenuItem, Typography, withStyles} from "@material-ui/core";
-import cexFlagImage from "../assets/cexFlag.png";
+import cexFlagImage from "../assets/navyPierLogo.png";
 import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
 import CloseIcon from "@material-ui/icons/Close";
 
@@ -69,7 +69,7 @@ const ChatHeader = ({classes, ...props}) => {
         </Avatar>
         <div className={classes.chatHeaderInfo}>
             <Typography variant="subtitle1" className={classes.chatHeaderTitle}>
-                CEX Support
+                Support Help Desk
             </Typography>
         </div>
         <div className={classes.chatHeaderSide}>

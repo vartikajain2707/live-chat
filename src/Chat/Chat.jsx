@@ -31,6 +31,15 @@ const Chat = ({classes, ...props}) => {
     const [currentFetchedMessages, setCurrentFetchedMessages] = useState([])
     const [hideLoadMore, setHideLoadMore] = useState(true)
 
+    const externalStyles = () => {
+        // const style = document.createElement('link');
+        // style.rel = 'stylesheet';
+        // style.type = 'text/css';
+        // style.href = 'https://vartika-hornblower-assets.s3.us-west-2.amazonaws.com/data/navyPierThems.css';
+        // document.head.append(style);
+    }
+
+
     useEffect(() => {
         const filteredMessages = messages.filter(({user}) => user !== 'loading')
         if (JSON.stringify(currentFetchedMessages) !== JSON.stringify(nextBatchOfMessages)) {
@@ -66,6 +75,7 @@ const Chat = ({classes, ...props}) => {
 
 
     useEffect(() => {
+        externalStyles()
         let localStorageMessages = JSON.parse(sessionStorage.getItem('cachedMessages'))
         const lastStoredMessTime = ((localStorageMessages || []).pop() || {}).timeStamp
         if (lastStoredMessTime + 3600 < moment().unix()) {
@@ -128,7 +138,8 @@ const Chat = ({classes, ...props}) => {
                     closeClickedOnce={closeClickedOnce} showFeedbackOnClickCross={showFeedbackOnClickCross}
                     enableScroll={enableScroll}
         />
-        <ChatBody messages={messages} setMessages={setMessages} setStoredMessageStatus={setStoredMessageStatus}
+        <ChatBody messages={messages} setMessages={setMessages}
+                  setStoredMessageStatus={setStoredMessageStatus}
                   responseLoadingDots={responseLoadingDots}
                   sendMessageFromUser={sendMessageFromUser} sessionId={sessionId}
                   sendSignalToSendMoreMess={sendSignalToSendMoreMess} usersName={usersName}

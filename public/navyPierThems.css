@@ -1,0 +1,76 @@
+.Chat-chat-1 {
+    background-color: #f1f1f2;
+}
+
+.ChatBody-chatMessageReceiver-16 {
+    background-color: #46C6EB;
+    color: #263C79
+}
+
+
+.ChatBody-chatNameReciever-13, .ChatBody-chatTimestampReciever-15 {
+    color: #263C79
+}
+
+.ChatBody-chatMessage-11 {
+    color: #263C79
+}
+
+
+.ChatBody-chatName-12, .ChatBody-chatTimestamp-14 {
+    color: #263C79
+}
+
+.ChatBody-optionButton-21 {
+    color: #263C79;
+    border: 1px solid #46C6EB;
+}
+
+
+.ChatBody-optionButton-21:hover {
+    color: #263C79;
+    background-color: #46C6EB
+}
+
+.ChatBody-loadMoreBtn-25 {
+    color: #46C6EB;
+}
+
+.ChatBody-loadMoreBtn-25:hover {
+    background-color: transparent;
+}
+
+
+.ChatHeader-chatHeader-2 {
+    background-color: #263C79
+}
+
+.ChatHeader-chatHeaderTitle-6 {
+    color: #fff;
+}
+
+.ChatHeader-headerIcon-8, .ChatHeader-closeIcon-9 {
+    color: #fff;
+}
+
+.ChatFooter-sendIcon-29 {
+    color: #263C79;
+}
+
+.SliderComponent-knowMoreBtn-31 {
+    color: #fff;
+    background-color: #C3319A;
+}
+
+.SliderComponent-knowMoreBtn-31:hover {
+    color: #C3319A;
+    background-color: #F2F5FF;
+}
+
+.SliderComponent-displayPrice-36, .SliderComponent-sliderPrice-38, .SliderComponent-sliderText-39 {
+    color: #263C79
+}
+
+.robotImage {
+    width: 42px
+}

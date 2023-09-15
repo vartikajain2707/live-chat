@@ -53,6 +53,12 @@ const styles = () => ({
         width: '90%',
         height: '87px',
         justifyContent: 'space-between'
+    },
+    sliderPrice: {
+        color: 'black'
+    },
+    sliderText: {
+        color: 'black'
     }
 
 
@@ -98,14 +104,14 @@ const SliderComponent = ({options, classes, ...props}) => {
                                     title="Contemplative Reptile"
                                 />
                                 <CardContent className={classes.cardContent}>
-                                    <Typography variant="subtitle2">
+                                    <Typography variant="subtitle2" className={classes.sliderText}>
                                         {display}
                                     </Typography>
                                     <div className={classes.additionalInfoContainer}>
                                         <a href={option.tagLink} target="_blank"><Button size={'small'}
                                                                                          className={classes.knowMoreBtn}>Know
                                             More</Button></a>
-                                        <Typography variant={"subtitle2"}>from <span
+                                        <Typography variant={"subtitle2"} className={classes.sliderPrice}>from <span
                                             className={classes.displayPrice}>{CURRENCY_SYMBOLS[option.defaultCurrency]}{option.displayPrice}</span></Typography>
                                     </div>
 
