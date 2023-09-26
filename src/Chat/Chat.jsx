@@ -31,10 +31,7 @@ const Chat = ({classes, ...props}) => {
     const [currentFetchedMessages, setCurrentFetchedMessages] = useState([])
     const [hideLoadMore, setHideLoadMore] = useState(true)
 
-<<<<<<< Updated upstream
-=======
 
->>>>>>> Stashed changes
     useEffect(() => {
         const filteredMessages = messages.filter(({user}) => user !== 'loading')
         if (JSON.stringify(currentFetchedMessages) !== JSON.stringify(nextBatchOfMessages)) {
@@ -135,7 +132,8 @@ const Chat = ({classes, ...props}) => {
                     closeClickedOnce={closeClickedOnce} showFeedbackOnClickCross={showFeedbackOnClickCross}
                     enableScroll={enableScroll}
         />
-        <ChatBody messages={messages} setMessages={setMessages} setStoredMessageStatus={setStoredMessageStatus}
+        <ChatBody messages={messages} setMessages={setMessages}
+                  setStoredMessageStatus={setStoredMessageStatus}
                   responseLoadingDots={responseLoadingDots}
                   sendMessageFromUser={sendMessageFromUser} sessionId={sessionId}
                   sendSignalToSendMoreMess={sendSignalToSendMoreMess} usersName={usersName}

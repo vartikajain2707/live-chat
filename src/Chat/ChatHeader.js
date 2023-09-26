@@ -1,9 +1,5 @@
 import React, {useState} from 'react'
 import {Avatar, Button, Menu, MenuItem, Typography, withStyles} from "@material-ui/core";
-<<<<<<< Updated upstream
-import cexFlagImage from "../assets/cexFlag.png";
-=======
->>>>>>> Stashed changes
 import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
 import CloseIcon from "@material-ui/icons/Close";
 
@@ -76,11 +72,7 @@ const ChatHeader = ({classes, ...props}) => {
         </Avatar>
         <div className={classes.chatHeaderInfo}>
             <Typography variant="subtitle1" className={classes.chatHeaderTitle}>
-<<<<<<< Updated upstream
-                CEX Support
-=======
                 {headerTitle}
->>>>>>> Stashed changes
             </Typography>
         </div>
         <div className={classes.chatHeaderSide}>

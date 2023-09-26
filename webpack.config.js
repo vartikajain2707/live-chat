@@ -15,19 +15,9 @@ module.exports = env => {
                 inject: false,
                 filename: 'index.html',
             }),
-            new webpack.DefinePlugin({ environment: JSON.stringify(env) }),
+            new webpack.DefinePlugin({environment: JSON.stringify(env)}),
             new CopyWebpackPlugin({
                 patterns: [
-<<<<<<< Updated upstream
-                  {
-                    from: './public/prod-embed.js',
-                    to: './scripts/',
-                  },
-                  {
-                    from: './public/test-embed.js',
-                    to: './scripts/',
-                  },
-=======
                     {
                         from: './public/prod-embed.js',
                         to: './scripts/',
@@ -36,21 +26,20 @@ module.exports = env => {
                         from: './public/test-embed.js',
                         to: './scripts/',
                     }
->>>>>>> Stashed changes
                 ],
-              }),
+            }),
         ],
         devServer: {
             port: 3000, // you can change the port
         },
         module: {
             rules: [{
-                    test: /\.(js|jsx)$/, // .js and .jsx files
-                    exclude: /node_modules/, // excluding the node_modules folder
-                    use: {
-                        loader: "babel-loader",
-                    },
+                test: /\.(js|jsx)$/, // .js and .jsx files
+                exclude: /node_modules/, // excluding the node_modules folder
+                use: {
+                    loader: "babel-loader",
                 },
+            },
                 {
                     test: /\.(sa|sc|c)ss$/, // styles files
                     use: ["style-loader", "css-loader"],
