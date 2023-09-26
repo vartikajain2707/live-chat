@@ -18,6 +18,7 @@ module.exports = env => {
             new webpack.DefinePlugin({ environment: JSON.stringify(env) }),
             new CopyWebpackPlugin({
                 patterns: [
+<<<<<<< Updated upstream
                   {
                     from: './public/prod-embed.js',
                     to: './scripts/',
@@ -26,6 +27,16 @@ module.exports = env => {
                     from: './public/test-embed.js',
                     to: './scripts/',
                   },
+=======
+                    {
+                        from: './public/prod-embed.js',
+                        to: './scripts/',
+                    },
+                    {
+                        from: './public/test-embed.js',
+                        to: './scripts/',
+                    }
+>>>>>>> Stashed changes
                 ],
               }),
         ],

@@ -31,6 +31,10 @@ const Chat = ({classes, ...props}) => {
     const [currentFetchedMessages, setCurrentFetchedMessages] = useState([])
     const [hideLoadMore, setHideLoadMore] = useState(true)
 
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
     useEffect(() => {
         const filteredMessages = messages.filter(({user}) => user !== 'loading')
         if (JSON.stringify(currentFetchedMessages) !== JSON.stringify(nextBatchOfMessages)) {
@@ -69,7 +73,10 @@ const Chat = ({classes, ...props}) => {
         let localStorageMessages = JSON.parse(sessionStorage.getItem('cachedMessages'))
         const lastStoredMessTime = ((localStorageMessages || []).pop() || {}).timeStamp
         if (lastStoredMessTime + 3600 < moment().unix()) {
-            sessionStorage.clear()
+            sessionStorage.removeItem("cachedMessages");
+            sessionStorage.removeItem("sessionId");
+            sessionStorage.removeItem("emailAddress");
+            sessionStorage.removeItem("userName");
         }
         let uuid = sessionStorage.getItem('sessionId');
         if (!uuid) {   //newChat Condition
