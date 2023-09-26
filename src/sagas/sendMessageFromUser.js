@@ -3,8 +3,8 @@ import {sendMessageFromUser, loadingDots, enableScroll, prevResponse} from '../a
 import Debug from 'debug';
 import axios from 'axios';
 import moment from "moment"
-import {getPrevResponse} from "../selectors";
-import {config} from '../config';
+import {getPrevResponse, config} from "../selectors";
+import {config as configLoaded} from '../config'
 
 
 const debug = Debug('hb:liveChat:sagas:sendMessageFromUser');
@@ -13,6 +13,7 @@ export function* sendMessageFromUserSaga({payload}) {
     debug('called');
     try {
         const {text, sessId, timeStamp} = payload
+        const configObject = yield select(config)
         const sessionEmailId = sessionStorage.getItem('emailAddress')
         let sessionUserName = sessionStorage.getItem('userName') || 'self'
         yield put(loadingDots(true))
@@ -21,19 +22,20 @@ export function* sendMessageFromUserSaga({payload}) {
             sessionUserName = text
         }
         yield put(sendMessageFromUser.success({user: 'loading', message: ['.......']}))
+        const {siteSettings} = configObject || {}
         const input = {
-            "botId": config.botId,
-            "botAliasId": config.botAliasId,
+            "botId": siteSettings.REACT_APP_BOTID,
+            "botAliasId": siteSettings.REACT_APP_BOTALIASID,
             "sessionId": sessId,
             "localeId": "en_US",
             "text": text.replace("&", ","),
-            "siteId": "base",
+            "siteId": siteSettings?.siteid || 'base',
             "timeStamp": timeStamp,
             "userName": sessionUserName,
             "emailId": sessionEmailId
         }
         yield put(enableScroll(true))
-        const response = yield call(axios.post, `${config.apiUri}/chatBotApi`, JSON.stringify(input));
+        const response = yield call(axios.post, `${configLoaded.apiUri}/chatBotApi`, JSON.stringify(input));
         const intent = response.data.sessionState.intent.name
         let customerAsUser = 'self'
         let customerEmail = ""

@@ -1,5 +1,8 @@
 import {createSelector} from 'reselect';
 import {fromJS} from 'immutable';
+import siteConfig from "../siteSettings";
+
+const envConfig = require(`../../config/env.${environment.NODE_ENV}`)
 
 
 export const setSendMessageFromUser = (state, payload) => state.setIn(['botResponseValue'], fromJS(payload))
@@ -69,3 +72,13 @@ export const getNextBatchOfMessages = createSelector(
     state => fromJS(state).getIn(['nextBatchOfMessages', 'nextBatchMsgs']),
     nextBatchMsgs => nextBatchMsgs
 );
+
+export const config = createSelector(
+    state => {
+        const siteId = sessionStorage.getItem('siteid');
+        return Object.assign({}, envConfig, {
+            apiUri: envConfig.REACT_APP_API_URL || "",
+            siteSettings: siteConfig[siteId]
+        });
+    }
+)

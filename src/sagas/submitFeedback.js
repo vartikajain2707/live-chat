@@ -2,9 +2,9 @@ import {takeLatest, put, call, select} from 'redux-saga/effects';
 import {enableScroll, submitFeedback} from '../actions';
 import Debug from 'debug';
 import axios from "axios";
-import {getStoreSessionId} from "../selectors";
+import {getStoreSessionId, config} from "../selectors";
 import moment from "moment";
-import {config} from '../config';
+import {config as configLoaded} from '../config'
 
 
 const debug = Debug('hb:liveChat:sagas:submitFeedbackSaga');
@@ -12,6 +12,8 @@ const debug = Debug('hb:liveChat:sagas:submitFeedbackSaga');
 export function* submitFeedbackSaga({payload}) {
     debug('called');
     try {
+        const configObject = yield select(config)
+        const {siteSettings} = configObject || {}
         const {feedbackInput, starRating, sendTranscriptCheckbox} = payload
         const sessionId = yield select(getStoreSessionId);
         const sessionEmailId = sessionStorage.getItem('emailAddress')
@@ -23,12 +25,12 @@ export function* submitFeedbackSaga({payload}) {
                 starRating
             },
             "sendTranscriptToUser": sendTranscriptCheckbox,
-            "siteId": "base",
+            "siteId": siteSettings?.siteid || 'base',
             "userName": sessionUserName,
             "emailId": sessionEmailId
         }
         yield put(enableScroll(true))
-        yield call(axios.post, `${config.apiUri}/chatBotApi/submitFeedback`, JSON.stringify(input));
+        yield call(axios.post, `${configLoaded.apiUri}/chatBotApi/submitFeedback`, JSON.stringify(input));
         const response = {
             user: 'bot',
             message: ['Your Feedback has been submitted. Thank You! Have a nice day.'],
@@ -39,7 +41,10 @@ export function* submitFeedbackSaga({payload}) {
                 window.parent.postMessage({closeChatBot: true}, '*');
             }
         }, "2000");
-        sessionStorage.clear()
+        sessionStorage.removeItem("cachedMessages");
+        sessionStorage.removeItem("sessionId");
+        sessionStorage.removeItem("emailAddress");
+        sessionStorage.removeItem("userName");
         yield put(submitFeedback.success(response))
     } catch (err) {
         debug(err);
