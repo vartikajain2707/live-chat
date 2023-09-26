@@ -146,6 +146,10 @@ const ChatBody = ({classes, ...props}) => {
         sendSignalToSendMoreMess, usersName, showFeedbackOnClickCross, responseFetchLoadingDots,
         activeScroll, hideLoadMore
     } = props
+    const siteid = sessionStorage.getItem('siteid');
+    const siteSettings = require('../siteSettings')
+    const chatBotIcon = siteSettings[siteid]?.chatBotIcon
+
     const [showFeedback, setShowFeedback] = useState(true)
     const messageLength = messages.length
     const chatBoxScroll = useRef(null);
@@ -194,7 +198,7 @@ const ChatBody = ({classes, ...props}) => {
 
                             <div>{isDifferentUser && ((user === 'bot' || user === 'loading') ?
                                 <Avatar className={classes.messageAvatar}>
-                                    <img src={cexFlagImage} className={classes.robotImage} alt={'cex'}/>
+                                    <img src={chatBotIcon} className={classes.robotImage} alt={'cex'}/>
                                 </Avatar> :
                                 <Avatar className={classes.selfAvatar}>
                                     <PersonIcon/>

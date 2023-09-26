@@ -1,10 +1,10 @@
-import {takeLatest, put, call} from 'redux-saga/effects';
+import {takeLatest, put, call, select} from 'redux-saga/effects';
 import {sendMessageFromUser, sendTranscript} from '../actions';
 import Debug from 'debug';
 import axios from "axios";
-import {config} from '../config';
 import moment from "moment/moment";
-
+import {config} from "../selectors";
+import {config as configLoaded} from '../config'
 
 const debug = Debug('hb:liveChat:sagas:sendTranscriptSaga');
 
@@ -14,16 +14,18 @@ export function* sendTranscriptSaga({payload}) {
         const sessionEmailId = sessionStorage.getItem('emailAddress')
         const sessionUserName = sessionStorage.getItem('userName') || 'self'
         const {sessId} = payload
+        const configObject = yield select(config)
+        const {siteSettings} = configObject || {}
         const input = {
-            "botId": config.botId,
-            "botAliasId": config.botAliasId,
+            "botId": siteSettings.botId,
+            "botAliasId": siteSettings.botAliasId,
             "sessionId": sessId,
             "localeId": "en_US",
-            "siteId": "base",
+            "siteId": siteSettings?.siteid || 'base',
             "userName": sessionUserName,
             "emailId": sessionEmailId
         }
-        const response = yield call(axios.post, `${config.apiUri}/chatBotApi/sendTranscript`, JSON.stringify(input));
+        const response = yield call(axios.post, `${configLoaded.apiUri}/chatBotApi/sendTranscript`, JSON.stringify(input));
         let finalRes = {
             user: 'bot',
             message: ['Oops!! There was an error in sending you the chat transcript. Please try again.'],

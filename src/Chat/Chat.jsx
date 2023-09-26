@@ -31,6 +31,7 @@ const Chat = ({classes, ...props}) => {
     const [currentFetchedMessages, setCurrentFetchedMessages] = useState([])
     const [hideLoadMore, setHideLoadMore] = useState(true)
 
+
     useEffect(() => {
         const filteredMessages = messages.filter(({user}) => user !== 'loading')
         if (JSON.stringify(currentFetchedMessages) !== JSON.stringify(nextBatchOfMessages)) {
@@ -69,7 +70,10 @@ const Chat = ({classes, ...props}) => {
         let localStorageMessages = JSON.parse(sessionStorage.getItem('cachedMessages'))
         const lastStoredMessTime = ((localStorageMessages || []).pop() || {}).timeStamp
         if (lastStoredMessTime + 3600 < moment().unix()) {
-            sessionStorage.clear()
+            sessionStorage.removeItem("cachedMessages");
+            sessionStorage.removeItem("sessionId");
+            sessionStorage.removeItem("emailAddress");
+            sessionStorage.removeItem("userName");
         }
         let uuid = sessionStorage.getItem('sessionId');
         if (!uuid) {   //newChat Condition
@@ -128,7 +132,8 @@ const Chat = ({classes, ...props}) => {
                     closeClickedOnce={closeClickedOnce} showFeedbackOnClickCross={showFeedbackOnClickCross}
                     enableScroll={enableScroll}
         />
-        <ChatBody messages={messages} setMessages={setMessages} setStoredMessageStatus={setStoredMessageStatus}
+        <ChatBody messages={messages} setMessages={setMessages}
+                  setStoredMessageStatus={setStoredMessageStatus}
                   responseLoadingDots={responseLoadingDots}
                   sendMessageFromUser={sendMessageFromUser} sessionId={sessionId}
                   sendSignalToSendMoreMess={sendSignalToSendMoreMess} usersName={usersName}

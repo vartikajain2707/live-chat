@@ -1,6 +1,5 @@
 import React, {useState} from 'react'
 import {Avatar, Button, Menu, MenuItem, Typography, withStyles} from "@material-ui/core";
-import cexFlagImage from "../assets/cexFlag.png";
 import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
 import CloseIcon from "@material-ui/icons/Close";
 
@@ -49,6 +48,10 @@ const ChatHeader = ({classes, ...props}) => {
     const {closeClickedOnce, showFeedbackOnClickCross, setMessages, messages, enableScroll} = props
     const [anchorElement, setAnchorElement] = useState(null);
     const open = Boolean(anchorElement)
+    const siteid = sessionStorage.getItem('siteid');
+    const siteSettings = require('../siteSettings')
+    const headerIcon = siteSettings[siteid]?.headerIcon
+    const headerTitle = siteSettings[siteid]?.headerTitle
     const handleClick = (event) => {
         setAnchorElement(event.currentTarget)
     }
@@ -65,11 +68,11 @@ const ChatHeader = ({classes, ...props}) => {
     }
     return <div className={classes.chatHeader}>
         <Avatar className={classes.avatar}>
-            <img src={cexFlagImage} alt={'cexFlag'} className={classes.robotImage}/>
+            <img src={headerIcon} alt={'cexFlag'} className={classes.robotImage}/>
         </Avatar>
         <div className={classes.chatHeaderInfo}>
             <Typography variant="subtitle1" className={classes.chatHeaderTitle}>
-                CEX Support
+                {headerTitle}
             </Typography>
         </div>
         <div className={classes.chatHeaderSide}>
