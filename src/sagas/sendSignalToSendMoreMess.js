@@ -20,8 +20,7 @@ export function* sendSignalToSendMoreMessSaga({payload}) {
         yield put(fetchLoader(true))
 
         const input = {
-            // "botId": "D4ALYGLD6O", // ayush stack
-            "botId": '2RON6R80PC', // prod
+            "botId": siteSettings.REACT_APP_BOTID, // prod
             "sessionId": sessId,
             "localeId": "en_US",
             "fetchMessageCount": fetchMessageCount,

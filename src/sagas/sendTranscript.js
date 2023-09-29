@@ -17,8 +17,8 @@ export function* sendTranscriptSaga({payload}) {
         const configObject = yield select(config)
         const {siteSettings} = configObject || {}
         const input = {
-            "botId": siteSettings.botId,
-            "botAliasId": siteSettings.botAliasId,
+            "botId": siteSettings.REACT_APP_BOTID,
+            "botAliasId": siteSettings.REACT_APP_BOTALIASID,
             "sessionId": sessId,
             "localeId": "en_US",
             "siteId": siteSettings?.siteid || 'base',
