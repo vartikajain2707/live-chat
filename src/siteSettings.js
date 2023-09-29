@@ -1,15 +1,15 @@
 module.exports = {
     "base": {
         "headerTitle": "CEX Support",
-        "headerIcon": "https://vartika-hornblower-assets.s3.us-west-2.amazonaws.com/data/cexFlag.png",
-        "chatBotIcon": "https://vartika-hornblower-assets.s3.us-west-2.amazonaws.com/data/cexFlag.png",
+        "headerIcon": "https://vartika-hornblower-assets.s3.us-west-2.amazonaws.com/data/baseLogo.png",
+        "chatBotIcon": "https://vartika-hornblower-assets.s3.us-west-2.amazonaws.com/data/baseLogo.png",
         "REACT_APP_BOTID": '2RON6R80PC',
         "REACT_APP_BOTALIASID": 'ERAZYC0A2I',
         "siteid": "base"
     },
     "navypier": {
         "headerTitle": "Navy Pier Support",
-        "headerIcon": "https://vartika-hornblower-assets.s3.us-west-2.amazonaws.com/data/navyPierLogo.png",
+        "headerIcon": "https://vartika-hornblower-assets.s3.us-west-2.amazonaws.com/data/navypierLogo.png",
         "chatBotIcon": "https://vartika-hornblower-assets.s3.us-west-2.amazonaws.com/data/navyPierLogo2.png",
         "REACT_APP_BOTID": 'IKZSHJKL4B',
         "REACT_APP_BOTALIASID": 'TSTALIASID',
