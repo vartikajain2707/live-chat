@@ -68,7 +68,7 @@ const ChatHeader = ({classes, ...props}) => {
     }
     return <div className={`${classes.chatHeader} chatHeader`}>
         <Avatar className={classes.avatar}>
-            <img src={headerIcon} alt={'cexFlag'} className={classes.robotImage}/>
+            <img src={headerIcon} alt={'cexFlag'} className={`${classes.robotImage} robotImage`}/>
         </Avatar>
         <div className={classes.chatHeaderInfo}>
             <Typography variant="subtitle1" className={`${classes.chatHeaderTitle} chatHeaderTitle`}>
