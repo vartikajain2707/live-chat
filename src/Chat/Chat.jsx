@@ -127,7 +127,7 @@ const Chat = ({classes, ...props}) => {
     }
 
 
-    return <div className={classes.chat}>
+    return <div className={`${classes.chat} chat`}>
         <ChatHeader sendTranscript={sendTranscript} messages={messages} setMessages={setMessages} sessionId={sessionId}
                     closeClickedOnce={closeClickedOnce} showFeedbackOnClickCross={showFeedbackOnClickCross}
                     enableScroll={enableScroll}

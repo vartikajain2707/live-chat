@@ -103,10 +103,10 @@ const SliderComponent = ({options, classes, ...props}) => {
                                     </Typography>
                                     <div className={classes.additionalInfoContainer}>
                                         <a href={option.tagLink} target="_blank"><Button size={'small'}
-                                                                                         className={classes.knowMoreBtn}>Know
+                                                                                         className={`${classes.knowMoreBtn} knowMoreBtn`}>Know
                                             More</Button></a>
                                         <Typography variant={"subtitle2"}>from <span
-                                            className={classes.displayPrice}>{CURRENCY_SYMBOLS[option.defaultCurrency]}{option.displayPrice}</span></Typography>
+                                            className={`${classes.displayPrice} displayPrice`}>{CURRENCY_SYMBOLS[option.defaultCurrency]}{option.displayPrice}</span></Typography>
                                     </div>
 
                                 </CardContent>

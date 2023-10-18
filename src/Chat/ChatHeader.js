@@ -66,12 +66,12 @@ const ChatHeader = ({classes, ...props}) => {
         sendTranscript({sessId: sessionId, allMessages: filteredMessages})
         setAnchorElement(null)
     }
-    return <div className={classes.chatHeader}>
+    return <div className={`${classes.chatHeader} chatHeader`}>
         <Avatar className={classes.avatar}>
             <img src={headerIcon} alt={'cexFlag'} className={classes.robotImage}/>
         </Avatar>
         <div className={classes.chatHeaderInfo}>
-            <Typography variant="subtitle1" className={classes.chatHeaderTitle}>
+            <Typography variant="subtitle1" className={`${classes.chatHeaderTitle} chatHeaderTitle`}>
                 {headerTitle}
             </Typography>
         </div>
@@ -81,7 +81,7 @@ const ChatHeader = ({classes, ...props}) => {
                 size="small"
                 aria-controls={'customized-menu'}
                 aria-haspopup="true"
-                className={classes.headerIcon}>
+                className={`${classes.headerIcon} headerIcon`}>
                 <MoreHorizIcon/>
             </Button>
             <Menu
@@ -106,7 +106,7 @@ const ChatHeader = ({classes, ...props}) => {
                 <MenuItem onClick={onClickSendTranscript}
                 >Send Transcript</MenuItem>
             </Menu>
-            <CloseIcon className={classes.closeIcon} onClick={() => {
+            <CloseIcon className={`${classes.closeIcon} closeIcon`} onClick={() => {
 
                 if (!showFeedbackOnClickCross) {
                     enableScroll(true)

@@ -173,7 +173,7 @@ const ChatBody = ({classes, ...props}) => {
                             currentMessagesCount: userBotMessageOnlyLength
                         })
                     }}
-                    className={classes.loadMoreBtn}
+                    className={`${classes.loadMoreBtn} loadMoreBtn`}
             >
                 {responseFetchLoadingDots ? <CircularProgress size={'1rem'}/> : `Load More Messages`}
             </Button>
@@ -188,8 +188,8 @@ const ChatBody = ({classes, ...props}) => {
                         const isDiffUserFromBottom = (idx === messages.length - 1 || user !== messages[idx + 1].user) && subIdx === message.length - 1;
                         return <Typography component="p" color={'textPrimary'} variant={'body2'} key={subIdx}
                                            className={classNames({
-                                               [classes.chatMessage]: true,
-                                               [classes.chatMessageReceiver]: user !== 'bot' && user !== 'loading',
+                                               [`${classes.chatMessage} chatMessage`]: true,
+                                               [`${classes.chatMessageReceiver} chatMessageReceiver`]: user !== 'bot' && user !== 'loading',
                                                [classes.chatMessageBot]: user === 'bot' || user === 'loading',
                                                [classes.differentUserMessage]: (idx > 0 && user !== messages[idx - 1].user) && subIdx === 0,
                                                [classes.sameUserMessage]: !isDifferentUser,
@@ -198,14 +198,14 @@ const ChatBody = ({classes, ...props}) => {
 
                             <div>{isDifferentUser && ((user === 'bot' || user === 'loading') ?
                                 <Avatar className={classes.messageAvatar}>
-                                    <img src={chatBotIcon} className={classes.robotImage} alt={'cex'}/>
+                                    <img src={chatBotIcon} className={`${classes.robotImage} robotImage`} alt={'cex'}/>
                                 </Avatar> :
                                 <Avatar className={classes.selfAvatar}>
                                     <PersonIcon/>
                                 </Avatar>)}
                                 {(isDifferentUser && user !== 'loading') && <span className={classNames({
-                                    [classes.chatName]: user === 'bot',
-                                    [classes.chatNameReciever]: user !== 'bot' && user !== 'loading'
+                                    [`${classes.chatName} chatName`]: user === 'bot',
+                                    [`${classes.chatNameReciever} chatNameReciever`]: user !== 'bot' && user !== 'loading'
                                 })}>
                 {user.toUpperCase()}</span>}
                                 {(responseLoadingDots !== false && user === 'loading' && idx === messageLength - 1) ?
@@ -213,8 +213,8 @@ const ChatBody = ({classes, ...props}) => {
                                 }
                                 {isDiffUserFromBottom && user !== 'loading' && <span
                                     className={classNames({
-                                        [classes.chatTimestamp]: user === 'bot',
-                                        [classes.chatTimestampReciever]: user !== 'bot' && user !== 'loading'
+                                        [`${classes.chatTimestamp} chatTimestamp`]: user === 'bot',
+                                        [`${classes.chatTimestampReciever} chatTimestampReciever`]: user !== 'bot' && user !== 'loading'
                                     })}>{formattedTime}
                                     </span>}
                             </div>
@@ -237,7 +237,8 @@ const ChatBody = ({classes, ...props}) => {
                                         display = input = option;
                                     }
                                     return (
-                                        <Button size="small" variant="outlined" key={idx} className={classes.optionButton}
+                                        <Button size="small" variant="outlined" key={idx}
+                                                className={`${classes.optionButton} optionButton`}
                                                 onClick={() => {
                                                     setMessages([...messages, Object.assign({}, {
                                                         user: (usersName || 'self'),

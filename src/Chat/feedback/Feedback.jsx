@@ -77,7 +77,7 @@ const Feedback = ({classes, ...props}) => {
                         </Grid>
                         <Grid item xs={12}>
                             <div className={classes.feedbackSubmitContainer}>
-                                <Button type="submit" className={classes.feedbackSubmit}
+                                <Button type="submit" className={`${classes.feedbackSubmit} feedbackSubmit`}
                                         size="small">
                                     Share Feedback
                                 </Button>
