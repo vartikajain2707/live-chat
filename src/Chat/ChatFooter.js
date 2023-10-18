@@ -46,7 +46,7 @@ const ChatFooter = ({classes, ...props}) => {
                 endAdornment: (
                     <InputAdornment position="end">
                         <SendIcon onClick={messageAppend} className={classNames({
-                            [classes.sendIcon]: true,
+                            [`${classes.sendIcon} sendIcon`]: true,
                             [classes.sendIconDisable]: input === ''
                         })}/>
                     </InputAdornment>

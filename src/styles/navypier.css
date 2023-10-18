@@ -1,80 +1,80 @@
-.Chat-chat-1 {
+.Chat-chat-1, .chat {
     background-color: #f1f1f2;
 }
 
-.ChatBody-chatMessageReceiver-16 {
+.ChatBody-chatMessageReceiver-16, .chatMessageReceiver {
     background-color: #46C6EB;
     color: #263C79
 }
 
 
-.ChatBody-chatNameReciever-13, .ChatBody-chatTimestampReciever-15 {
+.ChatBody-chatNameReciever-13, .ChatBody-chatTimestampReciever-15, .chatTimestampReciever, .chatNameReciever {
     color: #263C79
 }
 
-.ChatBody-chatMessage-11 {
+.ChatBody-chatMessage-11, .chatMessage {
     color: #263C79
 }
 
 
-.ChatBody-chatName-12, .ChatBody-chatTimestamp-14 {
+.ChatBody-chatName-12, .ChatBody-chatTimestamp-14, .chatTimestamp, .chatName {
     color: #263C79
 }
 
-.ChatBody-optionButton-21 {
+.ChatBody-optionButton-21, .optionButton {
     color: #263C79;
     border: 1px solid #46C6EB;
 }
 
 
-.ChatBody-optionButton-21:hover {
+.ChatBody-optionButton-21:hover, .optionButton:hover {
     color: #263C79;
     background-color: #46C6EB
 }
 
-.ChatBody-loadMoreBtn-25 {
+.ChatBody-loadMoreBtn-25, .loadMoreBtn {
     color: #46C6EB;
 }
 
-.ChatBody-loadMoreBtn-25:hover {
+.ChatBody-loadMoreBtn-25:hover, .loadMoreBtn:hover {
     background-color: transparent;
 }
 
 
-.ChatHeader-chatHeader-2 {
+.ChatHeader-chatHeader-2, .chatHeader {
     background-color: #263C79
 }
 
-.ChatHeader-chatHeaderTitle-6 {
+.ChatHeader-chatHeaderTitle-6, .chatHeaderTitle {
     color: #fff;
 }
 
-.ChatHeader-headerIcon-8, .ChatHeader-closeIcon-9 {
+.ChatHeader-headerIcon-8, .ChatHeader-closeIcon-9, .headerIcon, .closeIcon {
     color: #fff;
 }
 
-.ChatFooter-sendIcon-29 {
+.ChatFooter-sendIcon-29, .sendIcon {
     color: #263C79;
 }
 
-.SliderComponent-knowMoreBtn-31 {
+.SliderComponent-knowMoreBtn-31, .knowMoreBtn {
     color: #fff;
     background-color: #C3319A;
 }
 
-.SliderComponent-knowMoreBtn-31:hover {
+.SliderComponent-knowMoreBtn-31:hover, .knowMoreBtn:hover {
     color: #C3319A;
     background-color: #F2F5FF;
 }
 
-.SliderComponent-displayPrice-36, .SliderComponent-sliderPrice-38, .SliderComponent-sliderText-39 {
+.SliderComponent-displayPrice-36, .SliderComponent-sliderPrice-38, .SliderComponent-sliderText-39, .displayPrice {
     color: #263C79
 }
 
-.ChatHeader-robotImage-4 {
+.ChatHeader-robotImage-4, .robotImage {
     width: 42px
 }
 
-.Feedback-feedbackSubmit-33 {
+.Feedback-feedbackSubmit-33, .feedbackSubmit {
     background-color: #263C79
 }
