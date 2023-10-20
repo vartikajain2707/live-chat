@@ -1,74 +1,74 @@
-.Chat-chat-1 {
+.Chat-chat-1, .chat {
     background-color: #f4f0f7;
 }
 
-.ChatBody-chatMessageReceiver-16 {
+.ChatBody-chatMessageReceiver-16, .chatMessageReceiver {
     background-color: #358ddd;
 }
 
 
-.ChatBody-chatNameReciever-13, .ChatBody-chatTimestampReciever-15 {
+.ChatBody-chatNameReciever-13, .ChatBody-chatTimestampReciever-15, .chatNameReciever, .chatTimestampReciever {
     color: black
 }
 
 
-.ChatBody-chatName-12, .ChatBody-chatTimestamp-14 {
+.ChatBody-chatName-12, .ChatBody-chatTimestamp-14, .chatName, .chatTimestamp {
     color: black
 }
 
-.ChatBody-optionButton-21 {
+.ChatBody-optionButton-21, .optionButton {
     color: black;
     border: 1px solid #358ddd;
 }
 
-.ChatBody-optionButton-21:hover {
+.ChatBody-optionButton-21:hover, .optionButton:hover {
     color: #fff;
     background-color: #358ddd
 }
 
-.ChatBody-loadMoreBtn-25 {
+.ChatBody-loadMoreBtn-25, .loadMoreBtn {
     color: black;
 }
 
-.ChatBody-loadMoreBtn-25:hover {
+.ChatBody-loadMoreBtn-25:hover, .loadMoreBtn:hover {
     background-color: transparent;
 }
 
 
-.ChatHeader-chatHeader-2 {
+.ChatHeader-chatHeader-2, .chatHeader {
     background-color: #372f95
 }
 
-.ChatHeader-chatHeaderTitle-6 {
+.ChatHeader-chatHeaderTitle-6, .chatHeaderTitle {
     color: #fff;
 }
 
-.ChatHeader-headerIcon-8, .ChatHeader-closeIcon-9 {
+.ChatHeader-headerIcon-8, .ChatHeader-closeIcon-9, .headerIcon, .closeIcon {
     color: #fff;
 }
 
-.ChatFooter-sendIcon-29 {
+.ChatFooter-sendIcon-29, .sendIcon {
     color: #372f95;
 }
 
-.SliderComponent-knowMoreBtn-31 {
+.SliderComponent-knowMoreBtn-31, .knowMoreBtn {
     color: #fff;
     background-color: black;
 }
 
-.SliderComponent-knowMoreBtn-31:hover {
+.SliderComponent-knowMoreBtn-31:hover, .knowMoreBtn:hover {
     color: black;
     background-color: #F2F5FF;
 }
 
-.SliderComponent-displayPrice-36, .SliderComponent-sliderPrice-38, .SliderComponent-sliderText-39 {
+.SliderComponent-displayPrice-36, .SliderComponent-sliderPrice-38, .SliderComponent-sliderText-39, .displayPrice {
     color: black
 }
 
-.ChatHeader-robotImage-4 {
+.ChatHeader-robotImage-4, .robotImage {
     width: 42px
 }
 
-.Feedback-feedbackSubmit-33 {
+.Feedback-feedbackSubmit-33, .feedbackSubmit {
     background-color: #372f95
 }
