@@ -1,8 +1,8 @@
 module.exports = {
     "base": {
         "headerTitle": "CEX Support",
-        "headerIcon": "https://vartika-hornblower-assets.s3.us-west-2.amazonaws.com/data/baseLogo.png",
-        "chatBotIcon": "https://vartika-hornblower-assets.s3.us-west-2.amazonaws.com/data/baseLogo.png",
+        "headerIcon": "https://prodv3-hornblower-assets.s3.us-west-2.amazonaws.com/data/baseLogo.png",
+        "chatBotIcon": "https://prodv3-hornblower-assets.s3.us-west-2.amazonaws.com/data/baseLogo.png",
         "REACT_APP_BOTID": '2RON6R80PC',
         "REACT_APP_BOTALIASID": 'ERAZYC0A2I',
         "siteid": "base"
