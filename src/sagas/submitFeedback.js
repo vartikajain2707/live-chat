@@ -41,10 +41,7 @@ export function* submitFeedbackSaga({payload}) {
                 window.parent.postMessage({closeChatBot: true}, '*');
             }
         }, "2000");
-        sessionStorage.removeItem("cachedMessages");
-        sessionStorage.removeItem("sessionId");
-        sessionStorage.removeItem("emailAddress");
-        sessionStorage.removeItem("userName");
+        ["cachedMessages", "sessionId", "emailAddress", "userName"].forEach(key => sessionStorage.removeItem(key));
         yield put(submitFeedback.success(response))
     } catch (err) {
         debug(err);

@@ -2,7 +2,6 @@ import React, {useEffect, useRef, useState} from 'react'
 import {Avatar, Button, Typography, withStyles, CircularProgress} from "@material-ui/core";
 import classNames from 'classnames';
 import PersonIcon from '@material-ui/icons/Person';
-import cexFlagImage from '../assets/cexFlag.png'
 import InlineLoader from '../components/InlineLoader'
 import Feedback from '../Chat/feedback';
 import moment from 'moment-timezone/builds/moment-timezone-with-data-10-year-range';
