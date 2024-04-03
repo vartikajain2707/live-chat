@@ -22,7 +22,7 @@ const Chat = ({classes, ...props}) => {
     const {
         sendMessageFromUser, responseFromBot, responseLoadingDots, sendSignalToSendMoreMess,
         nextBatchOfMessages, usersName, sendTranscript, closeClickedOnce, showFeedbackOnClickCross,
-        afterFeedbackResult, storeSessionId, activeScroll, responseFetchLoadingDots, enableScroll
+        afterFeedbackResult, storeSessionId, activeScroll, responseFetchLoadingDots, enableScroll, removeSessionStorage
     } = props;
     const [input, setInput] = useState('')
     const [sessionId, setSessionId] = useState('')
@@ -68,7 +68,7 @@ const Chat = ({classes, ...props}) => {
     const postMessageHandler = (event) => {
         const isGenerateNewSession = event.data.generateNewSession
         if (isGenerateNewSession) {
-            ["cachedMessages", "sessionId", "emailAddress", "userName"].forEach(key => sessionStorage.removeItem(key));
+            removeSessionStorage()
             const uuid = v4()
             sessionStorage.setItem('sessionId', uuid);
             setSessionId(uuid);
@@ -80,7 +80,7 @@ const Chat = ({classes, ...props}) => {
         let localStorageMessages = JSON.parse(sessionStorage.getItem('cachedMessages'))
         const lastStoredMessTime = ((localStorageMessages || []).pop() || {}).timeStamp
         if (lastStoredMessTime + 3600 < moment().unix()) {
-            ["cachedMessages", "sessionId", "emailAddress", "userName"].forEach(key => sessionStorage.removeItem(key));
+            removeSessionStorage()
         }
         let uuid = sessionStorage.getItem('sessionId');
         window.addEventListener('message', postMessageHandler)

@@ -11,6 +11,7 @@ import enableScroll from './enableScroll'
 import fetchLoader from "./fetchLoader"
 import clientEmailId from './clientEmailId'
 import fetchPrevResponse from './fetchPrevResponse'
+import removeSessionStorage from './removeSessionStorage'
 
 const rootReducer = combineReducers({
     botResponse: botResponse,
@@ -24,7 +25,8 @@ const rootReducer = combineReducers({
     enableScroll: enableScroll,
     form: reducer,
     fetchLoader: fetchLoader,
-    clientEmailId: clientEmailId
+    clientEmailId: clientEmailId,
+    removeSessionStorage: removeSessionStorage
 });
 
 export default rootReducer;
