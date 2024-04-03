@@ -14,6 +14,7 @@ export const sendTranscript = createAction('SEND_TRANSCRIPT');
 export const submitFeedback = createAction('SUBMIT_FEEDBACK');
 export const closeClickedOnce = createAction('CLOSE_CLICKED_ONCE');
 export const loadingDots = createAction('LOADING_DOTS')
+export const removeSessionStorage = createAction('REMOVE_SESSION_STORAGE')
 export const enableScroll = createAction('ENABLE_SCROLL')
 export const clientUserName = createAction('CLIENT_USER_NAME')
 export const storeSessionId = createAction('STORE_SESSION_ID')

@@ -1,5 +1,5 @@
 import {takeLatest, put, call, select} from 'redux-saga/effects';
-import {enableScroll, submitFeedback} from '../actions';
+import {enableScroll, submitFeedback, removeSessionStorage} from '../actions';
 import Debug from 'debug';
 import axios from "axios";
 import {getStoreSessionId, config} from "../selectors";
@@ -41,10 +41,7 @@ export function* submitFeedbackSaga({payload}) {
                 window.parent.postMessage({closeChatBot: true}, '*');
             }
         }, "2000");
-        sessionStorage.removeItem("cachedMessages");
-        sessionStorage.removeItem("sessionId");
-        sessionStorage.removeItem("emailAddress");
-        sessionStorage.removeItem("userName");
+        yield put(removeSessionStorage())
         yield put(submitFeedback.success(response))
     } catch (err) {
         debug(err);
