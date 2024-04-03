@@ -22,7 +22,7 @@ const Chat = ({classes, ...props}) => {
     const {
         sendMessageFromUser, responseFromBot, responseLoadingDots, sendSignalToSendMoreMess,
         nextBatchOfMessages, usersName, sendTranscript, closeClickedOnce, showFeedbackOnClickCross,
-        afterFeedbackResult, storeSessionId, activeScroll, responseFetchLoadingDots, enableScroll
+        afterFeedbackResult, storeSessionId, activeScroll, responseFetchLoadingDots, enableScroll, removeSessionStorage
     } = props;
     const [input, setInput] = useState('')
     const [sessionId, setSessionId] = useState('')
@@ -65,31 +65,31 @@ const Chat = ({classes, ...props}) => {
         // eslint-disable-next-line
     }, [messages])
 
+    const postMessageHandler = (event) => {
+        const isGenerateNewSession = event.data.generateNewSession
+        if (isGenerateNewSession) {
+            removeSessionStorage()
+            const uuid = v4()
+            sessionStorage.setItem('sessionId', uuid);
+            setSessionId(uuid);
+            sendMessageFromUser({text: 'Hi', sessId: uuid, timeStamp: moment().unix()})
+        }
+    }
 
     useEffect(() => {
         let localStorageMessages = JSON.parse(sessionStorage.getItem('cachedMessages'))
         const lastStoredMessTime = ((localStorageMessages || []).pop() || {}).timeStamp
         if (lastStoredMessTime + 3600 < moment().unix()) {
-            sessionStorage.removeItem("cachedMessages");
-            sessionStorage.removeItem("sessionId");
-            sessionStorage.removeItem("emailAddress");
-            sessionStorage.removeItem("userName");
+            removeSessionStorage()
         }
         let uuid = sessionStorage.getItem('sessionId');
-        if (!uuid) {   //newChat Condition
-            uuid = v4()
-            sessionStorage.setItem('sessionId', uuid);
-            sendMessageFromUser({text: 'Hi', sessId: uuid, timeStamp: moment().unix()})
-        } else {
+        window.addEventListener('message', postMessageHandler)
+        if (uuid) {   //newChat Condition
             const localStorageMessages = JSON.parse(sessionStorage.getItem('cachedMessages'));
             setMessages([...localStorageMessages])
         }
         storeSessionId(uuid)
         setSessionId(uuid);
-        if (window && window.parent) {
-            window.parent.postMessage({closeChatBotLoader: true}, '*');
-        }
-        // eslint-disable-next-line
     }, [])
 
     useEffect(() => {

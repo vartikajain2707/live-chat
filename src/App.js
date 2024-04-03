@@ -8,7 +8,7 @@ function App() {
     const style = document.createElement('link');
     style.rel = 'stylesheet';
     style.type = 'text/css';
-    style.href = `https://vartika-hornblower-assets.s3.us-west-2.amazonaws.com/data/${siteid}.css`;
+    style.href = `https://prodv3-hornblower-assets.s3.us-west-2.amazonaws.com/data/chatbot/${siteid}.css`;
     document.body.append(style);
     sessionStorage.setItem('siteid', siteid)
     return (

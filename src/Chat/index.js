@@ -2,7 +2,7 @@ import {connect} from 'react-redux';
 import {List} from 'immutable';
 import {
     sendMessageFromUser, loadingDots, sendSignalToSendMoreMess, sendTranscript, closeClickedOnce,
-    storeSessionId, enableScroll
+    storeSessionId, enableScroll, removeSessionStorage
 } from '../actions';
 import Chat from './Chat';
 import {bindActionCreators} from 'redux';
@@ -47,7 +47,8 @@ const dispatchToProps = dispatch => bindActionCreators({
     sendTranscript,
     closeClickedOnce,
     storeSessionId,
-    enableScroll
+    enableScroll,
+    removeSessionStorage
 }, dispatch);
 
 export default connect(stateToProps, dispatchToProps)(Chat);

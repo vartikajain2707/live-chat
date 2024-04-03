@@ -22,5 +22,13 @@ module.exports = {
         "REACT_APP_BOTID": 'MEPH1P49CV',
         "REACT_APP_BOTALIASID": 'TSTALIASID',
         "siteid": "superblue"
+    },
+    "angelsenvy": {
+        "headerTitle": "Angel's Envy Support",
+        "headerIcon": "https://prodv3-hornblower-assets.s3.us-west-2.amazonaws.com/data/chatbot/angelsenvyLogo.png",
+        "chatBotIcon": "https://prodv3-hornblower-assets.s3.us-west-2.amazonaws.com/data/chatbot/angelsenvyLogo.png",
+        "REACT_APP_BOTID": 'CT0EBRMWFU',
+        "REACT_APP_BOTALIASID": 'PG9YPT5QUL',
+        "siteid": "angelsenvy"
     }
 }
