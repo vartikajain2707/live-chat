@@ -26,12 +26,13 @@
     }
     if (displayBot === 'true') {
         displayChatbot();
-        sendMessageToChatbot({generateNewSession: true});
     }
     body.addEventListener('click', (e) => {
         e.target.matches = e.target.matches || e.target.msMatchesSelector;
         if (e.target.matches('#cex-bot-launcher-img')) {
             displayChatbot();
+            sendMessageToChatbot({generateNewSession: true});
+
         }
         ;
     });
