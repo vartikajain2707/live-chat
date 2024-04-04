@@ -13,6 +13,10 @@ export const getSendMessageFromUser = createSelector(
     botResponseValue => (botResponseValue ? botResponseValue.toJS() : {})
 );
 
+export const setRemoveSessionStorage = () => {
+    ["cachedMessages", "sessionId", "emailAddress", "userName"].forEach(key => sessionStorage.removeItem(key));
+}
+
 export const setLoadingDots = (state, payload) => state.setIn(['loadingStatus'], fromJS(payload))
 export const getLoadingDots = createSelector(
     state => fromJS(state).getIn(['loadingDots', 'loadingStatus']),

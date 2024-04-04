@@ -1,0 +1,76 @@
+@font-face {
+    font-family: 'TradeGothicLTPro';
+    src: url('https://prodv3-hornblower-assets.s3.us-west-2.amazonaws.com/data/chatbot/anglesEnvy-TradeGothicLTPro.woff2') format('woff2')
+    /*/* Specify paths to your font files *! url('./path/to/your/font.woff') format('woff');*/
+    /* Add other font formats if necessary */
+}
+
+.Chat-chat-1, .chat {
+    background-color: #ffffff;
+}
+
+.ChatBody-chatMessageReceiver-16, .chatMessageReceiver {
+    background-color: #7E213B !important;
+    color: #ffffff !important;
+    font-family: 'TradeGothicLTPro', sans-serif;
+}
+
+.ChatBody-chatMessage-11, .chatMessage {
+    color: #402020;
+    background-color: #aa9868;
+    font-family: 'BigNoodleTitling', serif;
+}
+
+.ChatBody-chatNameReciever-13, .ChatBody-chatTimestampReciever-15, .chatNameReciever, .chatTimestampReciever {
+    color: #402020
+}
+
+
+.ChatBody-chatName-12, .ChatBody-chatTimestamp-14, .chatName, .chatTimestamp {
+    color: #402020
+}
+
+.ChatBody-optionButton-21, .optionButton {
+    color: #7E213B;
+    border: 1px solid #7E213B;
+}
+
+.ChatBody-optionButton-21:hover, .optionButton:hover {
+    color: #ffffff;
+    background-color: #7E213B
+}
+
+.ChatBody-loadMoreBtn-25, .loadMoreBtn {
+    color: black;
+}
+
+.ChatBody-loadMoreBtn-25:hover, .loadMoreBtn:hover {
+    background-color: transparent;
+}
+
+
+.ChatHeader-chatHeader-2, .chatHeader {
+    background-color: #7E213B
+}
+
+.ChatHeader-chatHeaderTitle-6, .chatHeaderTitle {
+    color: #ffffff;
+    font-family: 'TradeGothicLTPro', sans-serif;
+}
+
+.ChatHeader-headerIcon-8, .ChatHeader-closeIcon-9, .headerIcon, .closeIcon {
+    color: #ffffff;
+}
+
+.ChatFooter-sendIcon-29, .sendIcon {
+    color: #aa9868;
+}
+
+
+.ChatHeader-robotImage-4, .robotImage {
+    width: 42px
+}
+
+.Feedback-feedbackSubmit-33, .feedbackSubmit {
+    background-color: #7E213B
+}
