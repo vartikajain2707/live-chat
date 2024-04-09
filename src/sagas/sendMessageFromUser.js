@@ -17,7 +17,10 @@ export function* sendMessageFromUserSaga({payload}) {
         const sessionEmailId = sessionStorage.getItem('emailAddress')
         let sessionUserName = sessionStorage.getItem('userName') || 'self'
         yield put(loadingDots(true))
-        const prevRes = yield select(getPrevResponse)
+        let prevRes = yield select(getPrevResponse);
+        if (!prevRes) {
+            prevRes = JSON.parse(sessionStorage.getItem('previousResponse') || '{}')
+        }
         if (prevRes?.data?.sessionState?.intent?.slots?.firstName === null) {
             sessionUserName = text
         }
@@ -42,6 +45,8 @@ export function* sendMessageFromUserSaga({payload}) {
         let customerAsUser = 'self'
         let customerEmail = ""
         if (intent === 'Welcome') {
+            const prevResponseString = JSON.stringify(response)
+            sessionStorage.setItem('previousResponse', prevResponseString)
             yield put(prevResponse(response))
             customerAsUser = response?.data?.sessionState?.intent?.slots?.firstName?.value?.originalValue
             customerEmail = response?.data?.sessionState?.intent?.slots?.emailId?.value?.originalValue
