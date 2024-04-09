@@ -14,7 +14,8 @@ export const getSendMessageFromUser = createSelector(
 );
 
 export const setRemoveSessionStorage = () => {
-    ["cachedMessages", "sessionId", "emailAddress", "userName", "totalMessageCount"].forEach(key => sessionStorage.removeItem(key));
+    ["cachedMessages", "sessionId", "emailAddress",
+        "userName", "totalMessageCount", "previousResponse"].forEach(key => sessionStorage.removeItem(key));
 }
 
 export const setLoadingDots = (state, payload) => state.setIn(['loadingStatus'], fromJS(payload))
@@ -43,7 +44,7 @@ export const getFetchLoader = createSelector(
 export const setPrevResponse = (state, payload) => state.setIn(['setPrevResponse'], fromJS(payload))
 export const getPrevResponse = createSelector(
     state => fromJS(state).getIn(['fetchPrevResponse', "setPrevResponse"]),
-    fetchPrevResponse => (fetchPrevResponse ? fetchPrevResponse.toJS() : {})
+    fetchPrevResponse => (fetchPrevResponse ? fetchPrevResponse.toJS() : undefined)
 );
 
 export const setCloseClick = (state, payload) => state.setIn(['closeClickedOnce'], fromJS(payload))
