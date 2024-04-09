@@ -13,13 +13,15 @@ import {
     getCloseClick,
     getAfterFeedbackResult,
     getScroll,
-    getFetchLoader
+    getFetchLoader,
+    getTotalMessageCount
 } from '../selectors'
 
 const stateToProps = state => {
     const responseFromBot = getSendMessageFromUser(state) || {};
     const responseLoadingDots = getLoadingDots(state) || false
     const responseFetchLoadingDots = getFetchLoader(state) || false
+    const totalMessageCount = getTotalMessageCount(state) || parseInt((sessionStorage.getItem('totalMessageCount'))) || 0;
     const activeScroll = getScroll(state) || false
     let usersName = sessionStorage.getItem('userName')
     if (usersName === 'undefined') {
@@ -36,7 +38,8 @@ const stateToProps = state => {
         usersName,
         showFeedbackOnClickCross,
         afterFeedbackResult,
-        responseFetchLoadingDots
+        responseFetchLoadingDots,
+        totalMessageCount
     }
 };
 

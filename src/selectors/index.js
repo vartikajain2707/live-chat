@@ -14,7 +14,7 @@ export const getSendMessageFromUser = createSelector(
 );
 
 export const setRemoveSessionStorage = () => {
-    ["cachedMessages", "sessionId", "emailAddress", "userName"].forEach(key => sessionStorage.removeItem(key));
+    ["cachedMessages", "sessionId", "emailAddress", "userName", "totalMessageCount"].forEach(key => sessionStorage.removeItem(key));
 }
 
 export const setLoadingDots = (state, payload) => state.setIn(['loadingStatus'], fromJS(payload))
@@ -68,9 +68,13 @@ export const getClientEmailId = createSelector(
     clientEmailId => clientEmailId
 );
 
+export const setTotalMessageCount = (state, payload) => state.setIn(['totalMessageCount'], fromJS(payload))
+export const getTotalMessageCount = createSelector(
+    state => fromJS(state).getIn(['nextBatchOfMessages', 'totalMessageCount']),
+    totalMessageCount => totalMessageCount
+);
 
 export const setNextBatchOfMessages = (state, payload) => state.setIn(['nextBatchMsgs'], fromJS(payload))
-
 
 export const getNextBatchOfMessages = createSelector(
     state => fromJS(state).getIn(['nextBatchOfMessages', 'nextBatchMsgs']),

@@ -22,14 +22,14 @@ const Chat = ({classes, ...props}) => {
     const {
         sendMessageFromUser, responseFromBot, responseLoadingDots, sendSignalToSendMoreMess,
         nextBatchOfMessages, usersName, sendTranscript, closeClickedOnce, showFeedbackOnClickCross,
-        afterFeedbackResult, storeSessionId, activeScroll, responseFetchLoadingDots, enableScroll, removeSessionStorage
-    } = props;
+        afterFeedbackResult, storeSessionId, activeScroll, responseFetchLoadingDots, enableScroll, removeSessionStorage,
+        totalMessageCount} = props;
     const [input, setInput] = useState('')
     const [sessionId, setSessionId] = useState('')
     const [messages, setMessages] = useState([]);
     const [storedMessageStatus, setStoredMessageStatus] = useState(false)
     const [currentFetchedMessages, setCurrentFetchedMessages] = useState([])
-    const [hideLoadMore, setHideLoadMore] = useState(true)
+    const [hideLoadMore, setHideLoadMore] = useState(false)
 
 
     useEffect(() => {
@@ -38,9 +38,6 @@ const Chat = ({classes, ...props}) => {
             const finalSetMessages = nextBatchOfMessages.concat(filteredMessages)
             setStoredMessageStatus(false)
             setMessages(finalSetMessages)
-            if (nextBatchOfMessages.length > currentFetchedMessages.length) {
-                setHideLoadMore(false)
-            }
             setCurrentFetchedMessages(nextBatchOfMessages)
 
         }
@@ -60,6 +57,13 @@ const Chat = ({classes, ...props}) => {
         if (topMsg.length > 10) {
             topMsg = topMsg.slice(-10)
         }
+        const filteredMessages = messages.filter(({user}) => user !== 'loading');
+        if (filteredMessages.length < totalMessageCount-1) {
+            setHideLoadMore(true);
+        }
+        else{
+            setHideLoadMore(false);
+        }
         const cachedMessages = JSON.stringify(topMsg)
         sessionStorage.setItem('cachedMessages', cachedMessages);
         // eslint-disable-next-line
@@ -68,7 +72,6 @@ const Chat = ({classes, ...props}) => {
     const postMessageHandler = (event) => {
         const isGenerateNewSession = event.data.generateNewSession
         if (isGenerateNewSession) {
-            removeSessionStorage()
             const uuid = v4()
             sessionStorage.setItem('sessionId', uuid);
             setSessionId(uuid);
@@ -130,7 +133,7 @@ const Chat = ({classes, ...props}) => {
     return <div className={`${classes.chat} chat`}>
         <ChatHeader sendTranscript={sendTranscript} messages={messages} setMessages={setMessages} sessionId={sessionId}
                     closeClickedOnce={closeClickedOnce} showFeedbackOnClickCross={showFeedbackOnClickCross}
-                    enableScroll={enableScroll}
+                    enableScroll={enableScroll} removeSessionStorage={removeSessionStorage}
         />
         <ChatBody messages={messages} setMessages={setMessages}
                   setStoredMessageStatus={setStoredMessageStatus}

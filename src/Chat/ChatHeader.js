@@ -45,7 +45,8 @@ const styles = () => ({
 
 })
 const ChatHeader = ({classes, ...props}) => {
-    const {closeClickedOnce, showFeedbackOnClickCross, setMessages, messages, enableScroll} = props
+    const {closeClickedOnce, showFeedbackOnClickCross,
+        removeSessionStorage, setMessages, messages, enableScroll} = props
     const [anchorElement, setAnchorElement] = useState(null);
     const open = Boolean(anchorElement)
     const siteid = sessionStorage.getItem('siteid');
@@ -119,7 +120,8 @@ const ChatHeader = ({classes, ...props}) => {
                 } else {
                     if (window && window.parent) {
                         window.parent.postMessage({closeChatBot: true}, '*');
-
+                        removeSessionStorage();
+                        setMessages([])
                     }
                 }
             }}/>
