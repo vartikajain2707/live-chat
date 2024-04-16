@@ -1,8 +1,15 @@
 import Chat from './Chat'
 import './App.css';
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 
 function App() {
+    const [showComponent, setShowComponent] = useState(false);
+    useEffect(() => {
+        const timeout = setTimeout(() => {
+            setShowComponent(true)
+        }, 500)
+        return () => clearTimeout(timeout)
+    }, [])
     const queryParameters = new URLSearchParams(window.location.search);
     const siteid = queryParameters.get('siteid');
     const style = document.createElement('link');
@@ -13,7 +20,7 @@ function App() {
     sessionStorage.setItem('siteid', siteid)
     return (
         <div className='app__body'>
-            <Chat/>
+            {showComponent && <Chat/>}
         </div>
     );
 }
