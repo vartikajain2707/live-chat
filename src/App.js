@@ -7,7 +7,7 @@ function App() {
     useEffect(() => {
         const timeout = setTimeout(() => {
             setShowComponent(true)
-        }, 500)
+        }, 1000)
         return () => clearTimeout(timeout)
     }, [])
     const queryParameters = new URLSearchParams(window.location.search);
