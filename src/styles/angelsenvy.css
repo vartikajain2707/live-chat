@@ -5,6 +5,9 @@
     /* Add other font formats if necessary */
 }
 
+#cex-bot-launcher {
+    display: none;
+}
 
 .Chat-chat-1, .chat {
     background-color: #ffffff;
@@ -78,10 +81,6 @@
 }
 
 
-.botImg:hover + .para {
-    display: block;
-}
-
 .para {
     position: fixed;
     bottom: 11vh;
@@ -113,4 +112,24 @@
     right: 3vh;
     border-radius: 50%;
     box-shadow: 2px 2px 4px black;
+}
+
+#close {
+    position: fixed;
+    bottom: 105px;
+    right: 2vh;
+    z-index: 2;
+    text-decoration: none;
+    color: black;
+}
+
+.crossPara {
+    position: fixed;
+    bottom: 9vh;
+    right: 2vh;
+    background-color: white;
+    border: 1px solid #fff;
+    border-radius: 20px;
+    padding: 9px;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
 }
