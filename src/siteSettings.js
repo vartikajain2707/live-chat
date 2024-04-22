@@ -30,5 +30,13 @@ module.exports = {
         "REACT_APP_BOTID": 'CT0EBRMWFU',
         "REACT_APP_BOTALIASID": 'PG9YPT5QUL',
         "siteid": "angelsenvy"
+    },
+    "niagarafalls": {
+        "headerTitle": "Niagara Falls Support",
+        "headerIcon": "https://prodv3-hornblower-assets.s3.us-west-2.amazonaws.com/data/chatbot/niagarafallsLogo.png",
+        "chatBotIcon": "https://prodv3-hornblower-assets.s3.us-west-2.amazonaws.com/data/chatbot/niagarafallsLogo.png",
+        "REACT_APP_BOTID": 'CMOTFNPMN6',
+        "REACT_APP_BOTALIASID": 'TSTALIASID',
+        "siteid": "niagarafalls"
     }
 }
