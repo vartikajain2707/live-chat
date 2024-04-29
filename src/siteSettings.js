@@ -38,5 +38,13 @@ module.exports = {
         "REACT_APP_BOTID": 'CMOTFNPMN6',
         "REACT_APP_BOTALIASID": 'CG0JDQQHIE',
         "siteid": "niagarafalls"
+    },
+    "johnball": {
+        "headerTitle": "John Ball Support",
+        "headerIcon": "https://prodv3-hornblower-assets.s3.us-west-2.amazonaws.com/data/chatbot/johnballLogo.png",
+        "chatBotIcon": "https://prodv3-hornblower-assets.s3.us-west-2.amazonaws.com/data/chatbot/johnballChatBotIcon.png",
+        "REACT_APP_BOTID": 'ZIIBH1VMSN',
+        "REACT_APP_BOTALIASID": 'TNKDVUZYJO',
+        "siteid": "johnball"
     }
 }
