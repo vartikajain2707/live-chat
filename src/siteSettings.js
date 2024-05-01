@@ -46,5 +46,14 @@ module.exports = {
         "REACT_APP_BOTID": 'ZIIBH1VMSN',
         "REACT_APP_BOTALIASID": 'TNKDVUZYJO',
         "siteid": "johnball"
-    }
+    },
+    "natgeo": {
+        "headerTitle": "National Geographic Chat",
+        "headerIcon": "https://prodv3-hornblower-assets.s3.us-west-2.amazonaws.com/data/chatbot/natgeoLogo.png",
+        "chatBotIcon": "https://prodv3-hornblower-assets.s3.us-west-2.amazonaws.com/data/chatbot/natgeoChatBotIcon.png",
+        "REACT_APP_BOTID": 'D0EA4LVWZV',
+        "REACT_APP_BOTALIASID": 'XFTGKUAJLQ',
+        "siteid": "natgeo"
+    },
+
 }

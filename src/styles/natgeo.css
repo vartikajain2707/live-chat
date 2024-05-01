@@ -1,0 +1,137 @@
+@font-face {
+    font-family: 'openSans';
+    src: url('https://prodv3-hornblower-assets.s3.us-west-2.amazonaws.com/data/chatbot/open-sans.regular.woff2') format('woff2')
+    /*/* Specify paths to your font files *! url('./path/to/your/font.woff') format('woff');*/
+    /* Add other font formats if necessary */
+}
+
+#cex-bot-launcher {
+    display: none;
+}
+
+.Chat-chat-1, .chat {
+    background-color: #ffffff;
+}
+
+.ChatBody-chatMessageReceiver-16, .chatMessageReceiver {
+    background-color: #000 !important;
+    color: #fff !important;
+    font-family: 'openSans', sans-serif;
+}
+
+.ChatBody-chatMessage-11, .chatMessage {
+    color: #000;
+    font-size: 15px;
+    background-color: #F7F2E9;
+    font-family: 'openSans', sans-serif;
+}
+
+.ChatBody-chatNameReciever-13, .ChatBody-chatTimestampReciever-15, .chatNameReciever, .chatTimestampReciever {
+    color: grey
+}
+
+
+.ChatBody-chatName-12, .ChatBody-chatTimestamp-14, .chatName, .chatTimestamp {
+    color: #000
+}
+
+.ChatBody-optionButton-21, .optionButton {
+    color: #000;
+    border: 1px solid #000;
+}
+
+.ChatBody-optionButton-21:hover, .optionButton:hover {
+    color: #ffffff;
+    background-color: #000
+}
+
+.ChatBody-loadMoreBtn-25, .loadMoreBtn {
+    color: black;
+}
+
+.ChatBody-loadMoreBtn-25:hover, .loadMoreBtn:hover {
+    background-color: transparent;
+}
+
+
+.ChatHeader-chatHeader-2, .chatHeader {
+    background-color: #000
+}
+
+.ChatHeader-chatHeaderTitle-6, .chatHeaderTitle {
+    color: #ffffff;
+    font-family: 'openSans', sans-serif;
+}
+
+.ChatHeader-headerIcon-8, .ChatHeader-closeIcon-9, .headerIcon, .closeIcon {
+    color: #ffffff;
+}
+
+.ChatFooter-sendIcon-29, .sendIcon {
+    color: #FFCC00;
+}
+
+
+.ChatHeader-robotImage-4, .robotImage {
+    width: 42px
+}
+
+.Feedback-feedbackSubmit-33, .feedbackSubmit {
+    background-color: #FFCC00
+}
+
+
+.para {
+    font-size: 15px;
+    position: fixed;
+    bottom: 9vh;
+    right: 2vh;
+    background-color: white;
+    border: 1px solid #fff;
+    border-radius: 20px;
+    padding: 9px;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+    animation: bounce 2s ease 10;
+    display: none;
+}
+
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0);
+    }
+    40% {
+        transform: translateY(-30px);
+    }
+    60% {
+        transform: translateY(-15px);
+    }
+}
+
+#cex-bot-launcher-img {
+    position: fixed;
+    bottom: 3vh;
+    right: 3vh;
+    border-radius: 50%;
+}
+
+#close {
+    position: fixed;
+    bottom: 111px;
+    right: 2vh;
+    z-index: 2;
+    text-decoration: none;
+    color: black;
+}
+
+.crossPara {
+    font-size: 15px;
+    position: fixed;
+    bottom: 9vh;
+    right: 2vh;
+    background-color: white;
+    border: 1px solid #fff;
+    border-radius: 20px;
+    padding: 9px;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+}
+
