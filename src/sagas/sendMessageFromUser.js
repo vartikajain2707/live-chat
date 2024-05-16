@@ -41,7 +41,7 @@ export function* sendMessageFromUserSaga({payload}) {
         const response = yield call(axios.post, `${configLoaded.apiUri}/chatBotApi`, JSON.stringify(input));
         const totalMessageCountInSession = parseInt((sessionStorage.getItem('totalMessageCount') || 0)) + 2;
         sessionStorage.setItem('totalMessageCount', totalMessageCountInSession);
-        const intent = response.data.sessionState.intent.name
+        const intent = response.data.sessionState?.intent?.name
         let customerAsUser = 'self'
         let customerEmail = ""
         if (intent === 'Welcome') {
