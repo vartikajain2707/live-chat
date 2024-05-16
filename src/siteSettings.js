@@ -55,5 +55,13 @@ module.exports = {
         "REACT_APP_BOTALIASID": 'XFTGKUAJLQ',
         "siteid": "natgeo"
     },
+    "cruisingevents": {
+        "headerTitle": "Cruising Events Support",
+        "headerIcon": "https://prodv3-hornblower-assets.s3.us-west-2.amazonaws.com/data/chatbot/cruisingeventsLogo.png",
+        "chatBotIcon": "https://prodv3-hornblower-assets.s3.us-west-2.amazonaws.com/data/chatbot/cruisingeventsChatBotIcon.png",
+        "REACT_APP_BOTID": '0YUD7XHAMU',
+        "REACT_APP_BOTALIASID": 'GF6MYQZPVY',
+        "siteid": "cruisingevents"
+    }
 
 }
