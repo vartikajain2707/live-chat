@@ -1,5 +1,5 @@
 import {takeLatest, put, call, select} from 'redux-saga/effects';
-import {sendMessageFromUser, loadingDots, enableScroll, prevResponse,totalMessageCount} from '../actions';
+import {sendMessageFromUser, loadingDots, enableScroll, prevResponse, totalMessageCount} from '../actions';
 import Debug from 'debug';
 import axios from 'axios';
 import moment from "moment"
@@ -41,7 +41,7 @@ export function* sendMessageFromUserSaga({payload}) {
         const response = yield call(axios.post, `${configLoaded.apiUri}/chatBotApi`, JSON.stringify(input));
         const totalMessageCountInSession = parseInt((sessionStorage.getItem('totalMessageCount') || 0)) + 2;
         sessionStorage.setItem('totalMessageCount', totalMessageCountInSession);
-        const intent = response.data.sessionState?.intent?.name
+        const intent = response.data?.sessionState?.intent?.name
         let customerAsUser = 'self'
         let customerEmail = ""
         if (intent === 'Welcome') {
