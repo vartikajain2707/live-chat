@@ -62,6 +62,14 @@ module.exports = {
         "REACT_APP_BOTID": '0YUD7XHAMU',
         "REACT_APP_BOTALIASID": 'GF6MYQZPVY',
         "siteid": "cruisingevents"
+    },
+    "oregonzoo": {
+        "headerTitle": "Oregon Zoo Chat",
+        "headerIcon": "https://prodv3-hornblower-assets.s3.us-west-2.amazonaws.com/data/chatbot/oregonzooLogo.png",
+        "chatBotIcon": "https://prodv3-hornblower-assets.s3.us-west-2.amazonaws.com/data/chatbot/oregonzooLogo.png",
+        "REACT_APP_BOTID": 'N5MSKVYOEV',
+        "REACT_APP_BOTALIASID": 'K8LORNYCNX',
+        "siteid": "oregonzoo"
     }
 
 }
