@@ -239,6 +239,10 @@ const ChatBody = ({classes, ...props}) => {
                                         <Button size="small" variant="outlined" key={idx}
                                                 className={`${classes.optionButton} optionButton`}
                                                 onClick={() => {
+                                                    const actionedOptionFromDB = option?.action
+                                                    if (actionedOptionFromDB) {
+                                                        sessionStorage.setItem(actionedOptionFromDB?.actionType, actionedOptionFromDB?.value)
+                                                    }
                                                     setMessages([...messages, Object.assign({}, {
                                                         user: (usersName || 'self'),
                                                         timeStamp: moment().unix(),
@@ -246,7 +250,7 @@ const ChatBody = ({classes, ...props}) => {
                                                     })])
                                                     setStoredMessageStatus(true)
                                                     sendMessageFromUser({
-                                                        text: input,
+                                                        text: display || input || '',
                                                         sessId: sessionId,
                                                         timeStamp: moment().unix()
                                                     })
