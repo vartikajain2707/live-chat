@@ -14,7 +14,7 @@ export const getSendMessageFromUser = createSelector(
 );
 
 export const setRemoveSessionStorage = () => {
-    ["cachedMessages", "sessionId", "emailAddress",
+    ["cachedMessages", "sessionId", "emailAddress", "locale",
         "userName", "totalMessageCount", "previousResponse"].forEach(key => sessionStorage.removeItem(key));
 }
 

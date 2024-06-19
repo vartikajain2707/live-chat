@@ -16,6 +16,7 @@ export function* sendMessageFromUserSaga({payload}) {
         const configObject = yield select(config)
         const sessionEmailId = sessionStorage.getItem('emailAddress')
         let sessionUserName = sessionStorage.getItem('userName') || 'self'
+        const sessionLocale = sessionStorage.getItem('locale') || 'en'
         yield put(loadingDots(true))
         let prevRes = yield select(getPrevResponse);
         if (!prevRes) {
@@ -35,7 +36,8 @@ export function* sendMessageFromUserSaga({payload}) {
             "siteId": siteSettings?.siteid || 'base',
             "timeStamp": timeStamp,
             "userName": sessionUserName,
-            "emailId": sessionEmailId
+            "emailId": sessionEmailId,
+            "locale": sessionLocale
         }
         yield put(enableScroll(true))
         const response = yield call(axios.post, `${configLoaded.apiUri}/chatBotApi`, JSON.stringify(input));
