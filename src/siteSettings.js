@@ -70,6 +70,14 @@ module.exports = {
         "REACT_APP_BOTID": 'N5MSKVYOEV',
         "REACT_APP_BOTALIASID": 'K8LORNYCNX',
         "siteid": "oregonzoo"
+    },
+    "postojna": {
+        "headerTitle": "Postojna Cave Park Chat",
+        "headerIcon": "https://prodv3-hornblower-assets.s3.us-west-2.amazonaws.com/data/chatbot/postojnaLogo.png",
+        "chatBotIcon": "https://prodv3-hornblower-assets.s3.us-west-2.amazonaws.com/data/chatbot/postojnaLogo.png",
+        "REACT_APP_BOTID": 'BYKIQWVPMJ',
+        "REACT_APP_BOTALIASID": 'CWLTD0QNM0',
+        "siteid": "postojna"
     }
 
 }
