@@ -83,8 +83,8 @@ module.exports = {
         "headerTitle": "San Diego Chat",
         "headerIcon": "https://prodv3-hornblower-assets.s3.us-west-2.amazonaws.com/data/baseLogo.png",
         "chatBotIcon": "https://prodv3-hornblower-assets.s3.us-west-2.amazonaws.com/data/baseLogo.png",
-        "REACT_APP_BOTID": 'DW38RMHOGB',
-        "REACT_APP_BOTALIASID": 'E3ID79Y6WN',
+        "REACT_APP_BOTID": 'NIDNALRCHC',
+        "REACT_APP_BOTALIASID": 'A8U1RB0HXT',
         "siteid": "sandiego"
     }
 
