@@ -17,6 +17,11 @@ function App() {
     style.type = 'text/css';
     style.href = `https://prodv3-hornblower-assets.s3.us-west-2.amazonaws.com/data/chatbot/${siteid}.css`;
     document.body.append(style);
+    const siteIdExists = sessionStorage.getItem('siteid')
+    if (siteIdExists && siteIdExists !== siteid) {
+        ["cachedMessages", "sessionId", "emailAddress", "locale",
+            "userName", "totalMessageCount", "previousResponse"].forEach(key => sessionStorage.removeItem(key));
+    }
     sessionStorage.setItem('siteid', siteid)
     return (
         <div className='app__body'>
