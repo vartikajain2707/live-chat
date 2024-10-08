@@ -86,6 +86,14 @@ module.exports = {
         "REACT_APP_BOTID": 'NIDNALRCHC',
         "REACT_APP_BOTALIASID": 'A8U1RB0HXT',
         "siteid": "sandiego"
+    },
+    "maverick": {
+        "headerTitle": "Maverick, Virtual Pilot",
+        "headerIcon": "https://prodv3-hornblower-assets.s3.us-west-2.amazonaws.com/data/chatbot/maverickLogo.png",
+        "chatBotIcon": "https://prodv3-hornblower-assets.s3.us-west-2.amazonaws.com/data/chatbot/maverickLogo.png",
+        "REACT_APP_BOTID": 'ORJ4SMUA9V',
+        "REACT_APP_BOTALIASID": 'GN6VKPBB2K',
+        "siteid": "maverick"
     }
 
 }
