@@ -94,6 +94,14 @@ module.exports = {
         "REACT_APP_BOTID": 'ORJ4SMUA9V',
         "REACT_APP_BOTALIASID": 'GN6VKPBB2K',
         "siteid": "maverick"
+    },
+    "baldheadferry": {
+        "headerTitle": "Bald Head Ferry Chat",
+        "headerIcon": "https://prodv3-hornblower-assets.s3.us-west-2.amazonaws.com/data/chatbot/baldheadferryLogo.png",
+        "chatBotIcon": "https://prodv3-hornblower-assets.s3.us-west-2.amazonaws.com/data/chatbot/baldheadferryLogo.png",
+        "REACT_APP_BOTID": 'ITBRW5JSLU',
+        "REACT_APP_BOTALIASID": 'B1JXDYOPNH',
+        "siteid": "baldheadferry"
     }
 
 }
