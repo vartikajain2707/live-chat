@@ -1,4 +1,4 @@
-image: node:16.20.1
+image: node:20.16.0
 
 stages:
     - Build
