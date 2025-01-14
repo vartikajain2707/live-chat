@@ -102,6 +102,14 @@ module.exports = {
         "REACT_APP_BOTID": 'ITBRW5JSLU',
         "REACT_APP_BOTALIASID": 'B1JXDYOPNH',
         "siteid": "baldheadferry"
+    },
+    "washingtonbayferry": {
+        "headerTitle": "Washington Bay Ferry Chat",
+        "headerIcon": "https://prodv3-hornblower-assets.s3.us-west-2.amazonaws.com/data/chatbot/washingtonbayferryLogo.png",
+        "chatBotIcon": "https://prodv3-hornblower-assets.s3.us-west-2.amazonaws.com/data/chatbot/washingtonbayferryLogo.png",
+        "REACT_APP_BOTID": 'MDLAAUI4M6',
+        "REACT_APP_BOTALIASID": 'IBUFO4XLFC',
+        "siteid": "washingtonbayferry"
     }
 
 }
