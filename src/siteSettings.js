@@ -104,7 +104,7 @@ module.exports = {
         "siteid": "baldheadferry"
     },
     "washingtonbayferry": {
-        "headerTitle": "Washington Bay Ferry Chat",
+        "headerTitle": "Washington State Ferry Chat",
         "headerIcon": "https://prodv3-hornblower-assets.s3.us-west-2.amazonaws.com/data/chatbot/washingtonbayferryLogo.png",
         "chatBotIcon": "https://prodv3-hornblower-assets.s3.us-west-2.amazonaws.com/data/chatbot/washingtonbayferryLogo.png",
         "REACT_APP_BOTID": 'MDLAAUI4M6',
