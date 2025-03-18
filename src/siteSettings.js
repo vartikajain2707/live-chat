@@ -110,6 +110,14 @@ module.exports = {
         "REACT_APP_BOTID": 'MDLAAUI4M6',
         "REACT_APP_BOTALIASID": 'IBUFO4XLFC',
         "siteid": "washingtonbayferry"
+    },
+    "charlestonHarbor": {
+        "headerTitle": "Charleston Harbor Chat",
+        "headerIcon": "https://prodv3-hornblower-assets.s3.us-west-2.amazonaws.com/data/chatbot/charlestonHarborLogo.png",
+        "chatBotIcon": "https://prodv3-hornblower-assets.s3.us-west-2.amazonaws.com/data/chatbot/charlestonHarborLogo.png",
+        "REACT_APP_BOTID": 'XWIZMQZGW4',
+        "REACT_APP_BOTALIASID": 'FDCHG7FERT',
+        "siteid": "charlestonHarbor"
     }
 
 }
