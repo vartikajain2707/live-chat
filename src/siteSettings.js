@@ -118,6 +118,14 @@ module.exports = {
         "REACT_APP_BOTID": 'XWIZMQZGW4',
         "REACT_APP_BOTALIASID": 'FDCHG7FERT',
         "siteid": "charlestonHarbor"
+    },
+    "steamship": {
+        "headerTitle": "Steamship Authority Chat",
+        "headerIcon": "https://prodv3-hornblower-assets.s3.us-west-2.amazonaws.com/data/chatbot/steamshipLogo.png",
+        "chatBotIcon": "https://prodv3-hornblower-assets.s3.us-west-2.amazonaws.com/data/chatbot/steamshipLogo.png",
+        "REACT_APP_BOTID": 'IBAAU2IAU3',
+        "REACT_APP_BOTALIASID": 'UK66VPRFD6',
+        "siteid": "steamship"
     }
 
 }
