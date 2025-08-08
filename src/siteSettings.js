@@ -126,6 +126,14 @@ module.exports = {
         "REACT_APP_BOTID": 'IBAAU2IAU3',
         "REACT_APP_BOTALIASID": 'UK66VPRFD6',
         "siteid": "steamship"
+    },
+    "onewob": {
+        "headerTitle": "One World Observatory Chat",
+        "headerIcon": "https://prodv3-hornblower-assets.s3.us-west-2.amazonaws.com/data/chatbot/onewobLogo.png",
+        "chatBotIcon": "https://prodv3-hornblower-assets.s3.us-west-2.amazonaws.com/data/chatbot/onewobLogo.png",
+        "REACT_APP_BOTID": 'A5DYFRPGFO',
+        "REACT_APP_BOTALIASID": 'PO8GJ7VFBB',
+        "siteid": "onewob"
     }
 
 }
