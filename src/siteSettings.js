@@ -134,6 +134,22 @@ module.exports = {
         "REACT_APP_BOTID": 'A5DYFRPGFO',
         "REACT_APP_BOTALIASID": 'PO8GJ7VFBB',
         "siteid": "onewob"
+    },
+    "birchAquarium": {
+        "headerTitle": "Birch Aquarium Chat",
+        "headerIcon": "https://prodv3-hornblower-assets.s3.us-west-2.amazonaws.com/data/chatbot/birchAquariumLogo.png",
+        "chatBotIcon": "https://prodv3-hornblower-assets.s3.us-west-2.amazonaws.com/data/chatbot/birchAquariumLogo.png",
+        "REACT_APP_BOTID": 'UJW1MO8D6E',
+        "REACT_APP_BOTALIASID": 'Y76JJRXJGY',
+        "siteid": "birchAquarium"
+    },
+    "edinburghCastle": {
+        "headerTitle": "Edinburgh Castle Chat",
+        "headerIcon": "https://prodv3-hornblower-assets.s3.us-west-2.amazonaws.com/data/chatbot/edinburghCastleLogo.png",
+        "chatBotIcon": "https://prodv3-hornblower-assets.s3.us-west-2.amazonaws.com/data/chatbot/edinburghCastleLogo1.png",
+        "REACT_APP_BOTID": 'HMEHPIAIXD',
+        "REACT_APP_BOTALIASID": 'LKLPOFEWYJ',
+        "siteid": "edinburghCastle"
     }
 
 }
