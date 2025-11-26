@@ -150,6 +150,14 @@ module.exports = {
         "REACT_APP_BOTID": 'HMEHPIAIXD',
         "REACT_APP_BOTALIASID": 'LKLPOFEWYJ',
         "siteid": "edinburghCastle"
+    },
+    "blueGoldFleet": {
+        "headerTitle": "Blue Gold Fleet Chat",
+        "headerIcon": "https://prodv3-hornblower-assets.s3.us-west-2.amazonaws.com/data/chatbot/blueGoldFleetLogo.png",
+        "chatBotIcon": "https://prodv3-hornblower-assets.s3.us-west-2.amazonaws.com/data/chatbot/blueGoldFleetLogo.png",
+        "REACT_APP_BOTID": 'PYT37EGZAP',
+        "REACT_APP_BOTALIASID": 'TGPJZATJYQ',
+        "siteid": "blueGoldFleet"
     }
 
 }
